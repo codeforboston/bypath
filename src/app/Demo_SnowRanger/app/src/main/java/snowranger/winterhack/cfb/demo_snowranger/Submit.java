@@ -65,11 +65,6 @@ public class Submit extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-        ParseObject.registerSubclass(Condition.class);
-        Parse.initialize(this, "ikx3kRNF4RME6dqQblg2t06q5ETzRsklLOOHC7QD", "M2hsjU3i7XGqIebu23X3QsnAr5aUH3zWu1SP5UMn");
-
         setContentView(R.layout.activity_submit);
 
         homeIntent = new Intent(this, Splash.class);
