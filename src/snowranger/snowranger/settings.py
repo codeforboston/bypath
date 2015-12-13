@@ -77,9 +77,8 @@ WSGI_APPLICATION = 'snowranger.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 DATABASES = {
     'default': {
-         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-         'NAME': 'snowranger',
-         'USER': 'anatoliy',
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': 'mydatabase',
      }
 }
 
