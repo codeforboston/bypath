@@ -26,7 +26,7 @@
             android:minWidth="100dp"
             android:adjustViewBounds="true"
             android:paddingBottom="50dp"
-            android:src="@drawable/snowflake"
+            android:src="@drawable/snowranger"
             android:id="@+id/submitImage"
             />
 
