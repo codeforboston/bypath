@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Demo_SnowRanger</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="splashTitle">SnowRanger</string>
+    <string name="title_activity_camera_">Camera_Activity</string>
+    <color name="white">#ffffff</color>
+    <string name="title_activity_camera__test">Camera_Test</string>
+    <string name="title_activity_submit">Submit</string>
+
+</resources>
