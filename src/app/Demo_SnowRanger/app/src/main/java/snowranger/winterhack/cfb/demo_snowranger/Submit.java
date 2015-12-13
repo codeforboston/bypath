@@ -78,15 +78,16 @@ public class Submit extends ActionBarActivity{
         //Gets packaged elements from intent
         splashIntent = getIntent();
         imageFilePath = splashIntent.getStringExtra("imagePath");
-        latitude = splashIntent.getDoubleExtra("latitude",0.00);
-        longitude = splashIntent.getDoubleExtra("longitude",0.00);
+        latitude = splashIntent.getDoubleExtra("latitude", 0.00);
+        longitude = splashIntent.getDoubleExtra("longitude", 0.00);
 
         //Sets photo on open from local storage
         myBitmap = BitmapFactory.decodeFile(imageFilePath);
         resultPhoto.setImageBitmap(myBitmap);
 
-        latlongTV.setText("Latitude: " + String.valueOf(latitude) + "\n"
-                + "Longitude: " + String.valueOf(longitude));
+        String gpsString = "Latitude: " + String.valueOf(latitude) + "\n"
+                + "Longitude: " + String.valueOf(longitude);
+        latlongTV.setText(gpsString);
     }
 
     @Override
