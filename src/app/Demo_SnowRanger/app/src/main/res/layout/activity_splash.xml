@@ -25,14 +25,14 @@
 
         <ImageView
             android:layout_width="96dp"
-            android:layout_height="fill_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:paddingTop="70dp"
             android:paddingBottom="45dp"
 
-            android:src="@drawable/snowflake"
+            android:src="@drawable/snowranger"
             android:id="@+id/imageView2" />
 
         <Button

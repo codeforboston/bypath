@@ -51,6 +51,7 @@ public class Submit extends ActionBarActivity{
     ImageView resultPhoto;
     //Bitmap for ImageView conversion
     Bitmap myBitmap;
+    Bitmap scaledBitmap;
 
     Button submitButton;
     Intent splashIntent, homeIntent;
@@ -83,7 +84,18 @@ public class Submit extends ActionBarActivity{
 
         //Sets photo on open from local storage
         myBitmap = BitmapFactory.decodeFile(imageFilePath);
-        resultPhoto.setImageBitmap(myBitmap);
+
+        //resize Bitmap
+        scaledBitmap = null;
+        int height = 512;
+        int width = 308;
+
+        //create scaled bitmap and set to result photo
+        scaledBitmap = Bitmap.createScaledBitmap(myBitmap, height, width, true);
+        resultPhoto.setImageBitmap(scaledBitmap);
+
+        //recyle large bitmap
+        myBitmap.recycle();
 
         String gpsString = "Latitude: " + String.valueOf(latitude) + "\n"
                 + "Longitude: " + String.valueOf(longitude);
@@ -114,9 +126,6 @@ public class Submit extends ActionBarActivity{
 
     public void backHome(View v){
 
-        //Make JSON object to package info
-        //JSONObject jSonObject = new JSONObject();
-
         //Make Condition object to package info
         Condition condition = new Condition();
 
@@ -132,7 +141,7 @@ public class Submit extends ActionBarActivity{
             //add GeoPoint obj
             condition.setLocation(geoPoint);
 
-            ParseFile parseFile = new ParseFile("image.png",convertImagetoByteArray(myBitmap));
+            ParseFile parseFile = new ParseFile("image.png",convertImagetoByteArray(scaledBitmap));
             condition.setImage(parseFile);
 
             condition.saveInBackground();
