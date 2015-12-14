@@ -6,6 +6,7 @@
     <string name="splashTitle">SnowRanger</string>
     <string name="title_activity_camera_">Camera_Activity</string>
     <color name="white">#ffffff</color>
+    <color name="purple">#ddc7ff</color>
     <string name="title_activity_camera__test">Camera_Test</string>
     <string name="title_activity_submit">Submit</string>
 

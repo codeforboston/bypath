@@ -3,6 +3,7 @@ package snowranger.winterhack.cfb.demo_snowranger;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,6 +27,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import org.w3c.dom.Text;
 
 import java.io.File;
+import java.util.Locale;
 
 
 public class Splash extends ActionBarActivity {
@@ -74,7 +76,7 @@ public class Splash extends ActionBarActivity {
             public void onLocationChanged(Location location) {
                 gpsString.setText("Latitude: " + location.getLatitude()
                         + "\n Longitude: " + location.getLongitude());
-
+                
                 Log.v("latitude",String.valueOf(location.getLatitude()));
                 Log.v("longitude",String.valueOf(location.getLongitude()));
 
