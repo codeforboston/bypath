@@ -17,7 +17,8 @@
 <title>Snowranger</title>
 
 	<script src="//www.parsecdn.com/js/parse-1.6.7.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Latest compiled and minified CSS -->
@@ -71,11 +72,12 @@
        <div class="container">
            <p>This will display the current weather</p>
        </div>
-       <div class="container">
-           <div class="input-group">
-               <span class="input-group-addon" id="basic-addon1">I'm Coming From</span>
-               <input type="text" class="form-control" placeholder="Starting Point" aria-describedby="basic-addon1">
-           </div>
+   		
+	<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    <div id="map"></div>
+
+
+           
            <div class="input-group">
                <span class="input-group-addon" id="basic-addon2">I'm Going To</span>
                <input type="text" class="form-control" placeholder="Destination" aria-describedby="basic-addon1">
@@ -155,6 +157,70 @@ function initMap() {
 	   zoom: 14,
 	   mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
+
+	// Create the search box and link it to the UI element.
+	  var input = document.getElementById('pac-input');
+	  var searchBox = new google.maps.places.SearchBox(input);
+	  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+	 // Bias the SearchBox results towards current map's viewport.
+	  map.addListener('bounds_changed', function() {
+	    searchBox.setBounds(map.getBounds());
+	  });
+
+
+var markers = [];
+  // [START region_getplaces]
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    markers = [];
+
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+
+      // Create a marker for each place.
+      markers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+  });
+  // [END region_getplaces]
+
+
+
+
+
+
 
 	var StataGehry = new google.maps.LatLng(42.3618181, -71.090346);
 	var Harvard = new google.maps.LatLng(42.3770029, -71.1166601);
