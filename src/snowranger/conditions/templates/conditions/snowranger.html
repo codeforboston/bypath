@@ -1,6 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+
+
+    <style>
+
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      
+      #map {
+        height: 100%;
+      }
+	.controls {
+	  margin-top: 10px;
+	  border: 1px solid transparent;
+	  border-radius: 2px 0 0 2px;
+	  box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  height: 32px;
+	  outline: none;
+	  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	}
+
+	#pac-input {
+	  background-color: #fff;
+	  font-family: Roboto;
+	  font-size: 15px;
+	  font-weight: 300;
+	  margin-left: 12px;
+	  padding: 0 11px 0 13px;
+	  text-overflow: ellipsis;
+	  width: 300px;
+	}
+
+	#pac-input:focus {
+	  border-color: #4d90fe;
+	}
+
+	.pac-container {
+	  font-family: Roboto;
+	}
+
+	#type-selector {
+	  color: #fff;
+	  background-color: #4d90fe;
+	  padding: 5px 11px 0px 11px;
+	}
+
+	#type-selector label {
+	  font-family: Roboto;
+	  font-size: 13px;
+	  font-weight: 300;
+	}
+
+    </style>
+    <title>Places Searchbox</title>
+    <style>
+      #target {
+        width: 345px;
+      }
+    </style>
+
+
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,8 +88,7 @@
 	<script src="//www.parsecdn.com/js/parse-1.6.7.min.js"></script>
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
@@ -42,6 +110,7 @@
 
 <body role="document">
 
+
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
@@ -53,12 +122,14 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">(INSERT LOGO HERE)</a>
+
+<a class="pull-left" href="#">{% load staticfiles %}<img class="img-responsive" src="{% static "img/snowranger.png" %}" width="50px"/></a>				
+
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				 
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#">Plan Your Trip<span
 							class="sr-only">(current)</span></a></li>
@@ -70,19 +141,26 @@
 	</nav>
 	<section id="content"></section>
        <div class="container">
-           <p>This will display the current weather</p>
+
+
+
+
+           <p>(Display current weather here.)</p>
        </div>
    		
-	<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <div id="map"></div>
+    		<div class="container">
+           <div class="input-group">
+               <span class="input-group-addon" id="basic-addon1">I'm Coming From </span>
+               <input type="text" class="form-control" placeholder="Starting Point" aria-describedby="basic-addon1">
+           </div>
 
-
-           
            <div class="input-group">
                <span class="input-group-addon" id="basic-addon2">I'm Going To</span>
                <input type="text" class="form-control" placeholder="Destination" aria-describedby="basic-addon1">
            </div>
 		   <div class="jumbotron" id="map">The map ought to go here</div>
+		   <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    <div id="map"></div>
        </div>
        <!-- Our Google Maps API Key is AIzaSyC-fJe5RYynbYJhTOpfXW6bX8OSFhITKkQ  -->
 		<!--
@@ -111,14 +189,14 @@ query.find({
 			var Imagio = condition[i].get("image");
 			var ImagioURL = Imagio.url();
 
-			console.log(Lasco.latitude);
-			console.log(Lasco.longitude);
-			console.log(Dascro);
-			console.log(Lasco);
-			console.log(Imagio);
-			console.log(Imagio.name);
-			console.log(Imagio.url);
-			console.log(Imagio.url()); 
+			//console.log(Lasco.latitude);
+			//console.log(Lasco.longitude);
+			//console.log(Dascro);
+			//console.log(Lasco);
+			//console.log(Imagio);
+			//console.log(Imagio.name);
+			//console.log(Imagio.url);
+			//console.log(Imagio.url()); 
 
 			var Gloc = new google.maps.LatLng(Lasco.latitude, Lasco.longitude);
 
