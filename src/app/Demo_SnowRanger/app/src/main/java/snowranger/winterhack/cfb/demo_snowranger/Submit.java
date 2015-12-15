@@ -87,18 +87,20 @@ public class Submit extends ActionBarActivity{
 
         //resize Bitmap
         scaledBitmap = null;
-        int height = 512;
-        int width = 308;
+        float scalability = .25f;
+        int scaledHeight = (int)(myBitmap.getHeight()*scalability);
+        int scaledWidth = (int)(myBitmap.getWidth()*scalability);
+        Log.i("height",Integer.toString(scaledHeight));
+        Log.i("width",Integer.toString(scaledWidth));
 
         //create scaled bitmap and set to result photo
-        scaledBitmap = Bitmap.createScaledBitmap(myBitmap, height, width, true);
+        scaledBitmap = Bitmap.createScaledBitmap(myBitmap, scaledHeight, scaledWidth, true);
         resultPhoto.setImageBitmap(scaledBitmap);
 
         //recyle large bitmap
         myBitmap.recycle();
 
-        String gpsString = "Latitude: " + String.valueOf(latitude) + "\n"
-                + "Longitude: " + String.valueOf(longitude);
+        String gpsString = "(" + String.valueOf(latitude) + ", " + String.valueOf(longitude) + ")";
         latlongTV.setText(gpsString);
     }
 
@@ -145,6 +147,8 @@ public class Submit extends ActionBarActivity{
             condition.setImage(parseFile);
 
             condition.saveInBackground();
+
+            Toast.makeText(this, "thank you for reporting to SnowRanger", Toast.LENGTH_SHORT).show();
 
             startActivity(homeIntent);
 

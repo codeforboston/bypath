@@ -6,50 +6,65 @@
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/white">
+    android:background="@color/purple">
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
         <ImageView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:minHeight="100dp"
-            android:minWidth="100dp"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:adjustViewBounds="true"
-            android:paddingBottom="50dp"
-            android:src="@drawable/snowranger"
+            android:padding="1dp"
+            android:background="@drawable/snowranger_background"
             android:id="@+id/submitImage"
             />
 
-        <TextView android:text="Latitude/Longitude:"
+            <ImageView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:src="@drawable/imageborder"
+                />
+
+        </FrameLayout>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:paddingBottom="50dp"
+            android:paddingBottom="20dp"
             android:id="@+id/latlongTV"
             />
 
         <TextView android:text="Add a description:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
+            android:textSize="20dp"
             android:textStyle="bold"
-            android:paddingBottom="50dp"
+            android:paddingBottom="20dp"
             android:id="@+id/submitTV"
             />
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Ex. 'Icy pavement'"
             android:id="@+id/submitET" />
@@ -61,6 +76,7 @@
             android:id="@+id/submitButton"
             android:onClick="backHome"
             android:layout_gravity="center_horizontal" />
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
 </ScrollView>
