@@ -6,15 +6,17 @@
     <meta charset="utf-8">
     <style>
 
-      html, body {
+      body {
         height: 100%;
         margin: 0;
         padding: 0;
+        background-color: #17A2BD !important;
       }
 
       #map {
         height: 100%;
       }
+
 	.controls {
 	  margin-top: 10px;
 	  border: 1px solid transparent;
@@ -25,6 +27,10 @@
 	  outline: none;
 	  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 	}
+
+    .container {
+        background-color: #FFFFFF;
+    }
 
 	#pac-input {
 	  background-color: #fff;
@@ -58,21 +64,123 @@
 	}
 
 
-.img-responsive 
-{  display: block;  height: auto;  width: 100%; 
-	
+.img-responsive
+{  display: block;  height: auto;  width: 100%;
+
 }
 
-.logo-responsive 
+.logo-responsive
 {  display: block;  height: auto;  max-width: 100%; }
 
+#map {
+    height: 640px;
+}
 
-    </style>
-    <title>Snowranger</title>
-    <style>
-      #target {
-        width: 345px;
-      }
+#target {
+  width: 345px;
+}
+
+/*
+  Docs at http://http://simpleweatherjs.com
+
+  Look inspired by http://www.degreees.com/
+  Used for demo purposes.
+
+  Weather icon font from http://fonts.artill.de/collection/artill-weather-icons
+
+  DO NOT hotlink the assets/font included in this demo. If you wish to use the same font icon then download it to your local assets at the link above. If you use the links below odds are at some point they will be removed and your version will break.
+*/
+
+@font-face {
+    font-family: 'weather';
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/93/artill_clean_icons-webfont.eot');
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/93/artill_clean_icons-webfont.eot?#iefix') format('embedded-opentype'),
+         url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/93/artill_clean_icons-webfont.woff') format('woff'),
+         url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/93/artill_clean_icons-webfont.ttf') format('truetype'),
+         url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/93/artill_clean_icons-webfont.svg#artill_clean_weather_iconsRg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#weather {
+  width: 700px;
+  margin: 0px auto;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+i {
+  color: #000;
+  font-family: weather;
+  font-size: 100px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.0;
+  display: inline;
+}
+
+.icon-0:before { content: ":"; }
+.icon-1:before { content: "p"; }
+.icon-2:before { content: "S"; }
+.icon-3:before { content: "Q"; }
+.icon-4:before { content: "S"; }
+.icon-5:before { content: "W"; }
+.icon-6:before { content: "W"; }
+.icon-7:before { content: "W"; }
+.icon-8:before { content: "W"; }
+.icon-9:before { content: "I"; }
+.icon-10:before { content: "W"; }
+.icon-11:before { content: "I"; }
+.icon-12:before { content: "I"; }
+.icon-13:before { content: "I"; }
+.icon-14:before { content: "I"; }
+.icon-15:before { content: "W"; }
+.icon-16:before { content: "I"; }
+.icon-17:before { content: "W"; }
+.icon-18:before { content: "U"; }
+.icon-19:before { content: "Z"; }
+.icon-20:before { content: "Z"; }
+.icon-21:before { content: "Z"; }
+.icon-22:before { content: "Z"; }
+.icon-23:before { content: "Z"; }
+.icon-24:before { content: "E"; }
+.icon-25:before { content: "E"; }
+.icon-26:before { content: "3"; }
+.icon-27:before { content: "a"; }
+.icon-28:before { content: "A"; }
+.icon-29:before { content: "a"; }
+.icon-30:before { content: "A"; }
+.icon-31:before { content: "6"; }
+.icon-32:before { content: "1"; }
+.icon-33:before { content: "6"; }
+.icon-34:before { content: "1"; }
+.icon-35:before { content: "W"; }
+.icon-36:before { content: "1"; }
+.icon-37:before { content: "S"; }
+.icon-38:before { content: "S"; }
+.icon-39:before { content: "S"; }
+.icon-40:before { content: "M"; }
+.icon-41:before { content: "W"; }
+.icon-42:before { content: "I"; }
+.icon-43:before { content: "W"; }
+.icon-44:before { content: "a"; }
+.icon-45:before { content: "S"; }
+.icon-46:before { content: "U"; }
+.icon-47:before { content: "S"; }
+
+#weather h2 {
+  margin: 0 0 8px;
+  color: #000;
+  font-size: 30px;
+  font-weight: 300;
+  text-align: center;
+  text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+#weather .currently {
+  margin: 0 20px;
+}
+
     </style>
 
 <meta charset="utf-8">
@@ -81,12 +189,6 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="../../favicon.ico">
-	<style>
-		#map {
-		height: 500px;
-		}
-	</style>
 
 <title>Snowranger</title>
 
@@ -114,47 +216,33 @@
 	integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
 	crossorigin="anonymous"></script>
 <!-- <script src="snowranger.js"></script> -->
+
+<!-- CDN for Simple Weather -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.0.2/jquery.simpleWeather.min.js"></script>
+
+<!-- Set Icon -->
+
+<link rel="shortcut icon" href="http://www.ccs.neu.edu/home/nmg49/img/snowranger.png">
 </head>
 
 
 <body role="document">
 
 	<nav class="navbar navbar-default">
-		<div class="container-fluid">
+		<!-- <div class="container" style="margin: 0 auto"> -->
 			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-					aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-
-<a class="pull-left" href="#">{% load staticfiles %}<img class="logo-responsive" src="{% static "img/snowranger.png" %}" width="50px"/></a>
-
+			<div style="text-align: center; width: 100%; margin: 0">
+                <a href="#">{% load staticfiles %}<img style="width: 500px; height: 300px;" src="{% static "img/snowranger-title.png" %}" width="50px"/></a>
+                <div id="weather"></div>
 			</div>
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Plan Your Trip<span
-							class="sr-only">(current)</span></a></li>
-					<li><a href="#">Recent Updates</a></li>
-					<li><a href="#">About</a></li>
-				</ul>
-			</div>
-		</div>
+		<!-- </div> -->
 	</nav>
-
-	<section id="content"></section>
-       
-       <div class="container">
-           <p>(Display current weather here.)</p>
-       </div>
-
-    		<div class="container">
+        <div class="container">
+            <p>Some sample text here</p>
+        </div>
+		<div class="container">
            <div class="input-group">
                <span class="input-group-addon" id="basic-addon1">I'm Coming From </span>
                <input type="text" class="form-control" placeholder="Starting Point" aria-describedby="basic-addon1">
@@ -164,9 +252,10 @@
                <span class="input-group-addon" id="basic-addon2">I'm Going To</span>
                <input type="text" class="form-control" placeholder="Destination" aria-describedby="basic-addon1">
            </div>
-		   <div class="jumbotron" id="map">The map ought to go here</div>
+		   <div id="map">The map ought to go here</div>
 		   <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    
+           <br>
+
        </div>
 
        <script>
@@ -183,225 +272,149 @@
         $(document).ready(function() {
            initMap();
            getConditionData();
-        //    setMarkers(markers);
+           setWeather();
         });
 
-var initMap = function() {
+        var initMap = function() {
 
-               //var bounds = new google.maps.LatLngBounds();
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: 42.362598, lng: -71.088306},
+              zoom: 12,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
 
-	   map = new google.maps.Map(document.getElementById('map'), {
-	      center: {lat: 42.362598, lng: -71.088306},
-	      zoom: 12,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP
-	   });
+            // Create the search box and link it to the UI element.
+            var input = document.getElementById('pac-input');
+            var searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function() {
+            searchBox.setBounds(map.getBounds());
+            });
 
-      // Create the search box and link it to the UI element.
-	  var input = document.getElementById('pac-input');
-	  var searchBox = new google.maps.places.SearchBox(input);
-	  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+            var marcers = [];
+            // [START region_getplaces]
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
 
-	 // Bias the SearchBox results towards current map's viewport.
-	  map.addListener('bounds_changed', function() {
-	    searchBox.setBounds(map.getBounds());
-	  });
+        	searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
 
-	var marcers = [];
-  // [START region_getplaces]
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
-  	searchBox.addListener('places_changed', function() {
-	    var places = searchBox.getPlaces();
+                if (places.length == 0) {
+                  return;
+                }
+                //
+                // // Clear out the old markers.
+                marcers.forEach(function(marcer) {
+                  marcer.setMap(null);
+                });
+                marcers = [];
+                //
+                // // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
 
-	    if (places.length == 0) {
-	      return;
-	    }
+                places.forEach(function(place) {
+            	      var icon = {
+            	        url: place.icon,
+            	        size: new google.maps.Size(71, 71),
+            	        origin: new google.maps.Point(0, 0),
+            	        anchor: new google.maps.Point(17, 34),
+            	        scaledSize: new google.maps.Size(25, 25)
+            	      };
 
-	    // Clear out the old markers.
-	    marcers.forEach(function(marcer) {
-	      marcer.setMap(null);
-	    });
-	    marcers = [];
+            	      // Create a marker for each place.
+            	      marcers.push(new google.maps.Marker({
+            	        map: map,
+            	        icon: icon,
+            	        title: place.name,
+            	        position: place.geometry.location
+            	      }));
 
-	    // For each place, get the icon, name and location.
-	    var bounds = new google.maps.LatLngBounds();
-	    
-	    places.forEach(function(place) {
-		      var icon = {
-		        url: place.icon,
-		        size: new google.maps.Size(71, 71),
-		        origin: new google.maps.Point(0, 0),
-		        anchor: new google.maps.Point(17, 34),
-		        scaledSize: new google.maps.Size(25, 25)
-		      };
+            	      if (place.geometry.viewport) {
+            	        // Only geocodes have viewport.
+            	        bounds.union(place.geometry.viewport);
+            	      } else {
+            	        bounds.extend(place.geometry.location);
+            	      }
+                });
+                map.fitBounds(bounds);
+            });
+    };
 
-		      // Create a marker for each place.
-		      marcers.push(new google.maps.Marker({
-		        map: map,
-		        icon: icon,
-		        title: place.name,
-		        position: place.geometry.location
-		      }));
+    var getConditionData = function() {
 
-		      if (place.geometry.viewport) {
-		        // Only geocodes have viewport.
-		        bounds.union(place.geometry.viewport);
-		      } else {
-		        bounds.extend(place.geometry.location);
-		      }
-	    });
+    	// pull entries from Parse createdAt after Aug 20 2014 :-)
+        query.greaterThan("createdAt", "2014-08-20T02:06:57.931Z");
+        query.find({
+           success: function(condition) {
 
+            //    alert("Successfully retrieved " + condition.length + " descriptions.");
 
-// Don't zoom in too far on only one marker
-    if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
-       var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.005, bounds.getNorthEast().lng() + 0.005);
-       var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.005, bounds.getNorthEast().lng() - 0.005);
-       bounds.extend(extendPoint1);
-       bounds.extend(extendPoint2);
-    }
+               for (var i = 0; i < condition.length; i++) {
 
-
-
-	    map.fitBounds(bounds);
-			});
-
-
-
-				var StataGehry = new google.maps.LatLng(42.3618181, -71.090346);
-				var Harvard = new google.maps.LatLng(42.3770029, -71.1166601);
-				var BostonCityHall = new google.maps.LatLng(42.3605229, -71.0579748);
-				var RoxburyCrossing = new google.maps.LatLng(42.3313358, -71.0954743);
-
-
-				var marqer = new google.maps.Marker({
-					position: StataGehry,
-					title: "World's best marker!", 
-					icon: "{% static "img/snowrangermarker2.png" %}"
-				});
-
-				var marqer2 = new google.maps.Marker({
-					position: Harvard,
-					title: "Je suis un geo!",
-					icon: "{% static "img/snowrangermarker2.png" %}"
-				});
-
-				var marqer3 = new google.maps.Marker({
-					position: BostonCityHall,
-					title: "Je suis un geo!",
-					icon: "{% static "img/snowrangermarker2.png" %}"
-				});
-
-				var marqer4 = new google.maps.Marker({
-					position: RoxburyCrossing,
-					title: "Je suis un geo!",
-					icon: "{% static "img/snowrangermarker2.png" %}"
-				});
-				
-
-	        marqer.setMap(map);
-			marqer2.setMap(map);
-			marqer3.setMap(map);
-			marqer4.setMap(map);
-
-
-
-};
-
-        var getConditionData = function() {
-
-        	// pull entries from Parse createdAt after Aug 20 2014 :-)
-            query.greaterThan("createdAt", "2014-08-20T02:06:57.931Z");
-            query.find({
-               success: function(condition) {
-
-                   //alert("Successfully retrieved " + condition.length + " descriptions.");
-
-                   for (var i = 0; i < condition.length; i++) {
-
-                       markerInfos.push({
-                           description: condition[i].get("description"),
-                           location: condition[i].get("location"),
-                           image: condition[i].get("image").url()
-                       });
-                   }
-               },
-               error: function(object, error) {
-                   alert("could not retrieve parse object");
+                   markerInfos.push({
+                       description: condition[i].get("description"),
+                       location: condition[i].get("location"),
+                       image: condition[i].get("image").url()
+                   });
                }
-            }).done(function() {
+           },
+           error: function(object, error) {
+               alert("could not retrieve parse object");
+           }
+        }).done(function() {
 
-                infowindow = new google.maps.InfoWindow({
-                    content: "holding..."
+            infowindow = new google.maps.InfoWindow({
+                content: "holding..."
+            });
+
+            for (index in markerInfos) {
+                console.log("Description : " + markerInfos[index].description);
+                console.log("Location Latitude : " + markerInfos[index].location.latitude);
+                console.log("Location Longitude : " + markerInfos[index].location.longitude);
+                console.log("Image Url : " + markerInfos[index].image);
+
+                //bounds.extend(position);
+                marker = new google.maps.Marker({
+                  position: new google.maps.LatLng(parseFloat(markerInfos[index].location.latitude),parseFloat(markerInfos[index].location.longitude)),
+                  map: map,
+                  title: "Title " +  index,
+                  icon: "{% static 'img/snowranger-small.png' %}"
+                  //"{% static "img/snowrangermarker.png" %}"
                 });
 
-                for (index in markerInfos) {
-                    console.log("Description : " + markerInfos[index].description);
-                    console.log("Location Latitude : " + markerInfos[index].location.latitude);
-                    console.log("Location Longitude : " + markerInfos[index].location.longitude);
-                    console.log("Image Url : " + markerInfos[index].image);
+                // where I have added .html to the marker object.
+                infowindow = new google.maps.InfoWindow({
+                    content: "<div ><img class='img-responsive'  src=\'" + markerInfos[index].image + "\'><br><p>" + markerInfos[index].description + "</p></div>"
+                });
 
-                    //var position = new google.maps.LatLng(markers[index][1], markers[index][2]);
-                    //bounds.extend(position);
-                    marker = new google.maps.Marker({
-                      position: new google.maps.LatLng(parseFloat(markerInfos[index].location.latitude),parseFloat(markerInfos[index].location.longitude)),
-                      map: map,
-                      title: "Title " +  index,
-                      icon: "{% static "img/snowrangermarker2.png" %}"
-                    });
+                google.maps.event.addListener(marker, 'click', (function(marker, infowindow) {
+                    return function() {
+                        infowindow.open(map, this);
+                    };
 
+                })(marker, infowindow));
+            }
+        });
+    };
 
-
-
-
-
-
-                    // where I have added .html to the marker object.
-                    //infowindow.setContent("<img src='" + markers[index].image + "'><br>" + "<p>" + this.description + "</p>");
-                    infowindow = new google.maps.InfoWindow({
-                        content: "<div ><img class='img-responsive'  src=\'" + markerInfos[index].image + "\'><br><p>" + markerInfos[index].description + "</p></div>"
-                    });
-
-                    google.maps.event.addListener(marker, 'click', (function(marker, infowindow) {
-                        //infowindow27.open(map, marker2);
-                        return function() {
-                            infowindow.open(map, this);
-                        };
-
-                        //alert("click on a marker to open infowindow");
-                        // infowindow.setContent("<p>hi</p>");
-                        // infowindow.open(map, marker[index]);
-                    })(marker, infowindow));
-
-                    // google.maps.event.addListener(markers[index], 'click', function() {
-                    //
-                    // });
-                }
-            });
-        };
-
-        // var setMarkers = function(markers) {
-        //
-        //     // Display multiple markers on a map
-        //     var infoWindow = new google.maps.InfoWindow(), marker, i;
-        //
-        //     // Loop through our array of markers & place each one on the map
-        //
-        //
-        //        // Allow each marker to have an info window
-        //        google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        //            return function() {
-        //                infoWindow.setContent(infoWindowContent[i][0]);
-        //                infoWindow.open(map, marker);
-        //            }
-        //        })(marker, i));
-        //
-        //        // Automatically center the map fitting all markers on the screen
-        //        //map.fitBounds(bounds);
-        //     }
-        //
-        // // marque.setMap(map);
-        // };
+    // Docs at http://simpleweatherjs.com
+    var setWeather = function() {
+        html = "";
+        $.simpleWeather({
+            location: 'Boston, MA',
+            woeid: '',
+            unit: 'f',
+            success: function(weather) {
+                html += '<h2>' + weather.city+', '+weather.region + " - " + weather.temp+ '&deg;'+weather.units.temp + '<i class="icon-' + weather.code + '"></i></h2>';
+                $("#weather").html(html);
+            },
+            error: function(error) {
+                $("#weather").html('<p>'+error+'</p>');
+            }
+        });
+    };
 
        </script>
        <!-- Our Google Maps API Key is AIzaSyC-fJe5RYynbYJhTOpfXW6bX8OSFhITKkQ  -->
