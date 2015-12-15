@@ -76,7 +76,7 @@ public class Splash extends ActionBarActivity {
             public void onLocationChanged(Location location) {
                 gpsString.setText("Latitude: " + location.getLatitude()
                         + "\n Longitude: " + location.getLongitude());
-                
+
                 Log.v("latitude",String.valueOf(location.getLatitude()));
                 Log.v("longitude",String.valueOf(location.getLongitude()));
 

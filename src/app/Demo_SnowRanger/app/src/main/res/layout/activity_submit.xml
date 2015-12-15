@@ -1,17 +1,14 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:context="snowranger.winterhack.cfb.demo_snowranger.Submit">
-
 <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/purple">
+    android:background="@drawable/submit_bg"
+    tools:context="snowranger.winterhack.cfb.demo_snowranger.Submit">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -50,33 +47,34 @@
             android:id="@+id/latlongTV"
             />
 
-        <TextView android:text="Add a description:"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:paddingBottom="20dp"
+            android:paddingBottom="5dp"
             android:id="@+id/submitTV"
             />
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Ex. 'Icy pavement'"
+            android:paddingRight="20dp"
+            android:hint="description, e.g. 'Icy pavement'"
             android:id="@+id/submitET" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:id="@+id/submitButton"
             android:onClick="backHome"
-            android:layout_gravity="center_horizontal" />
-        </LinearLayout>
+            android:background="@drawable/snowranger"
+            android:layout_toRightOf="@id/submitET"
+           />
+        </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>
-</ScrollView>
