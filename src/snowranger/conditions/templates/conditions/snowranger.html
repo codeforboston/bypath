@@ -68,7 +68,7 @@
 
 
     </style>
-    <title>Places Searchbox</title>
+    <title>Snowranger</title>
     <style>
       #target {
         width: 345px;
@@ -84,7 +84,7 @@
 <link rel="icon" href="../../favicon.ico">
 	<style>
 		#map {
-		height: 440px;
+		height: 500px;
 		}
 	</style>
 
@@ -251,8 +251,60 @@ var initMap = function() {
 		        bounds.extend(place.geometry.location);
 		      }
 	    });
+
+
+// Don't zoom in too far on only one marker
+    if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
+       var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.005, bounds.getNorthEast().lng() + 0.005);
+       var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.005, bounds.getNorthEast().lng() - 0.005);
+       bounds.extend(extendPoint1);
+       bounds.extend(extendPoint2);
+    }
+
+
+
 	    map.fitBounds(bounds);
 			});
+
+
+
+				var StataGehry = new google.maps.LatLng(42.3618181, -71.090346);
+				var Harvard = new google.maps.LatLng(42.3770029, -71.1166601);
+				var BostonCityHall = new google.maps.LatLng(42.3605229, -71.0579748);
+				var RoxburyCrossing = new google.maps.LatLng(42.3313358, -71.0954743);
+
+
+				var marqer = new google.maps.Marker({
+					position: StataGehry,
+					title: "World's best marker!", 
+					icon: "{% static "img/snowrangermarker2.png" %}"
+				});
+
+				var marqer2 = new google.maps.Marker({
+					position: Harvard,
+					title: "Je suis un geo!",
+					icon: "{% static "img/snowrangermarker2.png" %}"
+				});
+
+				var marqer3 = new google.maps.Marker({
+					position: BostonCityHall,
+					title: "Je suis un geo!",
+					icon: "{% static "img/snowrangermarker2.png" %}"
+				});
+
+				var marqer4 = new google.maps.Marker({
+					position: RoxburyCrossing,
+					title: "Je suis un geo!",
+					icon: "{% static "img/snowrangermarker2.png" %}"
+				});
+				
+
+	        marqer.setMap(map);
+			marqer2.setMap(map);
+			marqer3.setMap(map);
+			marqer4.setMap(map);
+
+
 
 };
 
@@ -263,7 +315,7 @@ var initMap = function() {
             query.find({
                success: function(condition) {
 
-                   alert("Successfully retrieved " + condition.length + " descriptions.");
+                   //alert("Successfully retrieved " + condition.length + " descriptions.");
 
                    for (var i = 0; i < condition.length; i++) {
 
