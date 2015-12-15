@@ -57,6 +57,16 @@
 	  font-weight: 300;
 	}
 
+
+.img-responsive 
+{  display: block;  height: auto;  width: 100%; 
+	
+}
+
+.logo-responsive 
+{  display: block;  height: auto;  max-width: 100%; }
+
+
     </style>
     <title>Places Searchbox</title>
     <style>
@@ -81,8 +91,10 @@
 <title>Snowranger</title>
 
 <script src="//www.parsecdn.com/js/parse-1.6.7.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -119,7 +131,7 @@
 						class="icon-bar"></span>
 				</button>
 
-<a class="pull-left" href="#">{% load staticfiles %}<img class="img-responsive" src="{% static "img/snowranger.png" %}" width="50px"/></a>
+<a class="pull-left" href="#">{% load staticfiles %}<img class="logo-responsive" src="{% static "img/snowranger.png" %}" width="50px"/></a>
 
 			</div>
 
@@ -135,7 +147,9 @@
 			</div>
 		</div>
 	</nav>
+
 	<section id="content"></section>
+       
        <div class="container">
            <p>(Display current weather here.)</p>
        </div>
@@ -152,7 +166,7 @@
            </div>
 		   <div class="jumbotron" id="map">The map ought to go here</div>
 		   <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <div id="map"></div>
+    
        </div>
 
        <script>
@@ -172,57 +186,80 @@
         //    setMarkers(markers);
         });
 
-        var initMap = function() {
+var initMap = function() {
 
                //var bounds = new google.maps.LatLngBounds();
 
-               map = new google.maps.Map(document.getElementById('map'), {
-                  center: {lat: 65.9667, lng: -18.5333},
-                  zoom: 14,
-                  mapTypeId: google.maps.MapTypeId.ROADMAP
-               });
+	   map = new google.maps.Map(document.getElementById('map'), {
+	      center: {lat: 42.362598, lng: -71.088306},
+	      zoom: 12,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	   });
 
-               // var StataGehry = new google.maps.LatLng(42.3618181, -71.090346);
-               // var Harvard = new google.maps.LatLng(42.3770029, -71.1166601);
-               //
-               // var marker = new google.maps.Marker({
-               // 	position: StataGehry,
-               // 	title: "World's best marker!"
-               // });
-               // var marker2 = new google.maps.Marker({
-               // 	position: Harvard,
-               // 	title: "Je suis un geo!"
-               // });
-               // marker.setMap(map);
-               // marker2.setMap(map);
-               //
-               // var contentString = "I'm silly";
-               //
-               // var infowindow = new google.maps.InfoWindow({
-               // 	content: "I'm goofy"
-               // });
-               //
-               // marker.addListener('click', function() {
-               // 	infowindow.open(map, marker);
-               // 	alert("click on a marker to open infowindow");
-               // });
-               //
-               //
-               // var infowindow27 = new google.maps.InfoWindow({
-               // 	content: "I'm number 27"
-               // });
-               //
-               // marker2.addListener('click', function() {
-               // 	infowindow27.open(map, marker2);
-               // 	alert("click on a marker to open infowindow");
-               // });
 
-               // google.maps.event.addDomListener(window, 'load', initMap);
-        };
+      // Create the search box and link it to the UI element.
+	  var input = document.getElementById('pac-input');
+	  var searchBox = new google.maps.places.SearchBox(input);
+	  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+	 // Bias the SearchBox results towards current map's viewport.
+	  map.addListener('bounds_changed', function() {
+	    searchBox.setBounds(map.getBounds());
+	  });
+
+	var marcers = [];
+  // [START region_getplaces]
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  	searchBox.addListener('places_changed', function() {
+	    var places = searchBox.getPlaces();
+
+	    if (places.length == 0) {
+	      return;
+	    }
+
+	    // Clear out the old markers.
+	    marcers.forEach(function(marcer) {
+	      marcer.setMap(null);
+	    });
+	    marcers = [];
+
+	    // For each place, get the icon, name and location.
+	    var bounds = new google.maps.LatLngBounds();
+	    
+	    places.forEach(function(place) {
+		      var icon = {
+		        url: place.icon,
+		        size: new google.maps.Size(71, 71),
+		        origin: new google.maps.Point(0, 0),
+		        anchor: new google.maps.Point(17, 34),
+		        scaledSize: new google.maps.Size(25, 25)
+		      };
+
+		      // Create a marker for each place.
+		      marcers.push(new google.maps.Marker({
+		        map: map,
+		        icon: icon,
+		        title: place.name,
+		        position: place.geometry.location
+		      }));
+
+		      if (place.geometry.viewport) {
+		        // Only geocodes have viewport.
+		        bounds.union(place.geometry.viewport);
+		      } else {
+		        bounds.extend(place.geometry.location);
+		      }
+	    });
+	    map.fitBounds(bounds);
+			});
+
+};
 
         var getConditionData = function() {
 
-            query.greaterThan("nummy", 0);
+        	// pull entries from Parse createdAt after Aug 20 2014 :-)
+            query.greaterThan("createdAt", "2014-08-20T02:06:57.931Z");
             query.find({
                success: function(condition) {
 
@@ -257,14 +294,20 @@
                     marker = new google.maps.Marker({
                       position: new google.maps.LatLng(parseFloat(markerInfos[index].location.latitude),parseFloat(markerInfos[index].location.longitude)),
                       map: map,
-                      title: "Title " +  index
+                      title: "Title " +  index,
+                      icon: "{% static "img/snowrangermarker2.png" %}"
                     });
+
+
+
+
+
 
 
                     // where I have added .html to the marker object.
                     //infowindow.setContent("<img src='" + markers[index].image + "'><br>" + "<p>" + this.description + "</p>");
                     infowindow = new google.maps.InfoWindow({
-                        content: "<img src=\'" + markerInfos[index].image + "\'><br><p>" + markerInfos[index].description + "</p>"
+                        content: "<div ><img class='img-responsive'  src=\'" + markerInfos[index].image + "\'><br><p>" + markerInfos[index].description + "</p></div>"
                     });
 
                     google.maps.event.addListener(marker, 'click', (function(marker, infowindow) {
