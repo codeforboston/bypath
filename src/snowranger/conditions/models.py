@@ -1,3 +1,4 @@
+'''
 from django.contrib.gis.db import models
 
 # Create your models here.
@@ -27,3 +28,4 @@ class WorldBorder(models.Model):
     # Returns the string representation of the model.
     def __str__(self):              # __unicode__ on Python 2
         return self.name
+'''
