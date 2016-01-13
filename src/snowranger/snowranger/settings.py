@@ -101,13 +101,13 @@ USE_TZ = True
 #import os.path
 
 #STATIC_ROOT = '/Users/saxophone/snowranger/src/static/static_root/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static_root')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_prod')
 
 STATIC_URL = '/static/' 
 
 # collect static files from multiple different places
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static', 'static_dirs'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
