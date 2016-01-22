@@ -11,8 +11,13 @@
 
 <title>Theme Template for Bootstrap</title>
 
+<!-- JQuery -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+						<!-- BOOTSTRAP -->
+
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
@@ -34,6 +39,7 @@
 
 <body role="document">
 
+	<!-- NAV -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
@@ -60,7 +66,10 @@
 			</div>
 		</div>
 	</nav>
-	<section id="content"></section>
+
+
+	<!-- CONTENT -->
+	<section id="content">
        <div class="container">
            <p>This will display the current weather</p>
        </div>
@@ -74,18 +83,22 @@
                <input type="text" class="form-control" placeholder="Destination" aria-describedby="basic-addon1">
            </div>
        </div>
-       <!-- Our Google Maps API Key is AIzaSyC-fJe5RYynbYJhTOpfXW6bX8OSFhITKkQ  -->
-       <script>
-	       var map;
-	       function initMap() {
-	         map = new google.maps.Map(document.getElementById('map'), {
-	           center: {lat: -34.397, lng: 150.644},
-	           zoom: 8
-	         });
-       </script>
-       <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-fJe5RYynbYJhTOpfXW6bX8OSFhITKkQ=initMap">
-       </script>
+
+  </section>
+
+
+   <!-- Our Google Maps API Key is AIzaSyC-fJe5RYynbYJhTOpfXW6bX8OSFhITKkQ  -->
+   <script>
+     var map;
+     function initMap() {
+       map = new google.maps.Map(document.getElementById('map'), {
+         center: {lat: -34.397, lng: 150.644},
+         zoom: 8
+       });
+   </script>
+   <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-fJe5RYynbYJhTOpfXW6bX8OSFhITKkQ=initMap">
+   </script>
        
 </body>
 </html>
