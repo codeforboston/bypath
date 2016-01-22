@@ -269,9 +269,12 @@ i {
         var markerInfos = [];
         var infowindow = null;
 
+        var boston311MarkerInfos = [];
+
         $(document).ready(function() {
            initMap();
            getConditionData();
+           getBoston311Data();
            setWeather();
         });
 
@@ -340,6 +343,64 @@ i {
                 });
                 map.fitBounds(bounds);
             });
+    };
+
+    var getBoston311Data = function() {
+      var bostonUrl = 'https://data.cityofboston.gov/resource/wc8w-nujj.json';
+      // Retrieve relevant data from Boston 311 API
+      $.ajax({
+        url: bostonUrl,
+        method: 'GET',
+        headers: {
+          'X-App-Token' : 'k7chiGNz0GPFKd4dS03IEfKuE'
+        },
+        data : {
+          '$query' : "SELECT * WHERE open_dt > '2016-01-01T00:00:00' AND case_status = 'Open' AND STARTS_WITH(type, 'Request for Snow Plowing')"
+        },
+        success : function(data) {
+          console.log(data);
+          for (var i = 0; i < data.length; i++) {
+            var loc = {latitude: data[i].latitude, longitude: data[i].longitude};
+            boston311MarkerInfos.push({
+              description: data[i].case_title,
+              location: loc,
+              address: data[i].location
+            });
+          }
+        },
+        error : function(data) {
+          alert("Couldn't retrieve data from Boston SODA API");
+        }
+      }).done(function() {
+
+            infowindow = new google.maps.InfoWindow({
+                content: "holding..."
+            });
+
+            for (index in boston311MarkerInfos) {
+                marker = new google.maps.Marker({
+                  position: new google.maps.LatLng(parseFloat(boston311MarkerInfos[index].location.latitude),parseFloat(boston311MarkerInfos[index].location.longitude)),
+                  map: map,
+                  title: "Boston 311 Incident",
+                  icon: "{% static 'img/snowranger-small.png' %}"
+                });
+
+                infowindow = new google.maps.InfoWindow({
+                    content:
+                    "<div>" +
+                    "<p><b>" + boston311MarkerInfos[index].description + "</b></p><br>" +
+                    "<p>" + boston311MarkerInfos[index].address + "</p>" +
+                    "<p>" + "(Source: Boston 311)" + "</p>" +
+                    "</div>"
+                });
+
+                google.maps.event.addListener(marker, 'click', (function(marker, infowindow) {
+                    return function() {
+                        infowindow.open(map, this);
+                    };
+                })(marker, infowindow));
+            }
+        });
     };
 
     var getConditionData = function() {
@@ -417,10 +478,11 @@ i {
     };
 
        </script>
-       <!-- Our Google Maps API Key is AIzaSyC-fJe5RYynbYJhTOpfXW6bX8OSFhITKkQ  -->
+    <!-- Our Google Maps API Key is AIzaSyC-fJe5RYynbYJhTOpfXW6bX8OSFhITKkQ  -->
 		<!--
 		Parse snowranger Application ID is ikx3kRNF4RME6dqQblg2t06q5ETzRsklLOOHC7QD
 		Parse snowranger javascript key is 6kYKiz88UsscRqK2NFO2TIGqrU3UloA3hpA8r1kv
 		-->
+    <!-- Our SODA API key for City of Boston is: k7chiGNz0GPFKd4dS03IEfKuE -->
 </body>
 </html>
