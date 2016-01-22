@@ -7,7 +7,8 @@ from . import views
 #from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^map/$', views.map, name="map"),
+    url(r'^map/$', views.map, name="map")
+    # url(r'/$', views.map, name="root" )
 
 ] 
 
