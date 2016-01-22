@@ -282,6 +282,7 @@
         var gloc;
         var marque;
         var markerInfos = [];
+        var boston311MarkerInfos = [];
         var infowindow = null;
         $(document).ready(function() {
         initMap();
@@ -359,7 +360,6 @@
             '$query' : "SELECT * WHERE open_dt > '2016-01-01T00:00:00' AND case_status = 'Open' AND STARTS_WITH(type, 'Request for Snow Plowing')"
           },
           success : function(data) {
-            console.log(data);
             for (var i = 0; i < data.length; i++) {
               var loc = {latitude: data[i].latitude, longitude: data[i].longitude};
               boston311MarkerInfos.push({
@@ -383,7 +383,7 @@
                       position: new google.maps.LatLng(parseFloat(boston311MarkerInfos[index].location.latitude),parseFloat(boston311MarkerInfos[index].location.longitude)),
                       map: map,
                       title: "Boston 311 Incident",
-                      icon: "{% static 'img/snowranger-small.png' %}"
+                      icon: "{% static 'img/snowflake-icon.png' %}"
                     });
 
                     infowindow = new google.maps.InfoWindow({
