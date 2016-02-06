@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Snow Ranger</title>
+    <script src="//www.parsecdn.com/js/parse-1.6.7.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+      integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+      crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"
+      integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX"
+      crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'conditions/css/snowranger.css' %}">
+    <!-- Latest compiled and minified JavaScript -->
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
+      integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
+      crossorigin="anonymous"></script>
+    <!-- CDN for Simple Weather -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.0.2/jquery.simpleWeather.min.js"></script>
+    <!-- Set Icon -->
+    <link rel="shortcut icon" type="text/css" href="http://www.ccs.neu.edu/home/nmg49/img/snowranger.png">
+  </head>
+      <!-- BODY -->
+      <body role="document">
+
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-default">
+          <!-- <div class="container" style="margin: 0 auto"> -->
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <!-- <div style="text-align: center; width: 100%; margin-top: 50px;"> -->
+            <a class="navbar-brand" href="#">
+              {% load staticfiles %}
+              <span>
+              <img src="{% static "img/snowranger-small.png" %}" style="max-width:30px; margin-top: -5px; text-align: center;"/>
+                <span class="text text-brand" >Snow Ranger </span> 
+              </span>
+            </a>
+            <p class="navbar-text pull-right hidden-xs" style="color: gray; margin-right: 10px;"> Enabling mobility in Boston and beyond.</p>
+            
+          <!-- </div> -->
+          <!-- </div> -->
+        </nav>
+
+        <!-- .CONTAINER -->
+        <div class="container-fluid">
+          
+          <div class="row">
+          <!-- "SIDEBAR" -->
+          <div class="col-sm-4">
+            
+            <!-- inputs -->
+            <label for="startingPoint" class="sr-only">I'm coming from</label>
+            <div class="input-group padding">
+              <span class="input-group-addon text-success" id="basic-addon1">Start</span>
+              <input id="startingPoint" type="text" class="form-control" placeholder="Starting Point" aria-describedby="basic-addon1">
+            </div>
+
+            <label for="endingPoint" class="sr-only">I'm going to</label>
+            <div class="input-group padding">
+              <span class="input-group-addon text-danger" id="basic-addon2">Finish</span>
+              <input id="endingPoint" type="text" class="form-control" placeholder="Destination" aria-describedby="basic-addon1">
+            </div>
+
+            <!-- LEGEND -->
+            <!-- legend aligned right for small+ screens -->
+            <div id="legend" class="text-right padding hidden-xs">
+              
+              <p>
+                <span class="text-muted">
+                  snow mobility alert
+                </span>
+                <img src="{% static "img/snowflake-icon.png" %}" alt="" style="text-align: center;"> 
+              </p>
+
+              <p>
+                <span class="text-muted">
+                  request for snow plowing
+                </span>
+                <img src="{% static "img/boston311.png" %}" alt="" style="text-align: center;"> 
+              </p>
+            </div>
+            
+            <!-- legend aligned left for xsmall screens -->
+            <div id="legend" class="padding hidden-sm hidden-md hidden-lg">
+              
+              <p>
+                <img src="{% static "img/snowflake-icon.png" %}" alt="" style="text-align: center;"> 
+                <span class="text-muted">
+                  snow mobility alert
+                </span>
+              </p>
+
+              <p>
+                <img src="{% static "img/boston311.png" %}" alt="" style="text-align: center;"> 
+                <span class="text-muted">
+                  request for snow plowing
+                </span>
+              </p>
+
+            </div>
+
+          </div> <!-- end col-sm-4 -->
+
+        
+          <div class="col-sm-8">
+            <!-- WEATHER -->
+            <div id="weather"></div>
+            <!-- MAP -->
+            <div id="map">The map ought to go here</div>
+            <input id="pac-input" class="controls" type="text" placeholder="Search Box">  
+
+          </div>
+
+          </div>
+        </div>
+        <!-- SCRIPTS -->
+        <script>
+        Parse.initialize("ikx3kRNF4RME6dqQblg2t06q5ETzRsklLOOHC7QD", "6kYKiz88UsscRqK2NFO2TIGqrU3UloA3hpA8r1kv");
+        var Condition = Parse.Object.extend("Condition");
+        var query = new Parse.Query(Condition);
+        var map;
+        var gloc;
+        var marque;
+        var markerInfos = [];
+        var boston311MarkerInfos = [];
+        var infowindow = null;
+        $(document).ready(function() {
+            initMap();
+            getConditionData();
+            getBoston311Data();
+            setWeather();
+        });
+        var initMap = function() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {
+                    lat: 42.362598,
+                    lng: -71.088306
+                },
+                zoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            // Create the search box and link it to the UI element.
+            var input = document.getElementById('pac-input');
+            var searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+            });
+            var marcers = [];
+            // [START region_getplaces]
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
+                if (places.length == 0) {
+                    return;
+                }
+                //
+                // // Clear out the old markers.
+                marcers.forEach(function(marcer) {
+                    marcer.setMap(null);
+                });
+                marcers = [];
+                //
+                // // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function(place) {
+                    var icon = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+                    // Create a marker for each place.
+                    marcers.push(new google.maps.Marker({
+                        map: map,
+                        icon: icon,
+                        title: place.name,
+                        position: place.geometry.location
+                    }));
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+        };
+        var getBoston311Data = function() {
+            var bostonUrl = 'https://data.cityofboston.gov/resource/wc8w-nujj.json';
+            // Retrieve relevant data from Boston 311 API
+            $.ajax({
+                url: bostonUrl,
+                method: 'GET',
+                headers: {
+                    'X-App-Token': 'k7chiGNz0GPFKd4dS03IEfKuE'
+                },
+                data: {
+                    '$query': "SELECT * WHERE open_dt > '2016-01-01T00:00:00' AND case_status = 'Open' AND STARTS_WITH(type, 'Request for Snow Plowing')" // Rodent Activity // Request for Snow Plowing // Bed Bugs // Abandoned Building // Overcrowding
+                },
+                success: function(data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var loc = {
+                            latitude: data[i].latitude,
+                            longitude: data[i].longitude
+                        };
+                        boston311MarkerInfos.push({
+                            description: data[i].case_title,
+                            location: loc,
+                            address: data[i].location
+                        });
+                    }
+                },
+                error: function(data) {
+                    alert("Couldn't retrieve data from Boston SODA API");
+                }
+            }).done(function() {
+
+                infowindow = new google.maps.InfoWindow({
+                    content: "holding..."
+                });
+
+                for (index in boston311MarkerInfos) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(parseFloat(boston311MarkerInfos[index].location.latitude), parseFloat(boston311MarkerInfos[index].location.longitude)),
+                        map: map,
+                        title: "Boston 311 Incident",
+                        icon: "{% static 'img/boston311.png' %}"
+                    });
+
+                    infowindow = new google.maps.InfoWindow({
+                        content: "<div>" +
+                            "<p><b>" + boston311MarkerInfos[index].description + "</b></p><br>" +
+                            "<p>" + boston311MarkerInfos[index].address + "</p>" +
+                            "<p>" + "(Source: Boston 311)" + "</p>" +
+                            "</div>"
+                    });
+
+                    google.maps.event.addListener(marker, 'click', (function(marker, infowindow) {
+                        return function() {
+                            infowindow.open(map, this);
+                        };
+                    })(marker, infowindow));
+
+                    // FIXME? Click anywhere on map to close open infowindow.
+                    // google.maps.event.addListener(map, 'click', function() {
+                    //     infowindow.close();
+                    // });
+                }
+            });
+        };
+        var getConditionData = function() {
+            // pull entries from Parse createdAt after Aug 20 2014 :-)
+            query.greaterThan("createdAt", "2014-08-20T02:06:57.931Z");
+            query.find({
+                success: function(condition) {
+                    //    alert("Successfully retrieved " + condition.length + " descriptions.");
+                    for (var i = 0; i < condition.length; i++) {
+                        markerInfos.push({
+                            description: condition[i].get("description"),
+                            location: condition[i].get("location"),
+                            image: condition[i].get("image").url()
+                        });
+                    }
+                },
+                error: function(object, error) {
+                    alert("could not retrieve parse object");
+                }
+            }).done(function() {
+                infowindow = new google.maps.InfoWindow({
+                    content: "holding..."
+                });
+                for (index in markerInfos) {
+                    console.log("Description : " + markerInfos[index].description);
+                    console.log("Location Latitude : " + markerInfos[index].location.latitude);
+                    console.log("Location Longitude : " + markerInfos[index].location.longitude);
+                    console.log("Image Url : " + markerInfos[index].image);
+                    //bounds.extend(position);
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(parseFloat(markerInfos[index].location.latitude), parseFloat(markerInfos[index].location.longitude)),
+                        map: map,
+                        title: "Title " + index,
+                        icon: "{% static 'img/snowflake-icon.png' %}" // THIS IS WHERE WE REPLACE THE MAP MARKER(?)
+                        // icon: "{% static 'img/snowranger-small.png' %}" // THIS IS WHERE WE REPLACE THE MAP MARKER(?)
+                        //"{% static "img/snowrangermarker.png" %}"
+                    });
+                    // where I have added .html to the marker object.
+                    infowindow = new google.maps.InfoWindow({
+                        content: "<div ><img  src=\'" + markerInfos[index].image + "\' style='max-width: 200px; max-height: 200px;'/><br><p>" + markerInfos[index].description + "</p></div>",
+                        maxWidth: 200,
+                        maxHeight: 200
+                    });
+                    google.maps.event.addListener(marker, 'click', (function(marker, infowindow) {
+                        return function() {
+                            infowindow.open(map, this);
+                        };
+                    })(marker, infowindow));
+                }
+            });
+        };
+        // Docs at http://simpleweatherjs.com
+        var setWeather = function() {
+            html = "";
+            $.simpleWeather({
+                location: 'Boston, MA',
+                woeid: '',
+                unit: 'f',
+                success: function(weather) {
+                    html += '<h2>' + weather.city + ', ' + weather.region + " - " + weather.temp + '&deg;' + weather.units.temp + '<i class="icon-' + weather.code + '"></i></h2>';
+                    $("#weather").html(html);
+                },
+                error: function(error) {
+                    $("#weather").html('<p>' + error + '</p>');
+                }
+            });
+        };
+        setWeather();
+        </script>
+        <!-- Our Google Maps API Key is AIzaSyC-fJe5RYynbYJhTOpfXW6bX8OSFhITKkQ  -->
+        <!--
+        Parse snowranger Application ID is ikx3kRNF4RME6dqQblg2t06q5ETzRsklLOOHC7QD
+        Parse snowranger javascript key is 6kYKiz88UsscRqK2NFO2TIGqrU3UloA3hpA8r1kv
+        -->
+      </body>
+    </html>
