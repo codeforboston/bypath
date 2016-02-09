@@ -63,7 +63,7 @@
           <div class="col-sm-4">
             
             <!-- inputs -->
-            <label for="startingPoint" class="sr-only">I'm coming from</label>
+      <!--       <label for="startingPoint" class="sr-only">I'm coming from</label>
             <div class="input-group padding">
               <span class="input-group-addon text-success" id="basic-addon1">Start</span>
               <input id="startingPoint" type="text" class="form-control" placeholder="Starting Point" aria-describedby="basic-addon1">
@@ -73,26 +73,53 @@
             <div class="input-group padding">
               <span class="input-group-addon text-danger" id="basic-addon2">Finish</span>
               <input id="endingPoint" type="text" class="form-control" placeholder="Destination" aria-describedby="basic-addon1">
-            </div>
+            </div> -->
 
             <!-- LEGEND -->
             <!-- legend aligned right for small+ screens -->
             <div id="legend" class="text-right padding hidden-xs">
               
               <p>
-                <span class="text-muted">
+                <span class="" class="text-muted">
                   snow mobility alert
                 </span>
                 <img src="{% static "img/snowflake-icon.png" %}" alt="" style="text-align: center;"> 
               </p>
 
               <p>
-                <span class="text-muted">
+                <span class="" class="text-muted">
                   request for snow plowing
                 </span>
-                <img src="{% static "img/boston311.png" %}" alt="" style="text-align: center;"> 
+                <img src="{% static "img/snow_plow_truck.png" %}" alt="" style="text-align: center;"> 
               </p>
+
+              <p>
+                <span class="" class="text-muted">
+                  unsafe/dangerous conditions
+                </span>
+                <img src="{% static "img/falling-person.png" %}" alt="" style="text-align: center;"> 
+              </p>
+
+              <p>
+                <span class="" class="text-muted">
+                  side walk repair
+                </span>
+                <img src="{% static "img/danger-hump.png" %}" alt="" style="text-align: center;"> 
+              </p>
+
+              <p>
+                <span class="" class="text-muted">
+                  ground maintenance
+                </span>
+                <img src="{% static "img/danger-hump.png" %}" alt="" style="text-align: center;"> 
+              </p>
+
+ 
+
+
             </div>
+
+
             
             <!-- legend aligned left for xsmall screens -->
             <div id="legend" class="padding hidden-sm hidden-md hidden-lg">
@@ -105,11 +132,39 @@
               </p>
 
               <p>
-                <img src="{% static "img/boston311.png" %}" alt="" style="text-align: center;"> 
+                <img src="{% static "img/snow_plow_truck.png" %}" alt="" style="text-align: center;"> 
                 <span class="text-muted">
                   request for snow plowing
                 </span>
               </p>
+
+            <!-- moar danger -->
+            <p>
+              <img src="{% static "img/falling-person.png" %}" alt="" style="text-align: center;"> 
+              <span class="text-muted">
+                unsafe/dangerous conditions
+              </span>
+            </p>
+
+              <p>
+                <img src="{% static "img/danger-hump.png" %}" alt="" style="text-align: center;"> 
+                <span class="text-muted">
+                  side walk repair
+                </span>
+              </p>
+
+              <p>
+                <img src="{% static "img/danger-hump.png" %}" alt="" style="text-align: center;"> 
+                <span class="text-muted">
+                  ground maintenance
+                </span>
+              </p>
+
+
+
+
+
+
 
             </div>
 
