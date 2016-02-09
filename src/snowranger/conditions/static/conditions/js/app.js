@@ -120,7 +120,7 @@ var getBoston311Data = function() {
                 position: new google.maps.LatLng(parseFloat(boston311MarkerInfos[index].location.latitude), parseFloat(boston311MarkerInfos[index].location.longitude)),
                 map: map,
                 title: "Boston 311 Incident",
-                icon: "{% static 'img/boston311.png' %}"
+                icon: "/static/img/boston311.png"
             });
 
             infowindow = new google.maps.InfoWindow({
@@ -175,7 +175,7 @@ var getConditionData = function() {
                 position: new google.maps.LatLng(parseFloat(markerInfos[index].location.latitude), parseFloat(markerInfos[index].location.longitude)),
                 map: map,
                 title: "Title " + index,
-                icon: "{% static 'img/snowflake-icon.png' %}" // THIS IS WHERE WE REPLACE THE MAP MARKER(?)
+                icon: "/static/img/snowflake-icon.png" // THIS IS WHERE WE REPLACE THE MAP MARKER(?)
                 // icon: "{% static 'img/snowranger-small.png' %}" // THIS IS WHERE WE REPLACE THE MAP MARKER(?)
                 //"{% static "img/snowrangermarker.png" %}"
             });
