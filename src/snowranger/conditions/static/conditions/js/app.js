@@ -1,4 +1,4 @@
-console.log('I am loading from static/conditions/js/app.js');
+// console.log('I am loading from static/conditions/js/app.js');
 
 Parse.initialize("ikx3kRNF4RME6dqQblg2t06q5ETzRsklLOOHC7QD", "6kYKiz88UsscRqK2NFO2TIGqrU3UloA3hpA8r1kv");
 var Condition = Parse.Object.extend("Condition");
@@ -80,70 +80,13 @@ var initMap = function() {
     });
 };
 
-// Get live 311 data.
-var getBoston311Data = function() {
-    var bostonUrl = 'https://data.cityofboston.gov/resource/wc8w-nujj.json';
-    // Retrieve relevant data from Boston 311 API
-    $.ajax({
-        url: bostonUrl,
-        method: 'GET',
-        headers: {
-            'X-App-Token': 'k7chiGNz0GPFKd4dS03IEfKuE'
-        },
-        data: {
-            '$query': "SELECT * WHERE open_dt > '2016-01-01T00:00:00' AND case_status = 'Open' AND STARTS_WITH(type, 'Request for Snow Plowing')" // Rodent Activity // Request for Snow Plowing // Bed Bugs // Abandoned Building // Overcrowding
-        },
-        success: function(data) {
-            for (var i = 0; i < data.length; i++) {
-                var loc = {
-                    latitude: data[i].latitude,
-                    longitude: data[i].longitude
-                };
-                boston311MarkerInfos.push({
-                    description: data[i].case_title,
-                    location: loc,
-                    address: data[i].location
-                });
-            }
-        },
-        error: function(data) {
-            alert("Couldn't retrieve data from Boston SODA API");
-        }
-    }).done(function() {
 
-        infowindow = new google.maps.InfoWindow({
-            content: "holding..."
-        });
+///////////////////////////////////
+// 311 moved to ./311.js
+// \ia
+///////////////////////////////////
 
-        for (index in boston311MarkerInfos) {
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng(parseFloat(boston311MarkerInfos[index].location.latitude), parseFloat(boston311MarkerInfos[index].location.longitude)),
-                map: map,
-                title: "Boston 311 Incident",
-                icon: "/static/img/boston311.png"
-            });
 
-            infowindow = new google.maps.InfoWindow({
-                content: "<div>" +
-                    "<p><b>" + boston311MarkerInfos[index].description + "</b></p><br>" +
-                    "<p>" + boston311MarkerInfos[index].address + "</p>" +
-                    "<p>" + "(Source: Boston 311)" + "</p>" +
-                    "</div>"
-            });
-
-            google.maps.event.addListener(marker, 'click', (function(marker, infowindow) {
-                return function() {
-                    infowindow.open(map, this);
-                };
-            })(marker, infowindow));
-
-            // FIXME? Click anywhere on map to close open infowindow.
-            // google.maps.event.addListener(map, 'click', function() {
-            //     infowindow.close();
-            // });
-        }
-    });
-};
 var getConditionData = function() {
     // pull entries from Parse createdAt after Aug 20 2014 :-)
     query.greaterThan("createdAt", "2014-08-20T02:06:57.931Z");
@@ -166,10 +109,10 @@ var getConditionData = function() {
             content: "holding..."
         });
         for (index in markerInfos) {
-            console.log("Description : " + markerInfos[index].description);
-            console.log("Location Latitude : " + markerInfos[index].location.latitude);
-            console.log("Location Longitude : " + markerInfos[index].location.longitude);
-            console.log("Image Url : " + markerInfos[index].image);
+            // console.log("Description : " + markerInfos[index].description);
+            // console.log("Location Latitude : " + markerInfos[index].location.latitude);
+            // console.log("Location Longitude : " + markerInfos[index].location.longitude);
+            // console.log("Image Url : " + markerInfos[index].image);
             //bounds.extend(position);
             marker = new google.maps.Marker({
                 position: new google.maps.LatLng(parseFloat(markerInfos[index].location.latitude), parseFloat(markerInfos[index].location.longitude)),
