@@ -12,8 +12,12 @@
 
 var complaintTypes = {
     'Request for Snow Plowing': '/static/img/snow_plow_truck.png',
-    'PWD Graffiti': '/static/img/graffiti-icon.png',
-    'Graffiti Removal': '/static/img/graffiti-icon.png'
+    // 'PWD Graffiti': '/static/img/graffiti-icon.png',
+    // 'Graffiti Removal': '/static/img/graffiti-icon.png',
+    'Park Maintenace' : '/static/img/lawnmower.png',
+    'Sidewalk Repair' : '/static/img/danger-hump.png',
+    'Unsafe/Dangerous Conditions' : '/static/img/falling-person.png',
+    'Ground Maintenance' : '/static/img/danger-hump.png'
 };
 
 // 311 image urls for different complaint types. 
@@ -24,9 +28,10 @@ var getBoston311Data = function(complaintType, complaintImageUrl) {
     console.log('complaintType -> ' + complaintTypes + ', ' + 'complaintImage -> ' + complaintImageUrl);
     var bostonUrl = 'https://data.cityofboston.gov/resource/wc8w-nujj.json';
 
+    // Get 311 data and add markers for all complaint types. 
     for (var type in complaintTypes) {
       if (complaintTypes.hasOwnProperty(type)) {
-        console.log(type, complaintTypes[type]);
+        // console.log(type, complaintTypes[type]);
         doAjax(type, complaintTypes[type]);
       }
     }
