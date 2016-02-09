@@ -11,13 +11,21 @@
 */
 
 var complaintTypes = {
-    'Request for Snow Plowing': '/static/img/snow_plow_truck.png',
+    
     // 'PWD Graffiti': '/static/img/graffiti-icon.png',
     // 'Graffiti Removal': '/static/img/graffiti-icon.png',
-    'Park Maintenace' : '/static/img/lawnmower.png',
+
+    // 'Ground Maintenance' : '/static/img/danger-hump.png',
+    
+    // these are (mostly) redundant to snow plowing, but not 1:1
+    // (all snowplowing -> sidewalk repair, but not all sidewalk repair -> snowplowing)
     'Sidewalk Repair' : '/static/img/danger-hump.png',
+    
+    // there aren't many of these open
+    'Park Maintenace' : '/static/img/lawnmower.png',
     'Unsafe/Dangerous Conditions' : '/static/img/falling-person.png',
-    'Ground Maintenance' : '/static/img/danger-hump.png'
+    
+    'Request for Snow Plowing': '/static/img/snow_plow_truck.png'
 };
 
 // 311 image urls for different complaint types. 
