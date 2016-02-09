@@ -15,17 +15,20 @@ var complaintTypes = {
     // 'PWD Graffiti': '/static/img/graffiti-icon.png',
     // 'Graffiti Removal': '/static/img/graffiti-icon.png',
 
-    // 'Ground Maintenance' : '/static/img/danger-hump.png',
-    
-    // these are (mostly) redundant to snow plowing, but not 1:1
-    // (all snowplowing -> sidewalk repair, but not all sidewalk repair -> snowplowing)
-    'Sidewalk Repair' : '/static/img/danger-hump.png',
-    
+
+    // sidewalk repair >= ground maintenance
+    // sidewalk repair >= request for snow plowing
+    // 'Sidewalk Repair' : '/static/img/danger-hump.png',
+    // ground maintenance > = request for snow plowing
+    'Ground Maintenance' : '/static/img/danger-hump.png',
+    'Request for Snow Plowing': '/static/img/snow_plow_truck.png',
+
     // there aren't many of these open
-    'Park Maintenace' : '/static/img/lawnmower.png',
-    'Unsafe/Dangerous Conditions' : '/static/img/falling-person.png',
-    
-    'Request for Snow Plowing': '/static/img/snow_plow_truck.png'
+    'Park Maintenance' : '/static/img/lawnmower.png',
+
+    'Unsafe/Dangerous Conditions' : '/static/img/falling-person.png'
+
+    //Pothole Repair
 };
 
 // 311 image urls for different complaint types. 
@@ -52,7 +55,8 @@ var getBoston311Data = function(complaintType, complaintImageUrl) {
                 'X-App-Token': 'k7chiGNz0GPFKd4dS03IEfKuE'
             },
             data: {
-                '$query': "SELECT * WHERE open_dt > '2016-01-01T00:00:00' AND case_status = 'Open' AND STARTS_WITH(type, '" + complaintType + "')" // Rodent Activity // Request for Snow Plowing // Bed Bugs // Abandoned Building // Overcrowding
+                // type vs case_title
+                '$query': "SELECT * WHERE open_dt > '2016-01-01T00:00:00' AND case_status = 'Open' AND STARTS_WITH(case_title, '" + complaintType + "')" // Rodent Activity // Request for Snow Plowing // Bed Bugs // Abandoned Building // Overcrowding
             },
             success: function(data) {
                 for (var i = 0; i < data.length; i++) {
@@ -97,6 +101,8 @@ var getBoston311Data = function(complaintType, complaintImageUrl) {
                         infowindow.open(map, this);
                     };
                 })(marker, infowindow));
+
+                console.log('got the 311 for ' + complaintType);
 
                 // FIXME? Click anywhere on map to close open infowindow.
                 // google.maps.event.addListener(map, 'click', function() {
