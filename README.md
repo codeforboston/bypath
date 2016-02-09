@@ -3,8 +3,8 @@ Snowranger is working to help low-mobility individuals plan trips in cities, by 
 
 ### Fire'r up! 
 ```bash
-$ workon dfs # virtualenv with python 3.5.0
-$ sudo pip3 install Django
-$ cd <>/snowranger
-$ python3 ./src/snowranger/manage.py runserver
+$ workon myVirtualEnv # Virtualenv with python 3.5.0
+$ sudo pip3 install Django # If you don't have Django, get it. 
+$ cd path/to/snowranger
+$ python3 ./src/snowranger/manage.py runserver # http://127.0.0.1:8000/
 ```
