@@ -77,7 +77,7 @@
 
             <!-- LEGEND -->
             <!-- legend aligned right for small+ screens -->
-            <div id="legend" class="text-right padding hidden-xs">
+            <div id="legend" class="text-right padding">
               
               <p>
                 <span class="" class="text-muted">
@@ -87,30 +87,27 @@
               </p>
 
               <p>
-                <span class="" class="text-muted">
-                  request for snow plowing
-                </span>
+                <span style="color: green;">311</span>
+                <span id="request-for-snow-plowing"></span>
+                <span id="request-for-snow-plowing-count"class="badge"></span>
+
                 <img src="{% static "img/snow_plow_truck.png" %}" alt="" style="text-align: center;"> 
               </p>
 
               <p>
-                <span class="" class="text-muted">
-                  unsafe/dangerous conditions
+                <span style="color: green;">311</span>
+                <span id="unsafedangerous-conditions" class="" class="text-muted">
                 </span>
+                <span class="badge" id="unsafedangerous-conditions-count"></span>
+
                 <img src="{% static "img/falling-person.png" %}" alt="" style="text-align: center;"> 
               </p>
 
               <p>
-                <span class="" class="text-muted">
-                  side walk repair
+                <span style="color: green;">311</span>
+                <span id="ground-maintenance">
                 </span>
-                <img src="{% static "img/danger-hump.png" %}" alt="" style="text-align: center;"> 
-              </p>
-
-              <p>
-                <span class="" class="text-muted">
-                  ground maintenance
-                </span>
+                <span class="badge" id="ground-maintenance-count"></span>
                 <img src="{% static "img/danger-hump.png" %}" alt="" style="text-align: center;"> 
               </p>
 
@@ -122,51 +119,9 @@
 
             
             <!-- legend aligned left for xsmall screens -->
-            <div id="legend" class="padding hidden-sm hidden-md hidden-lg">
-              
-              <p>
-                <img src="{% static "img/snowflake-icon.png" %}" alt="" style="text-align: center;"> 
-                <span class="text-muted">
-                  snow mobility alert
-                </span>
-              </p>
-
-              <p>
-                <img src="{% static "img/snow_plow_truck.png" %}" alt="" style="text-align: center;"> 
-                <span class="text-muted">
-                  request for snow plowing
-                </span>
-              </p>
-
-            <!-- moar danger -->
-            <p>
-              <img src="{% static "img/falling-person.png" %}" alt="" style="text-align: center;"> 
-              <span class="text-muted">
-                unsafe/dangerous conditions
-              </span>
-            </p>
-
-              <p>
-                <img src="{% static "img/danger-hump.png" %}" alt="" style="text-align: center;"> 
-                <span class="text-muted">
-                  side walk repair
-                </span>
-              </p>
-
-              <p>
-                <img src="{% static "img/danger-hump.png" %}" alt="" style="text-align: center;"> 
-                <span class="text-muted">
-                  ground maintenance
-                </span>
-              </p>
+            <!-- removed. it was a hassle. \ia -->
 
 
-
-
-
-
-
-            </div>
 
           </div> <!-- end col-sm-4 -->
 

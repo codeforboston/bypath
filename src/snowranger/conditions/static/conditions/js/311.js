@@ -31,12 +31,24 @@ var complaintTypes = {
     //Pothole Repair
 };
 
+
+
 // 311 image urls for different complaint types. 
 // var snowPlowImageUrl = '/static/img/snow_plow_truck.png'
 
+function convertToSlug(Text)
+{
+    var t = Text
+        .toLowerCase()
+        .replace(/ /g,'-')
+        .replace(/[^\w-]+/g,'')
+        ;
+    console.log(t);
+    return t;
+}
 
 var getBoston311Data = function(complaintType, complaintImageUrl) {
-    console.log('complaintType -> ' + complaintTypes + ', ' + 'complaintImage -> ' + complaintImageUrl);
+    // console.log('complaintType -> ' + complaintTypes + ', ' + 'complaintImage -> ' + complaintImageUrl);
     var bostonUrl = 'https://data.cityofboston.gov/resource/wc8w-nujj.json';
 
     // Get 311 data and add markers for all complaint types. 
@@ -46,7 +58,18 @@ var getBoston311Data = function(complaintType, complaintImageUrl) {
         doAjax(type, complaintTypes[type]);
       }
     }
+        function setComplaintsCount(type, count) {
+            var spanId = convertToSlug(type);
+            var countSpanId = spanId + '-count';
+            var span = document.getElementById(spanId);
+            var countSpan = document.getElementById(countSpanId);
+            // console.log(span, count);
+            $(span).text(type);
+            $(countSpan).text(count);
+        };
     function doAjax(complaintType, complaintImageUrl) {
+
+
         // Retrieve relevant data from Boston 311 API
         $.ajax({
             url: bostonUrl,
@@ -59,6 +82,10 @@ var getBoston311Data = function(complaintType, complaintImageUrl) {
                 '$query': "SELECT * WHERE open_dt > '2016-01-01T00:00:00' AND case_status = 'Open' AND STARTS_WITH(case_title, '" + complaintType + "')" // Rodent Activity // Request for Snow Plowing // Bed Bugs // Abandoned Building // Overcrowding
             },
             success: function(data) {
+                
+                setComplaintsCount(complaintType, data.length);
+
+
                 for (var i = 0; i < data.length; i++) {
                     var loc = {
                         latitude: data[i].latitude,
@@ -103,6 +130,8 @@ var getBoston311Data = function(complaintType, complaintImageUrl) {
                 })(marker, infowindow));
 
                 console.log('got the 311 for ' + complaintType);
+
+
 
                 // FIXME? Click anywhere on map to close open infowindow.
                 // google.maps.event.addListener(map, 'click', function() {
