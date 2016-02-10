@@ -4,6 +4,12 @@
   padding: 0;
   /*background-color: #17A2BD !important;*/
   }
+
+  /*this don't work. dont' know why not.*/
+  nav.navbar.navbar-default.whiter {
+    border: none !important;
+    background-color: transparent !important;
+  }
   #map {
   height: 100%;
   }

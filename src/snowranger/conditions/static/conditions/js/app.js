@@ -10,22 +10,38 @@ var markerInfos = [];
 var boston311MarkerInfos = [];
 var infowindow = null;
 
+
 // Document ready. 
 $(document).ready(function() {
-    initMap();
-    getConditionData();
-    getBoston311Data();
-    setWeather();
+    
+
+
+    if ("geolocation" in navigator) {
+      /* geolocation is available */
+      navigator.geolocation.getCurrentPosition(
+        function success(position) {
+        // alert("lat: " + position.coords.latitude + " long: " + position.coords.longitude);
+        initMap(position);
+        getConditionData();
+        getBoston311Data();
+        setWeather();
+        }, function error(e) {
+            console.log('Shit. Error: ' + e);
+        });
+    } else {
+      /* geolocation IS NOT available */
+      console.log('/* geolocation IS NOT available */');
+    }
 });
 
 // Initialize map. 
-var initMap = function() {
+var initMap = function(position) {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
-            lat: 42.362598,
-            lng: -71.088306
+            lat: position.coords.latitude || 42.362598,//
+            lng: position.coords.longitude || -71.088306//-
         },
-        zoom: 12,
+        zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     // Create the search box and link it to the UI element.

@@ -43,7 +43,7 @@ function convertToSlug(Text)
         .replace(/ /g,'-')
         .replace(/[^\w-]+/g,'')
         ;
-    console.log(t);
+    // console.log(t);
     return t;
 }
 
@@ -129,7 +129,7 @@ var getBoston311Data = function(complaintType, complaintImageUrl) {
                     };
                 })(marker, infowindow));
 
-                console.log('got the 311 for ' + complaintType);
+                // console.log('got the 311 for ' + complaintType);
 
 
 

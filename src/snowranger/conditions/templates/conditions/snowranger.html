@@ -23,12 +23,13 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"
       integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX"
       crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'conditions/css/snowranger.css' %}">
+    
     <!-- Latest compiled and minified JavaScript -->
     <script
       src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
       integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
       crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'conditions/css/snowranger.css' %}">
     <!-- CDN for Simple Weather -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.0.2/jquery.simpleWeather.min.js"></script>
     <!-- Set Icon -->
@@ -38,7 +39,7 @@
       <body role="document">
 
         <!-- NAVBAR -->
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default whiter" >
           <!-- <div class="container" style="margin: 0 auto"> -->
           <!-- Brand and toggle get grouped for better mobile display -->
           <!-- <div style="text-align: center; width: 100%; margin-top: 50px;"> -->
@@ -57,76 +58,60 @@
 
         <!-- .CONTAINER -->
         <div class="container-fluid">
+
           
-          <div class="row">
-          <!-- "SIDEBAR" -->
-          <div class="col-sm-4">
+          <div class="col-sm-12" style="position: relative;">
             
-            <!-- inputs -->
-      <!--       <label for="startingPoint" class="sr-only">I'm coming from</label>
-            <div class="input-group padding">
-              <span class="input-group-addon text-success" id="basic-addon1">Start</span>
-              <input id="startingPoint" type="text" class="form-control" placeholder="Starting Point" aria-describedby="basic-addon1">
+            <!-- "SIDEBAR" -->
+            <div class="col-sm-4" style="position: absolute; top: 0; right: 0; z-index: 10; background-color: white; border-bottom-left-radius: 20px;">
+
+              <!-- LEGEND -->
+              <!-- legend aligned right for small+ screens -->
+              <div id="legend" class="padding">
+                
+                <p>
+                  <img src="{% static "img/snowflake-icon.png" %}" alt="" style="text-align: center;"> 
+                  <span class="" class="text-muted">
+                    snow mobility alert
+                  </span>
+                  
+                </p>
+
+                <p>
+                  <img src="{% static "img/snow_plow_truck.png" %}" alt="" style="text-align: center;"> 
+                  
+                  <span id="request-for-snow-plowing"></span>
+                  <span id="request-for-snow-plowing-count"class="badge"></span>
+                  <span style="color: green;">@311</span>
+
+                  
+                </p>
+
+                <p>
+                  <img src="{% static "img/falling-person.png" %}" alt="" style="text-align: center;"> 
+                  <span id="unsafedangerous-conditions" class="" class="text-muted">
+                  </span>
+                  <span class="badge" id="unsafedangerous-conditions-count"></span>
+                  <span style="color: green;">@311</span>
+                  
+                  
+
+                  
+                </p>
+
+                <p>
+                  
+                  
+                  
+                  <img src="{% static "img/danger-hump.png" %}" alt="" style="text-align: center;">
+                  <span id="ground-maintenance"></span>
+                  <span class="badge" id="ground-maintenance-count"></span>
+                  <span style="color: green;">@311</span> 
+                </p>
+
+              </div>
             </div>
-
-            <label for="endingPoint" class="sr-only">I'm going to</label>
-            <div class="input-group padding">
-              <span class="input-group-addon text-danger" id="basic-addon2">Finish</span>
-              <input id="endingPoint" type="text" class="form-control" placeholder="Destination" aria-describedby="basic-addon1">
-            </div> -->
-
-            <!-- LEGEND -->
-            <!-- legend aligned right for small+ screens -->
-            <div id="legend" class="text-right padding">
-              
-              <p>
-                <span class="" class="text-muted">
-                  snow mobility alert
-                </span>
-                <img src="{% static "img/snowflake-icon.png" %}" alt="" style="text-align: center;"> 
-              </p>
-
-              <p>
-                <span style="color: green;">311</span>
-                <span id="request-for-snow-plowing"></span>
-                <span id="request-for-snow-plowing-count"class="badge"></span>
-
-                <img src="{% static "img/snow_plow_truck.png" %}" alt="" style="text-align: center;"> 
-              </p>
-
-              <p>
-                <span style="color: green;">311</span>
-                <span id="unsafedangerous-conditions" class="" class="text-muted">
-                </span>
-                <span class="badge" id="unsafedangerous-conditions-count"></span>
-
-                <img src="{% static "img/falling-person.png" %}" alt="" style="text-align: center;"> 
-              </p>
-
-              <p>
-                <span style="color: green;">311</span>
-                <span id="ground-maintenance">
-                </span>
-                <span class="badge" id="ground-maintenance-count"></span>
-                <img src="{% static "img/danger-hump.png" %}" alt="" style="text-align: center;"> 
-              </p>
-
- 
-
-
-            </div>
-
-
             
-            <!-- legend aligned left for xsmall screens -->
-            <!-- removed. it was a hassle. \ia -->
-
-
-
-          </div> <!-- end col-sm-4 -->
-
-        
-          <div class="col-sm-8">
 
             <!-- WEATHER -->
             <!-- FIXME: this doesn't work for me \IA -->
@@ -137,8 +122,8 @@
             <input id="pac-input" class="controls" type="text" placeholder="Search Box">  
           
           </div>
-
-          </div>
+        
+          
         </div>
 
         <!-- SCRIPTS -->
