@@ -1,3 +1,8 @@
+
+src/snowranger/snowranger/__pycache__/
+src/snowranger/conditions/migrations/__pycache__/
+mydatabase
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
