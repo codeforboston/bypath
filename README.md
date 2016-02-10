@@ -8,3 +8,16 @@ $ sudo pip3 install Django # If you don't have Django, get it.
 $ cd path/to/snowranger
 $ python3 ./src/snowranger/manage.py runserver # http://127.0.0.1:8000/
 ```
+
+### Ignore the darn __pycachers__. 
+> http://stackoverflow.com/questions/1470572/gitignore-ignore-any-bin-directory
+
+```
+# .gitignore
+__pycache__/
+```
+```
+# So if you want add to ignore some directories in your local repository (which already exist) after editing .gitignore you want to run this on your root dir
+$ git rm --cached -r .
+$ git add .
+```
