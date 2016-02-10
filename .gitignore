@@ -1,6 +1,10 @@
 
-src/snowranger/snowranger/__pycache__/
-src/snowranger/conditions/migrations/__pycache__/
+# src/snowranger/snowranger/__pycache__/
+# src/snowranger/conditions/migrations/__pycache__/
+# src/snowranger/conditions/__pycache__
+__pycache__/
+
+
 mydatabase
 
 # Byte-compiled / optimized / DLL files
