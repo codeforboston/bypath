@@ -38,8 +38,8 @@ $(document).ready(function() {
 var initMap = function(position) {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
-            lat: position.coords.latitude,//42.362598,
-            lng: position.coords.longitude//-71.088306
+            lat: position.coords.latitude || 42.362598,//
+            lng: position.coords.longitude || -71.088306//-
         },
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP

@@ -23,12 +23,13 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"
       integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX"
       crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'conditions/css/snowranger.css' %}">
+    
     <!-- Latest compiled and minified JavaScript -->
     <script
       src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
       integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
       crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'conditions/css/snowranger.css' %}">
     <!-- CDN for Simple Weather -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.0.2/jquery.simpleWeather.min.js"></script>
     <!-- Set Icon -->
@@ -38,7 +39,7 @@
       <body role="document">
 
         <!-- NAVBAR -->
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default whiter" >
           <!-- <div class="container" style="margin: 0 auto"> -->
           <!-- Brand and toggle get grouped for better mobile display -->
           <!-- <div style="text-align: center; width: 100%; margin-top: 50px;"> -->
@@ -60,8 +61,9 @@
 
           
           <div class="col-sm-12" style="position: relative;">
+            
             <!-- "SIDEBAR" -->
-            <div class="col-sm-4" style="position: absolute; top: 0; right: 0; z-index: 10; background-color: white;">
+            <div class="col-sm-4" style="position: absolute; top: 0; right: 0; z-index: 10; background-color: white; border-bottom-left-radius: 20px;">
 
               <!-- LEGEND -->
               <!-- legend aligned right for small+ screens -->
