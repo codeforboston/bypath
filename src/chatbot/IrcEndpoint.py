@@ -10,6 +10,7 @@ class IrcEndpoint:
     master     = "botowner"
     uname      = "ircusername"
     realname   = "realname"
+    user       = "NotificationBot"
     
     ircsock = None
     
@@ -18,14 +19,17 @@ class IrcEndpoint:
         self.port = 6667
         self.channel = channel
         
-    def ConnectToChannel(self):
+    def Connect(self):
         self.ircsock = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
         self.ircsock.connect ((self.server, self.port))
         
+        self.SetDisplayName()
+        self.JoinChannel()
         
-    def SetDisplayName(self, user, nick):
-        self.ircsock.send(bytes("USER " + user + " 2 3 " + self.realname + "\n",'UTF-8'))
-        self.ircsock.send(bytes("NICK "+ nick + "\n", 'UTF-8'))
+        
+    def SetDisplayName(self):
+        self.ircsock.send(bytes("USER " + self.user + " 2 3 " + self.realname + "\n",'UTF-8'))
+        self.ircsock.send(bytes("NICK "+ self.user + "\n", 'UTF-8'))
     
     def JoinChannel(self):
         self.ircsock.send(bytes("JOIN "+ self.channel +"\n", 'UTF-8'))

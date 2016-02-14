@@ -12,11 +12,10 @@ class Bot:
         
     def AddEndpoint(self, endpoint):
         self.endpoints.append(endpoint)
-        endpoint.ConnectToChannel()
-        endpoint.SetDisplayName(self.name, self.name)
-        endpoint.JoinChannel()
+        endpoint.Connect()
+        #endpoint.listen()
         
-        t = threading.Thread(target=endpoint.CheckForMessages, args=[self])
+        t = threading.Thread(target=endpoint.listen)
         # classifying as a daemon, so they will die when the main dies
         t.daemon = True
     
@@ -29,8 +28,11 @@ class Bot:
     #3 - channel
     #4 - command
     #5 - message
-    def RecieveMessage(self, endpoint, message):
-        
+    def RecieveMessage(self, endpoint, user, message):
+        print("Bot recieved message: '%s' from user: %s"%(message, user[0]))
+        output = '%s message %s has been recieved' %(user[0], message)
+        endpoint.send(user[1], output)
+        '''
         user = message[0]
         server = message[1]
         mType = message[2]
@@ -41,3 +43,4 @@ class Bot:
         if cmd.find("Alert") != -1:
             print("Alert recieved: " + msg)
             endpoint.SendMessage("User {}, we recieved your alert for {}".format(user, msg))
+        '''
