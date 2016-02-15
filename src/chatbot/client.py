@@ -3,7 +3,7 @@ from uuid import uuid1
 from random import random, choice
 from datetime import datetime
 from bs4 import BeautifulSoup as bs
-from lxml import etree
+
 
 from utils import *
 from models import *
@@ -41,8 +41,8 @@ class Client(object):
             chat = fbchat.Client(email, password)
         """
 
-        if not (email and password):
-            raise Exception("id and password or config is needed")
+        if not (email and password and fbid):
+            raise Exception("email, id, and password are required")
 
         self.email = email
         self.password = password
@@ -163,8 +163,6 @@ class Client(object):
         else:
             return False
 
-    def listen(self):
-        pass
 
     def getUsers(self, name):
         """Find and get user by his/her name
@@ -288,7 +286,7 @@ class Client(object):
             for participant in j['payload']['participants']:
                 participants[participant["fbid"]] = participant["name"]
         except Exception as e:
-          print(j)
+            print(j)
 
         # Prevent duplicates in self.threads
         threadIDs=[getattr(x, "thread_id") for x in self.threads]
@@ -384,8 +382,10 @@ class Client(object):
 
         r = self._get(StickyURL, data)
         text = r.text.replace('\"', '"')
-        j = get_json(r.text)
-
+        j = get_json(text)
+        
+        #print_json(j)
+        
         self.seq = j.get('seq', '0')
         return j
 
@@ -406,7 +406,16 @@ class Client(object):
                         message=m['message']['body']
                         fbid =  m['message']['sender_fbid']
                         name =  m['message']['sender_name']
-                        self.on_message(mid, fbid, name, message, m)
+                        attachs =  m['message']['attachments']
+                        
+                        image = None
+                        
+                        for attach in attachs:
+                            if attach['attach_type'] == 'photo':
+                                image = [attach['name'], attach['hires_url']]
+                                #print("Image %s found" %(attach['name']))
+                                
+                        self.on_message(mid, fbid, name, message, image)
                 elif m['type'] in ['typ']:
                     self.on_typing(m["from"])
                 elif m['type'] in ['m_read_receipt']:
@@ -444,22 +453,16 @@ class Client(object):
             except KeyboardInterrupt:
                 break
             except requests.exceptions.Timeout:
-              pass
+                pass
 
-    def on_message(self, mid, author_id, author_name, message, metadata):
-        print(self.fbid)
-        print(author_id)
-        same = self.fbid == author_id
-        print(same)
-        
+    def on_message(self, mid, author_id, author_name, message, image):
         # Don't pass on any messages that are coming from our selves
         if self.fbid != author_id:
             self.markAsDelivered(author_id, mid)
             self.markAsRead(author_id)
             user = [author_name, author_id]
-            self.bot.RecieveMessage(self, user, message)
-            print("Id%s, %s said: %s"%(author_id, author_name, message))          
-            #self.send(author_id, message)
+            self.bot.RecieveMessage(self, user, message, image)
+            #print("Id%s, %s said: %s"%(author_id, author_name, message))          
 
     def on_typing(self, author_id):
         pass

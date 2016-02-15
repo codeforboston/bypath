@@ -2,7 +2,7 @@ from client import *
 from Bot import *
 
 def main():
-    bot = Bot("fbbot")
+    bot = Bot("fbbot", True)
     
     cl = Client("alexswdevtest@gmail.com", 100011287874549, "facebookpassword", bot)
     
