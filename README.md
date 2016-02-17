@@ -11,7 +11,7 @@ $ python3 ./src/snowranger/manage.py runserver # http://127.0.0.1:8000/
 
 ### Find the front end
 ```bash
-# The main ndex.html
+# The main index.html
 /snowranger/src/snowranger/conditions/static/templates/conditions/snowranger.html
 # Javascript components
 /snowranger/src/snowranger/conditions/static/conditions/(js|css)
