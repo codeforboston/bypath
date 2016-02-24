@@ -24,11 +24,13 @@ I used the instruction here to set up the webserver:
 http://michal.karzynski.pl/blog/2013/06/09/django-nginx-gunicorn-virtualenv-supervisor/
 
 To deploy new code, 
+```
+$ ssh ubuntu@snowranger.org #Repo admins have private key
 $ sudo su snow
 $ git pull
 $ exit # i.e., go back to user Ubuntu
 $ sudo supervisorctl restart snow
-
+```
 ----
 ### Ignore the darn __pycachers__. 
 > http://stackoverflow.com/questions/1470572/gitignore-ignore-any-bin-directory
