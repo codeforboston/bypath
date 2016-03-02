@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "ionic": "~1.1.0",
+    "angular": "~1.4.5",
+    "angular-animate": "~1.4.5",
+    "angular-sanitize": "~1.4.5",
+    "angular-ui-router": "~0.2.15",
+    "ngCordova": "~0.1.17-alpha",
+    "angular-dynamic-locale": "~0.1.27",
+    "angular-translate": "~2.8.1",
+    "angular-translate-loader-static-files": "~2.8.1",
+    "angular-localForage": "~1.2.3",
+    "angularfire": "~1.1.4",
+    "firebase": "~2.4.1",
+    "angular-google-maps": "~2.3.2",
+    "geofire": "~3.2.4"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.5"
+  },
+  "resolutions": {
+    "angular": "~1.4.5",
+    "angular-animate": "~1.4.5",
+    "angular-sanitize": "~1.4.5",
+    "angular-ui-router": "~0.2.15"
+  },
+  "name": "Snowranger",
+  "private": true
+}

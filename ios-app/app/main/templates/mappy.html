@@ -1,0 +1,28 @@
+<ion-view view-title="Map">
+  <!-- do you want padding? -->
+  <ion-content class="padding" scroll="false">
+
+  <!-- test pictures assets -->
+  <!-- <div class="row">
+      <img ng-src="main/assets/images/boston311.png" style="width: 20px; height: 20px">
+  </div> -->
+
+
+
+  <!-- required scss in _mappy.scss -->
+  <ui-gmap-google-map
+  center='mappyCtrl.map.center'
+  zoom='mappyCtrl.map.zoom'
+  draggable='false'
+  disableDefaultUI="mappyCtrl.map.disableDefaultUI"
+  options="mappyCtrl.map.options"
+  >
+
+    <ui-gmap-markers models="mappyCtrl.threeOneOneMarkers" coords="'location'" icon="'icon'"></ui-gmap-markers>
+
+  </ui-gmap-google-map>
+
+
+
+  </ion-content>
+</ion-view>
