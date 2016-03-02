@@ -42,5 +42,15 @@ angular.module('main', [
             controller: 'DebugCtrl as ctrl'
           }
         }
-      });
+      })
+      .state('main.mappy', {
+        url: '/mappy',
+        views: {
+          'tab-mappy': {
+            templateUrl: 'main/templates/mappy.html',
+            controller: 'MappyCtrl as ctrl'
+          }
+        }
+      })
+      ;
 });
