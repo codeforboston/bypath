@@ -17,7 +17,9 @@ def now():
     return int(time()*1000)
 
 def get_json(text):
-    return json.loads(re.sub(r"for.*(.*;.*;.*).*;", '', text.encode('utf-8').decode("unicode-escape"), 1))
+    #Make sure to sanitize the text before trying to parse it
+    sanText = text.replace('/"', '"')
+    return json.loads(re.sub(r"for.*(.*;.*;.*).*;", '', sanText.encode('utf-8').decode("unicode-escape"), 1))
 
 def print_json(j):
     print("Printing Json\n\n")

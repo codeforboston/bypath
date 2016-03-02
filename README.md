@@ -19,6 +19,18 @@ $ python3 ./src/snowranger/manage.py runserver # http://127.0.0.1:8000/
 /snowranger/src/snowranger/static/img # This is where the images live for now. But this will change. 
 ```
 
+### Deploy
+I used the instruction here to set up the webserver:
+http://michal.karzynski.pl/blog/2013/06/09/django-nginx-gunicorn-virtualenv-supervisor/
+
+To deploy new code, 
+```
+$ ssh ubuntu@snowranger.org #Repo admins have private key
+$ sudo su snow
+$ git pull
+$ exit # i.e., go back to user Ubuntu
+$ sudo supervisorctl restart snow
+```
 ----
 ### Ignore the darn __pycachers__. 
 > http://stackoverflow.com/questions/1470572/gitignore-ignore-any-bin-directory
@@ -37,3 +49,5 @@ $ git add .
 ```
 $ pip install -r requirements.txt # or pip3, whatever you're rockin
 ```
+=======
+
