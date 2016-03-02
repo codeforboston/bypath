@@ -4,6 +4,7 @@ angular.module('main')
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
+  mappyCtrl.thing = {};
 
   // Defaults.
   mappyCtrl.zoom = 10;
@@ -21,14 +22,10 @@ angular.module('main')
     // , 'Metrolist Survey'
   ];
 
-  // Tests.
-  // $log.log('Hello from your Controller: MappyCtrl in module main:. This is your controller:', this);
-  // var test = ThreeOneOne.get311(mappyCtrl.complaintTypes);
-  // $log.log(test);
-
   var initializeMap = function (position, markers) {
     //\\
     // $log.log('initializeMap position -> ', position);
+
 
     // Create the Google Map
     mappyCtrl.map = {
@@ -41,8 +38,28 @@ angular.module('main')
       // bounds="mappyCtrl.map.bounds"
       // control: {},
       // styles: mappyStyle,
+      // markers: get311Markers(),
       options: {scrollwheel: false},
-      disableDefaultUI: false
+      disableDefaultUI: false,
+      markersEvents: {
+         click: function(marker, eventName, model) {
+           console.log('Click marker');
+           mappyCtrl.map.infoIcon = model.icon;
+           mappyCtrl.map.infoDescription = model.description;
+           mappyCtrl.map.infoAddress = model.address;
+           // alert(model.address);
+           // mappyCtrl.map.window.model = model;
+           // mappyCtrl.map.window.show = true;
+         }
+       }
+       // ,window: {
+       //    marker: {},
+       //    show: false,
+       //    closeClick: function() {
+       //      this.show = false;
+       //    },
+       //    options: {}
+       //  }
     };
   };
 
@@ -100,21 +117,26 @@ angular.module('main')
   };
 
 
-  var markerArray311 = function () {
+  var get311Markers = function () {
     ThreeOneOne.get311(mappyCtrl.complaintTypes)
       .then(function got311 (data) {
         $log.log(data);
 
+        // Call the above function to add in matching icon paths for each object.
         var markers = setIcons(data);
-
         mappyCtrl.threeOneOneMarkers = markers;
-        getLocation(); // This will check for availability of current location and then initialize the map with either the current loc or with default Boston.
+
+        // This will check for availability of current location and then initialize the map with either the current loc or with default Boston.
+        getLocation();
+        // return markers;
       }, function failedGetting311 (err) {
         $log.log("Errrrrororrrr...", err);
       });
   };
 
+  // getLocation();
 
-  markerArray311();
+
+  get311Markers();
 
 });
