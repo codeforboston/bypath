@@ -1,8 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($log, Geolocation) {
-  //\\
-  // $log.log('Hello from your Controller: MappyCtrl in module main:. This is your controller:', this);
+.controller('MappyCtrl', function ($log, Geolocation, ThreeOneOne) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
@@ -15,8 +13,20 @@ angular.module('main')
       longitude: -71.1
     }
   };
+  mappyCtrl.complaintTypes = [
+    // 'Ground Maintenance',
+    // 'Request for Snow Plowing'
+    'Metrolist Survey'
+    // 'Park Maintenance',
+    // 'Unsafe/Dangerous Conditions'
+  ];
 
-  var initializeMap = function (position) {
+  // Tests.
+  // $log.log('Hello from your Controller: MappyCtrl in module main:. This is your controller:', this);
+  // var test = ThreeOneOne.get311(mappyCtrl.complaintTypes);
+  // $log.log(test);
+
+  var initializeMap = function (position, markers) {
     //\\
     // $log.log('initializeMap position -> ', position);
 
@@ -36,21 +46,32 @@ angular.module('main')
     };
   };
 
-  var doMappery = function () {
+  var getLocation = function () {
     Geolocation.get()
       .then(function (position) { // Success.
-        // Init map to current location as returned by the geolocator.
+        // return position
         initializeMap(position);
       },
       function (err) { // Error. Possibly/probably because it wasn't allowed.
         $log.log("Shit! (Maybe geolocation wasn't allowed?).\nError: ", err);
-
-        // Set to map to center on default hardcoded position at about Boston.
+        // return err;
+        // return mappyCtrl.boston;
         initializeMap(mappyCtrl.boston);
       });
-  }
+  };
 
-  // Initialize map to current location if allowed or hardcoded Boston if not.
-  doMappery();
+  var markerArray311 = function () {
+    ThreeOneOne.get311(mappyCtrl.complaintTypes)
+      .then(function got311 (data) {
+        $log.log(data);
+        mappyCtrl.threeOneOneMarkers = data;
+        getLocation();
+      }, function failedGetting311 (err) {
+        $log.log("Errrrrororrrr...", err);
+      });
+  };
+
+
+  markerArray311();
 
 });
