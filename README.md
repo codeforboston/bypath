@@ -32,3 +32,8 @@ __pycache__/
 $ git rm --cached -r .
 $ git add .
 ```
+
+## Install Python dependencies
+```
+$ pip install -r requirements.txt # or pip3, whatever you're rockin
+```
