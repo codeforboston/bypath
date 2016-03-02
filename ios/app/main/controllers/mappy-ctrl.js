@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($log, Geolocation, ThreeOneOne) {
+.controller('MappyCtrl', function ($log, complainables, Geolocation, ThreeOneOne) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
@@ -14,13 +14,6 @@ angular.module('main')
       longitude: -71.1
     }
   };
-  mappyCtrl.complaintTypes = [
-    'Ground Maintenance'
-    , 'Request for Snow Plowing'
-    , 'Park Maintenance'
-    , 'Unsafe/Dangerous Conditions'
-    // , 'Metrolist Survey'
-  ];
 
   var initializeMap = function (position, markers) {
     //\\
@@ -118,7 +111,7 @@ angular.module('main')
 
 
   var get311Markers = function () {
-    ThreeOneOne.get311(mappyCtrl.complaintTypes)
+    ThreeOneOne.get311(complainables.GRIPES)
       .then(function got311 (data) {
         $log.log(data);
 

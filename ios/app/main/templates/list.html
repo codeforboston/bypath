@@ -2,15 +2,16 @@
   <ion-content>
 
     <!-- content goes here -->
-    <ion-list>
+
+    <ion-list ng-repeat="complaint in listyCtrl.complaints">
       <ion-item
         class="item-remove-animate item-avatar item-icon-right"
         type="item-text-wrap"
-        ui-sref="main.listDetail">
-        <img src="main/assets/images/yo@2x.png">
-        <h2>Mr. Yo</h2>
-        <p>Learn more...</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
+        >
+        <img ng-src="{{complaint.icon}}" style="height: 20px; width: auto;">
+        <h2>{{complaint.description}}</h2>
+        <p>{{complaint.address}}</p>
+        <!-- <i class="icon ion-chevron-right icon-accessory"></i> -->
       </ion-item>
     </ion-list>
 
