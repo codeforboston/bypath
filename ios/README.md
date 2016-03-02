@@ -2,7 +2,7 @@
 
 ```
 # install npm and bower dpendencies
-$ npm install -g
+$ npm install
 $ bower install
 # start server w/ live reload
 $ gulp watch

@@ -61,14 +61,30 @@ angular.module('main')
   };
 
   function matchIcon (obj) {
-    var b = '';
-    switch (obj.description) {
-      case 'Ground Maintenance' : b = 'main/assets/images/danger-hump.png'; break;
-      case 'Request for Snow Plowing' : b = 'main/assets/images/snow_plow_truck.png'; break;
-      case 'Park Maintenance' : b = 'main/b = assets/images/lawnmower.png'; break;
-      case 'Unsafe/Dangerous Conditions' : b = 'main/assets/images/falling-person.png'; break;
-    };
-    return b;
+    var desc = obj.description;
+    var icon_path = '';
+
+    var groundy = /ground/i;
+    var snowy = /snow/i;
+    var parky = /park/i;
+    var dangery = /danger/i;
+
+    if (desc.match(groundy)) {
+      icon_path = 'main/assets/images/danger-hump.png';
+    }
+    else if (desc.match(snowy)) {
+      icon_path = 'main/assets/images/snow_plow_truck.png';
+    }
+    else if (desc.match(parky)) {
+      icon_path = 'main/assets/images/lawnmower.png';
+    }
+    else if (desc.match(dangery)) {
+      icon_path = 'main/assets/images/falling-person.png';
+    }
+    else {
+      icon_path = 'main/assets/images/snowflake-icon.png';
+    }
+    return icon_path;
   };
 
   function setIcons (objArray) {
@@ -92,7 +108,7 @@ angular.module('main')
         var markers = setIcons(data);
 
         mappyCtrl.threeOneOneMarkers = markers;
-        getLocation();
+        getLocation(); // This will check for availability of current location and then initialize the map with either the current loc or with default Boston.
       }, function failedGetting311 (err) {
         $log.log("Errrrrororrrr...", err);
       });
