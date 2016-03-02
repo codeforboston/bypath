@@ -1,8 +1,17 @@
-<ion-view view-title="main module">
+<ion-view view-title="Map">
   <!-- do you want padding? -->
-  <ion-content class="padding">
+  <ion-content class="padding" scroll="false">
 
 
+  <!-- required scss in _mappy.scss -->
+  <ui-gmap-google-map
+  center='mappyCtrl.map.center'
+  zoom='mappyCtrl.map.zoom'
+  draggable='false'
+  disableDefaultUI="mappyCtrl.map.disableDefaultUI"
+  options="mappyCtrl.map.options"
+  >
+  </ui-gmap-google-map>
 
 
 

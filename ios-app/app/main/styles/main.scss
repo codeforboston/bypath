@@ -21,4 +21,5 @@ $ionicons-font-path: "../assets/fonts" !default;
 // Include all of Ionic
 @import "../../bower_components/ionic/scss/ionic";
 
-
+// Import map styles.
+@import './mappy';

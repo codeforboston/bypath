@@ -3,6 +3,9 @@ angular.module('main', [
   'ionic',
   'ngCordova',
   'ui.router',
+  'firebase',
+  'uiGmapgoogle-maps'
+
   // TODO: load other modules selected during generation
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -48,7 +51,7 @@ angular.module('main', [
         views: {
           'tab-mappy': {
             templateUrl: 'main/templates/mappy.html',
-            controller: 'MappyCtrl as ctrl'
+            controller: 'MappyCtrl as mappyCtrl'
           }
         }
       })
