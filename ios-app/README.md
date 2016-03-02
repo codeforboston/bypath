@@ -1,4 +1,15 @@
 # Snowranger
+
+```
+# install npm and bower dpendencies
+$ npm install -g
+$ bower install
+# start server w/ live reload
+$ gulp watch
+# build ios
+$ gulp --cordova 'build ios'
+```
+
 This project was generated with Generator-M-Ionic v1.4.1. For more info visit the [repository](https://github.com/mwaylabs/generator-m-ionic) or check out the README below.
 
 # Generator-M-Ionic v1.4.1
