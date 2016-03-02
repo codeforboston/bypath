@@ -6,43 +6,73 @@ angular.module('main')
 
   // Set up query string for grabbing multiple complaint types at once.
   function buildQueryString (complaintTypes) {
+
+    // Base url.
+    // https://data.cityofboston.gov/resource/awu8-dc52.json
+    // var bostonUrl = 'https://data.cityofboston.gov/resource/wc8w-nujj.json';
+    var bostonUrl = 'https://data.cityofboston.gov/resource/awu8-dc52.json'
+
+    // Let's build a query string!
     var queryString = "";
-    queryString += "SELECT * WHERE open_dt > '2016-01-01T00:00:00'" +
-                  " AND case_status = 'Open'" +
-                  " AND ("
+    // queryString += "SELECT * WHERE open_dt > '2016-02-02T00:00:00'" +
+    //               " AND case_status = 'Open'" +
+    //               " AND ("
+    queryString += "&$where=case_status = 'Open'";
+    queryString += " AND open_dt > '2016-02-02T00:00:00'";
+    // queryString += " AND STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Park Maintenance')";
+    queryString += " AND ("
 
     // STARTS_WITH(case_title, 'Request For Snow Plowing') OR STARTS_WITH(case_title, 'Ground Maintenance')
     for (var i = 0; i < complaintTypes.length; i++) {
       var type = complaintTypes[i];
-      var caseAttr = "description"; // 'case_title'
+      var caseAttr = 'case_title'; // 'description'; //'case_title';//"description"; // 'case_title'
       queryString += "STARTS_WITH(" + caseAttr + ", '" + type + "')"
       // if there are more than one complaint types and given type is not last in the array, then append an OR
       if (complaintTypes.length > 1 && complaintTypes.indexOf(type) !== complaintTypes.length - 1) {
         $log.log(complaintTypes.indexOf(type));
         $log.log(complaintTypes.length - 1);
-        queryString += " OR "
+        queryString += " OR ";
+      } else {
+        queryString += ")";
       }
     }
 
+    // https://data.cityofboston.gov/resource/wc8w-nujj$query=SELECT%20*%20WHERE%20open_dt%20%3E%20'2016-02-31T00%3A00%3A00'%20AND%20(STARTS_WITH(case_title%2C%20'Ground%20Maintenance')%20OR%20STARTS_WITH(case_title%2C%20'Request%20for%20Snow%20Plowing')%20OR%20STARTS_WITH(case_title%2C%20'Park%20Maintenance')%20OR%20STARTS_WITH(case_title%2C%20'Unsafe%2FDangerous%20Conditions')
+
     // var testString = "SELECT * WHERE open_dt > '2016-03-01T00:00:00' AND case_status = 'Open' AND STARTS_WITH(case_title, 'Metrolist Survery')";
-    $log.log("queryString:", queryString);
-    return queryString;
+    // var encodedQuery = encodeURIComponent(queryString);
+    var encodedQuery = queryString;
+
+    // var queryable = bostonUrl + "$query=" + encodedQuery;
+    // var queryable = bostonUrl + "?$query=" + encodedQuery;
+    var queryable = bostonUrl + "?$limit=100" + encodedQuery;
+      //\\
+      $log.log("full query url encoded:", queryable);
+    return queryable;
+
     // return testString;
     // "SELECT * WHERE open_dt > '2016-01-01T00:00:00' AND case_status = 'Open' AND (STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Request for Snow Plowing') OR STARTS_WITH(case_title, 'Park Maintenance') OR STARTS_WITH(case_title, 'Unsafe/Dangerous Conditions'))"
   }
 
-  function asyncHTTP(query) {
+
+
+  function asyncHTTP(queryable) {
     var defer = $q.defer();
-    var bostonUrl = 'https://data.cityofboston.gov/resource/wc8w-nujj.json';
+    // var bostonUrl = 'https://data.cityofboston.gov/resource/wc8w-nujj.json';
+    // var bostonUrl = 'https://data.cityofboston.gov/resource/awu8-dc52.json';
+    // https://data.cityofboston.gov/resource/awu8-dc52.json
+    // var bostonUrl = 'https://data.cityofboston.gov/resource/awu8-dc52.json?$limit=5' <--- it works!
+
     $http({
       method: 'GET',
-      url: bostonUrl,
+      url: queryable,
       headers: {
-        'X-App-Token': 'k7chiGNz0GPFKd4dS03IEfKuE'
-      },
-      data: {
-        '$query': query // "SELECT * WHERE open_dt > '2016-03-01T00:00:00' AND case_status = 'Open' AND STARTS_WITH(case_title, 'Metrolist Survery')" //query
+        'X-App-Token': 'zdkQROnSL8UlsDCjuiBcc3VHq' //'k7chiGNz0GPFKd4dS03IEfKuE'
       }
+      // , data: {
+      //   '$limit' : '5'
+      //   // '$query': query // "SELECT * WHERE open_dt > '2016-03-01T00:00:00' AND case_status = 'Open' AND STARTS_WITH(case_title, 'Metrolist Survery')" //query
+      // }
     }).success(function (data, status, headers, config) {
         defer.resolve({data: data});
       })

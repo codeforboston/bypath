@@ -6,7 +6,7 @@ angular.module('main')
   var mappyCtrl = this;
 
   // Defaults.
-  mappyCtrl.zoom = 8;
+  mappyCtrl.zoom = 10;
   mappyCtrl.boston = { // This object is formatted to imitate the coords object from the geolocator.
     coords: {
       latitude: 42.4,
@@ -14,11 +14,11 @@ angular.module('main')
     }
   };
   mappyCtrl.complaintTypes = [
-    // 'Ground Maintenance',
-    // 'Request for Snow Plowing'
-    'Metrolist Survey'
-    // 'Park Maintenance',
-    // 'Unsafe/Dangerous Conditions'
+    'Ground Maintenance'
+    , 'Request for Snow Plowing'
+    , 'Park Maintenance'
+    , 'Unsafe/Dangerous Conditions'
+    // , 'Metrolist Survey'
   ];
 
   // Tests.
@@ -42,7 +42,7 @@ angular.module('main')
       // control: {},
       // styles: mappyStyle,
       options: {scrollwheel: false},
-      disableDefaultUI: true
+      disableDefaultUI: false
     };
   };
 
@@ -60,11 +60,38 @@ angular.module('main')
       });
   };
 
+  function matchIcon (obj) {
+    var b = '';
+    switch (obj.description) {
+      case 'Ground Maintenance' : b = 'main/assets/images/danger-hump.png'; break;
+      case 'Request for Snow Plowing' : b = 'main/assets/images/snow_plow_truck.png'; break;
+      case 'Park Maintenance' : b = 'main/b = assets/images/lawnmower.png'; break;
+      case 'Unsafe/Dangerous Conditions' : b = 'main/assets/images/falling-person.png'; break;
+    };
+    return b;
+  };
+
+  function setIcons (objArray) {
+    var dataWithIcons = [];
+
+    for (var i = 0; i < objArray.length; i++) {
+      var a = objArray[i];
+      a.icon = matchIcon(a);
+      dataWithIcons.push(a);
+    }
+
+    return dataWithIcons;
+  };
+
+
   var markerArray311 = function () {
     ThreeOneOne.get311(mappyCtrl.complaintTypes)
       .then(function got311 (data) {
         $log.log(data);
-        mappyCtrl.threeOneOneMarkers = data;
+
+        var markers = setIcons(data);
+
+        mappyCtrl.threeOneOneMarkers = markers;
         getLocation();
       }, function failedGetting311 (err) {
         $log.log("Errrrrororrrr...", err);
