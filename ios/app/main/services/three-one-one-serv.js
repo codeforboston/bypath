@@ -5,7 +5,18 @@ angular.module('main')
   $log.log('ThreeOneOne Factory in module main ready for action.');
 
   // Set up query string for grabbing multiple complaint types at once.
-  function buildQueryString (complaintTypes) {
+  // -------------------------------------------------------------------------------
+  // should accept: complaintTypes []
+  //              : open_dt string
+  //              : limit integer
+  //              :
+
+  var buildQueryString = function (limit, opened_date, complaintTypes) {
+
+    // Set defaults if no val passed.
+    limit = typeof limit !== 'undefined' ? limit : 100;
+    opened_date = typeof opened_date !== 'undefined' ? opened_date : '2016-03-01T00:00:00';
+    complaintTypes = typeof complaintTypes !== 'undefined' ? complaintTypes : complainables.GRIPES;
 
     // Base url.
     var bostonUrl = 'https://data.cityofboston.gov/resource/awu8-dc52.json'
@@ -14,7 +25,7 @@ angular.module('main')
     var queryString = "";
 
     queryString += "&$where=case_status = 'Open'";
-    queryString += " AND open_dt > '2016-02-02T00:00:00'";
+    queryString += " AND open_dt > '" + opened_date + "'";
     // queryString += " AND STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Park Maintenance')";
     queryString += " AND ("
 
@@ -33,11 +44,11 @@ angular.module('main')
 
     var orderer = "&$order=open_dt DESC";
 
-    var queryable = bostonUrl + "?$limit=100" + queryString + orderer;
+    var queryable = bostonUrl + "?$limit=" + limit + queryString + orderer;
       //\\
       $log.log("full query url encoded:", queryable);
     return queryable;
-  }
+  };
 
   function asyncHTTP(queryable) {
     var defer = $q.defer();
@@ -57,10 +68,10 @@ angular.module('main')
     return defer.promise;
   };
 
-  var getBoston311Data = function(complaintTypes) {
+  var getBoston311Data = function(query) {
 
     var defer = $q.defer();
-    var query = buildQueryString(complaintTypes);
+    // var query = buildQueryString(complaintTypes);
 
     // This will hold an array object information for each complaint type.
     // We're going to return this so the controller can populate markers on the map.
@@ -102,7 +113,8 @@ angular.module('main')
 
   // Angular Factories, being singletons, have to return a thing.
   return {
-    get311: getBoston311Data
+    get311: getBoston311Data,
+    buildQuery: buildQueryString
     // , get311Fake: getFake311Data
   };
 });

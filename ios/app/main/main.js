@@ -25,8 +25,9 @@ angular.module('main', [
       templateUrl: 'main/templates/tabs.html',
       controller: 'MainCtrl as mainCtrl',
       resolve: {
-        threeoneones: function (ThreeOneOne, complainables) {
-          return ThreeOneOne.get311(complainables.GRIPES);
+        threeoneones: function (ThreeOneOne) {
+          var query = ThreeOneOne.buildQuery(50, undefined, undefined);
+          return ThreeOneOne.get311(query);
         },
         opinions: function (Opinions) {
           return Opinions.index();
