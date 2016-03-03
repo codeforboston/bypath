@@ -70,53 +70,11 @@ angular.module('main')
       });
   };
 
-  function matchIcon (obj) {
-    var desc = obj.description;
-    var icon_path = '';
-
-    var groundy = /ground/i;
-    var snowy = /snow/i;
-    var parky = /park/i;
-    var dangery = /danger/i;
-
-    if (desc.match(groundy)) {
-      icon_path = 'main/assets/images/danger-hump.png';
-    }
-    else if (desc.match(snowy)) {
-      icon_path = 'main/assets/images/snow_plow_truck.png';
-    }
-    else if (desc.match(parky)) {
-      icon_path = 'main/assets/images/lawnmower.png';
-    }
-    else if (desc.match(dangery)) {
-      icon_path = 'main/assets/images/falling-person.png';
-    }
-    else {
-      icon_path = 'main/assets/images/snowflake-icon.png';
-    }
-    return icon_path;
-  };
-
-  function setIcons (objArray) {
-    var dataWithIcons = [];
-
-    for (var i = 0; i < objArray.length; i++) {
-      var a = objArray[i];
-      a.icon = matchIcon(a);
-      dataWithIcons.push(a);
-    }
-
-    return dataWithIcons;
-  };
-
-
   var get311Markers = function () {
     ThreeOneOne.get311(complainables.GRIPES)
-      .then(function got311 (data) {
-        $log.log(data);
+      .then(function got311 (markers) {
+        $log.log(markers);
 
-        // Call the above function to add in matching icon paths for each object.
-        var markers = setIcons(data);
         mappyCtrl.threeOneOneMarkers = markers;
 
         // This will check for availability of current location and then initialize the map with either the current loc or with default Boston.

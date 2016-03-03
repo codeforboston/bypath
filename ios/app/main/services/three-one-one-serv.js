@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.factory('ThreeOneOne', function ($log, $http, $q, complainables) {
+.factory('ThreeOneOne', function ($log, $http, $q, complainables, Utils) {
   //\\
   $log.log('ThreeOneOne Factory in module main ready for action.');
 
@@ -114,7 +114,9 @@ angular.module('main')
                 open_dt: data.data[i].open_dt
             });
         }
-        defer.resolve(boston311MarkerInfos);
+        var boston311MarkerInfos_WithIcons = Utils.setIcons(boston311MarkerInfos);
+
+        defer.resolve(boston311MarkerInfos_WithIcons);
       }, function error311Query(err) {
         $log.log("Shit! Error. Status: " + err.status + "\n" + err.data);
         defer.reject({error: err});
@@ -123,29 +125,29 @@ angular.module('main')
     return defer.promise;
   };
 
-  var getFake311Data = function (complaintTypes) {
-    var boston311MarkerInfosTESTES = [];
-    var example = complainables.TESTES;
-    for (var i = 0; i < example.length; i++) {
-        var loc = {
-            latitude: example[i].latitude,
-            longitude: example[i].longitude
-        };
-        boston311MarkerInfosTESTES.push({
-            id: "311" + i.toString(),
-            description: example[i].case_title,
-            location: loc,
-            address: example[i].location,
-            open_dt: example[i].open_dt
-        });
-    }
-    return boston311MarkerInfosTESTES;
-  }
+  // var getFake311Data = function (complaintTypes) {
+  //   var boston311MarkerInfosTESTES = [];
+  //   var example = complainables.TESTES;
+  //   for (var i = 0; i < example.length; i++) {
+  //       var loc = {
+  //           latitude: example[i].latitude,
+  //           longitude: example[i].longitude
+  //       };
+  //       boston311MarkerInfosTESTES.push({
+  //           id: "311" + i.toString(),
+  //           description: example[i].case_title,
+  //           location: loc,
+  //           address: example[i].location,
+  //           open_dt: example[i].open_dt
+  //       });
+  //   }
+  //   return boston311MarkerInfosTESTES;
+  // }
 
 
   // Angular Factories, being singletons, have to return a thing.
   return {
-    get311: getBoston311Data,
-    get311Fake: getFake311Data
+    get311: getBoston311Data
+    // , get311Fake: getFake311Data
   };
 });
