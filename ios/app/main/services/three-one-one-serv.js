@@ -25,8 +25,6 @@ angular.module('main')
       queryString += "STARTS_WITH(" + caseAttr + ", '" + type + "')"
       // if there are more than one complaint types and given type is not last in the array, then append an OR
       if (complaintTypes.length > 1 && complaintTypes.indexOf(type) !== complaintTypes.length - 1) {
-        $log.log(complaintTypes.indexOf(type));
-        $log.log(complaintTypes.length - 1);
         queryString += " OR ";
       } else {
         queryString += ")";
