@@ -22,7 +22,7 @@ angular.module('main')
     }
   };
 
-  var initializeMap = function (position, markers) {
+  var initializeMap = function (position) {
     //\\
     // $log.log('initializeMap position -> ', position);
 
@@ -40,7 +40,7 @@ angular.module('main')
       disableDefaultUI: false,
       markersEvents311: {
         click: function(marker, eventName, model) {
-          console.log('Click marker');
+          $log.log('Click marker');
           mappyCtrl.map.infoIcon = model.icon;
           mappyCtrl.map.infoDescription = model.description;
           mappyCtrl.map.infoAddress = model.address;
@@ -48,7 +48,7 @@ angular.module('main')
       },
       markersEventsOpinions: {
         click: function(marker, eventName, model) {
-          console.log('Click marker');
+          $log.log('Click marker');
           mappyCtrl.map.infoIcon = 'main/assets/images/snowflake-icon.png';
           mappyCtrl.map.infoDescription = model.text;
           mappyCtrl.map.infoAddress = model.location.address;

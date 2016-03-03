@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('OpinionatorCtrl', function ($scope, $log, Geolocation, Opinions, opinions) {
+.controller('OpinionatorCtrl', function ($scope, $log, Camera, Ref, $firebaseArray, Geolocation, Opinions, opinions) {
 
   $log.log('Hello from your Controller: OpinionatorCtrl in module main:. This is your controller:', this);
 
@@ -12,6 +12,48 @@ angular.module('main')
   $scope.where = {};
 
   $scope.where.position = location;
+
+
+  // gettin imageable
+  $scope.images = [];
+  var syncArray = $firebaseArray(Ref.child('testImages'));
+  $scope.images = syncArray;
+
+  $scope.getPhoto = function() {
+    Camera.getPicture().then(function(imageURI) {
+     console.log(imageURI);
+     syncArray.$add({image: imageURI})
+      .then(function () {
+        alert("Image uploaded!");
+      }, function (err) {
+        $log.log("Error uploading image...");
+      });
+    }, function(err) {
+     $log.log(err);
+    });
+  };
+
+
+  // $scope.uploadPicture = function() {
+  //        var options = {
+  //            quality : 75,
+  //            destinationType : Camera.DestinationType.DATA_URL,
+  //            sourceType : Camera.PictureSourceType.CAMERA,
+  //            allowEdit : true,
+  //            encodingType: Camera.EncodingType.JPEG,
+  //            popoverOptions: CameraPopoverOptions,
+  //            targetWidth: 500,
+  //            targetHeight: 500,
+  //            saveToPhotoAlbum: false
+  //        };
+  //        $cordovaCamera.getPicture(options).then(function(imageData) {
+  //            syncArray.$add({image: imageData}).then(function() {
+  //                alert("Image has been uploaded");
+  //            });
+  //        }, function(error) {
+  //            console.error(error);
+  //        });
+  //    }
 
 
   $scope.addOpinion = function (message) {
@@ -26,6 +68,7 @@ angular.module('main')
             }
         }
         , text: message
+        , time: Date.now()
       }, function (error) {
         $log.log('Error adding opinion.');
       })

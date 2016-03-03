@@ -4,7 +4,7 @@
 
 
 
-    <ion-list>
+<!--     <ion-list>
       <div class="card" ng-repeat="opinion in opinions">
         <div class="item item-text-wrap">
           <p>
@@ -13,9 +13,18 @@
           </p>
         </div>
       </div>
-    </ion-list>
+    </ion-list> -->
 
-  <!-- content goes here -->
+  <div class="padding picture-button-wrapper" >
+    <div class="picture-button" ng-click="getPhoto()">
+
+        <p class="picture-icon">
+          <i class="icon ion-camera"></i>
+        </p>
+
+    </div>
+  </div>
+
   <div class="padding">
     <p>
       <span class="calm">
@@ -33,6 +42,22 @@
       Add it!
     </button>
   </div>
+
+  <!-- https://www.airpair.com/ionic-framework/posts/ionic-firebase-camera-app -->
+  <div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
+              <div class="col col-25" ng-if="$index < images.length">
+                  <img ng-src="data:image/jpeg;base64,{{images[$index].image}}" width="100%" />
+              </div>
+              <div class="col col-25" ng-if="$index + 1 < images.length">
+                  <img ng-src="data:image/jpeg;base64,{{images[$index + 1].image}}" width="100%" />
+              </div>
+              <div class="col col-25" ng-if="$index + 2 < images.length">
+                  <img ng-src="data:image/jpeg;base64,{{images[$index + 2].image}}" width="100%" />
+              </div>
+              <div class="col col-25" ng-if="$index + 3 < images.length">
+                  <img ng-src="data:image/jpeg;base64,{{images[$index + 3].image}}" width="100%" />
+              </div>
+          </div>
 
 
   </ion-content>

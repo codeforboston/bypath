@@ -22,10 +22,10 @@ $ionicons-font-path: "../assets/fonts" !default;
 @import "../../bower_components/ionic/scss/ionic";
 
 /// Note that the convention uses _partialname and looks in relative path.
-// Import map styles.
+// Import page styles.
 @import './mappy';
-// Import list styles.
 @import './listy';
+@import './opinions';
 
 
 .text-muted {

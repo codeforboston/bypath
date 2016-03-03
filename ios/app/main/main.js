@@ -13,6 +13,11 @@ angular.module('main', [
 
   // TODO: load other modules selected during generation
 ])
+// for the camera
+// http://learn.ionicframework.com/formulas/cordova-camera/
+.config(function($compileProvider){
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+})
 .config(function ($stateProvider, $urlRouterProvider) {
 
   // ROUTING with ui.router
@@ -47,7 +52,7 @@ angular.module('main', [
         url: '/list/detail',
         views: {
           'tab-list': {
-            templateUrl: 'main/templates/list-detail.html',
+            templateUrl: 'main/templates/list-detail.html'
             // controller: 'SomeCtrl as ctrl'
           }
         }
