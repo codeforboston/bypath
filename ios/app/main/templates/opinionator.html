@@ -2,15 +2,7 @@
   <!-- do you want padding? -->
   <ion-content class="padding">
 
-    <!-- content goes here -->
-    <div class="padding">
-      <p>
-        <span class="calm">
-        <i class="icon ion-ios-location"></i>&nbsp;</span>
-        <span class="text-muted">
-        Near {{ where.address }}.</span>
-      </p>
-    </div>
+
 
     <ion-list>
       <div class="card" ng-repeat="opinion in opinions">
@@ -23,10 +15,19 @@
       </div>
     </ion-list>
 
+  <!-- content goes here -->
+  <div class="padding">
+    <p>
+      <span class="calm">
+      <i class="icon ion-ios-location"></i>&nbsp;</span>
+      <span class="text-muted">
+      Near {{ where.address }}.</span>
+    </p>
+  </div>
 
   <div class="list">
     <label class="item item-input">
-      <textarea ng-model="msg.text" placeholder="Add your opinion about something around here."></textarea>
+      <textarea ng-model="msg.text" placeholder="A brief descripton of what's up."></textarea>
     </label>
     <button class="button button-block button-balanced" ng-click="addOpinion(msg.text)">
       Add it!

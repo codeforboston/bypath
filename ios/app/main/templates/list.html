@@ -4,22 +4,30 @@
     <!-- content goes here -->
 
     <ion-list ng-repeat="complaint in listyCtrl.complaints">
-      <ion-item
-        class="item-remove-animate item-avatar item-icon-right"
-        type="item-text-wrap"
-        >
-        <img ng-src="{{complaint.icon}}" style="height: 20px; width: auto;">
-        <h2>{{complaint.description}}
+      <div class="card padding" style="margin-bottom: 0px;">
+        <div class="item item-text-wrap item-button-right">
 
-        </h2>
+        <h2><img ng-src="{{complaint.icon}}">&nbsp;{{complaint.description}}</h2>
+
         <span style="color: lightgray; font-size:.8em;">{{complaint.open_dt}}</span>
-        <p>{{complaint.address}}
 
-        </p>
+        <p>{{complaint.address}}</p>
 
-        <!-- <i class="icon ion-chevron-right icon-accessory"></i> -->
-      </ion-item>
-    </ion-list>
+          <div class="buttons" style="display: block;">
+            <button class="button button-balanced button-outline" ng-click="listyCtrl.upvote(complaint.id)" style="margin-bottom: 5px;">
+              <span>{{ listyCtrl.getComplaintUpvotes(complaint.id).$value || 0 }}</span>
+              <i class="icon ion-arrow-up-b"></i>
+            </button>
+            <br>
+            <button class="button button-assertive button-outline" ng-click="listyCtrl.downvote(complaint.id)">
+              <span>{{ listyCtrl.getComplaintDownvotes(complaint.id).$value || 0 }}</span>
+              <i class="icon ion-arrow-down-b"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    <padding ion->
 
   </ion-content>
 </ion-view>

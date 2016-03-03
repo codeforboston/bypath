@@ -81,7 +81,8 @@ angular.module('main')
                 longitude: data.data[i].longitude
             };
             boston311MarkerInfos.push({
-                id: "311" + i.toString(),
+                id: data.data[i].case_enquiry_id,
+
                 description: data.data[i].case_title,
                 location: loc,
                 address: data.data[i].location,
