@@ -10,7 +10,6 @@ angular.module('main')
   mappyCtrl.threeOneOneMarkers = $rootScope.threeoneones;
   // Set arbitrary ids for opinion markers
   mappyCtrl.opinionMarkers = opinions;
-  mappyCtrl.pathToSnowflakeIcon = 'main/assets/images/snowflake-icon.png';
 
 
 
