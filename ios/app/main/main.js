@@ -55,5 +55,14 @@ angular.module('main', [
           }
         }
       })
+      .state('main.opinionate', {
+        url: '/opinionate',
+        views: {
+          'tab-opinionate': {
+            templateUrl: 'main/templates/opinionator.html',
+            controller: 'OpinionatorCtrl as opCtrl'
+          }
+        }
+      })
       ;
 });

@@ -7,7 +7,7 @@ angular.module('main')
   mappyCtrl.thing = {};
 
   // Defaults.
-  mappyCtrl.zoom = 10;
+  mappyCtrl.zoom = 12;
   mappyCtrl.boston = { // This object is formatted to imitate the coords object from the geolocator.
     coords: {
       latitude: 42.4,

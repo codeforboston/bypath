@@ -23,3 +23,8 @@ $ionicons-font-path: "../assets/fonts" !default;
 
 // Import map styles.
 @import './mappy';
+
+
+.text-muted {
+  color: darken(lightgray, 10%);
+}
