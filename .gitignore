@@ -76,3 +76,5 @@ target/
 #Eclipse project files
 .project
 .pydevproject
+
+scratch/

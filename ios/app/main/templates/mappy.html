@@ -1,0 +1,69 @@
+<ion-view view-title="Map">
+  <!-- do you want padding? -->
+  <ion-content class="padding" scroll="false">
+
+  <!-- test pictures assets -->
+  <!-- <div class="row">
+      <img ng-src="main/assets/images/boston311.png" style="width: 20px; height: 20px">
+  </div> -->
+
+
+
+  <!-- required scss in _mappy.scss -->
+  <ui-gmap-google-map
+  center='mappyCtrl.map.center'
+  zoom='mappyCtrl.map.zoom'
+  draggable='false'
+  disableDefaultUI="mappyCtrl.map.disableDefaultUI"
+  options="mappyCtrl.map.options"
+  >
+ <!--    <ui-gmap-window
+      show="mappyCtrl.map.window.show"
+      coords="mappyCtrl.map.window.model"
+      options="mappyCtrl.map.window.options"
+      closeClick="mappyCtrl.map.window.closeClick()"
+      templateUrl="'main/templates/info-window.tpl.html'"
+      templateParameter="mappyCtrl.map.window">
+    </ui-gmap-window> -->
+
+    <!-- opinion markers -->
+    <ui-gmap-markers
+      models="mappyCtrl.opinionMarkers"
+      coords="'location.coords'"
+      icon=""
+      events="mappyCtrl.map.markersEventsOpinions"
+      options="'options'">
+    </ui-gmap-markers>
+
+    <!-- 311 markers -->
+    <ui-gmap-markers
+      models="mappyCtrl.threeOneOneMarkers"
+      coords="'location'"
+      icon="'icon'"
+      events="mappyCtrl.map.markersEvents311"
+      options="'options'">
+    </ui-gmap-markers>
+
+  </ui-gmap-google-map>
+
+  <div class="row padding" style="position: relative; bottom: 50; width: 80%;">
+
+  <div class="padding" style="position: absolute; bottom: 0; left: 0; z-index: 10; background-color: white; border-bottom-left-radius: 20px;">
+    <p class="text-dark">
+      <span><img ng-src="{{ mappyCtrl.map.infoIcon}}" alt="" style="max-height: 14px;">
+    <strong>
+
+      {{ mappyCtrl.map.infoDescription }}
+      </strong></span><br>
+      <span style="color: gray;">
+      {{ mappyCtrl.map.infoAddress }}
+      </span>
+    </p>
+
+  </div>
+  </div>
+
+
+
+  </ion-content>
+</ion-view>

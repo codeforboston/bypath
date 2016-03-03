@@ -1,0 +1,64 @@
+<ion-view view-title="Speak up!">
+  <!-- do you want padding? -->
+  <ion-content class="padding">
+
+
+
+<!--     <ion-list>
+      <div class="card" ng-repeat="opinion in opinions">
+        <div class="item item-text-wrap">
+          <p>
+            {{ opinion.text }}  <br>
+            <span class="text-muted">{{ opinion.location.address }}</span>
+          </p>
+        </div>
+      </div>
+    </ion-list> -->
+
+  <div class="padding picture-button-wrapper" >
+    <div class="picture-button" ng-click="getPhoto()">
+
+        <p class="picture-icon">
+          <i class="icon ion-camera"></i>
+        </p>
+
+    </div>
+  </div>
+
+  <div class="padding">
+    <p>
+      <span class="calm">
+      <i class="icon ion-ios-location"></i>&nbsp;</span>
+      <span class="text-muted">
+      Near {{ where.address }}.</span>
+    </p>
+  </div>
+
+  <div class="list">
+    <label class="item item-input">
+      <textarea ng-model="msg.text" placeholder="A brief descripton of what's up."></textarea>
+    </label>
+    <button class="button button-block button-balanced" ng-click="addOpinion(msg.text)">
+      Add it!
+    </button>
+  </div>
+
+  <!-- https://www.airpair.com/ionic-framework/posts/ionic-firebase-camera-app -->
+  <div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
+              <div class="col col-25" ng-if="$index < images.length">
+                  <img ng-src="data:image/jpeg;base64,{{images[$index].image}}" width="100%" />
+              </div>
+              <div class="col col-25" ng-if="$index + 1 < images.length">
+                  <img ng-src="data:image/jpeg;base64,{{images[$index + 1].image}}" width="100%" />
+              </div>
+              <div class="col col-25" ng-if="$index + 2 < images.length">
+                  <img ng-src="data:image/jpeg;base64,{{images[$index + 2].image}}" width="100%" />
+              </div>
+              <div class="col col-25" ng-if="$index + 3 < images.length">
+                  <img ng-src="data:image/jpeg;base64,{{images[$index + 3].image}}" width="100%" />
+              </div>
+          </div>
+
+
+  </ion-content>
+</ion-view>
