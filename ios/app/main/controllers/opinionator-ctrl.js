@@ -45,7 +45,8 @@ angular.module('main')
             }
         }
         , text: message
-        , time: Date.now() // Firebase.ServerValue.TIMESTAMP <-- won't compile because the gulp eslinter is a hardarss bastard
+                // Date.now()
+        , time: Firebase.ServerValue.TIMESTAMP // <-- won't compile because the gulp eslinter is a hardarss bastard
       }, function (error) {
         $log.log('Error adding opinion.');
       })

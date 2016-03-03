@@ -1,11 +1,36 @@
 'use strict';
 angular.module('main')
-.controller('ListyCtrl', function ($rootScope, $log, Ref, $firebaseArray) {
+.controller('ListyCtrl', function ($rootScope, $log, Ref, opinions, $firebaseArray) {
 
   var listyCtrl = this;
 
+
+
+
   // Root root resolution!
   listyCtrl.complaints = $rootScope.threeoneones;
+  // Get resolved opinions, too.
+  listyCtrl.opinions = opinions;
+
+  listyCtrl.slideIndex = 0;
+  listyCtrl.slideChanged = function(index) { // Called each time the slide changes.
+    listyCtrl.slideIndex = index;
+    setViewTitle(listyCtrl.slideIndex);
+  };
+  function setViewTitle (index) {
+    if (index === 0) {
+      listyCtrl.viewTitle = '311 Notices';
+    } else {
+      listyCtrl.viewTitle = 'Public Advisories';
+    }
+  }
+  setViewTitle(0);
+
+
+
+
+
+  // votableables
 
   var upvotesRef = Ref.child('upvotes');
   var downvotesRef = Ref.child('downvotes');
