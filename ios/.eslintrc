@@ -4,43 +4,43 @@
     "node": true
   },
   "rules": {
-    // overrides from 'recommended'
-    "comma-dangle": 0,
-    "no-console": 0,
+    // // overrides from 'recommended'
+    // "comma-dangle": 0,
+    // "no-console": 0,
 
-    // strict
-    "strict": [2, "global"],
+    // // strict
+    // "strict": [2, "global"],
 
-    // formatting, spaces, operators
-    "indent": [1, 1, {"SwitchCase": 1}],
-    "quotes": [1, "single"],
-    "semi": [1, "always"],
-    "space-after-keywords": [1, "always"],
-    "space-before-blocks": [1, "always"],
-    "space-before-function-paren": [1, "always"],
-    "dot-location": [1, "property"],
-    "space-infix-ops": 1,
-    "key-spacing": [1, {"beforeColon": false, "afterColon": true}],
-    "operator-linebreak": [1, "after"],
-    "no-spaced-func": 1,
-    "comma-spacing": [1, {"before": false, "after": true}],
-    "no-multiple-empty-lines": [1, {"max": 1}],
-    "camelcase": [1, {"properties": "always"}],
-    "no-extra-semi" : 1,
+    // // formatting, spaces, operators
+    // "indent": [1, 1, {"SwitchCase": 1}],
+    // "quotes": [1, "single"],
+    // "semi": [1, "always"],
+    // "space-after-keywords": [1, "always"],
+    // "space-before-blocks": [1, "always"],
+    // "space-before-function-paren": [1, "always"],
+    // "dot-location": [1, "property"],
+    // "space-infix-ops": 1,
+    // "key-spacing": [1, {"beforeColon": false, "afterColon": true}],
+    // "operator-linebreak": [1, "after"],
+    // "no-spaced-func": 1,
+    // "comma-spacing": [1, {"before": false, "after": true}],
+    // "no-multiple-empty-lines": [1, {"max": 1}],
+    // "camelcase": [1, {"properties": "always"}],
+    // "no-extra-semi" : 1,
 
-    // coding style
-    "curly": 1,
-    "wrap-iife": [1, "inside"],
-    "eqeqeq": 1,
-    "no-use-before-define": [1, "nofunc"],
-    "no-unused-vars": 1,
-    "no-unexpected-multiline": 1,
-    "no-multi-str": 1,
-    "no-irregular-whitespace": 1,
+    // // coding style
+    // "curly": 1,
+    // "wrap-iife": [1, "inside"],
+    // "eqeqeq": 1,
+    // "no-use-before-define": [1, "nofunc"],
+    // "no-unused-vars": 1,
+    // "no-unexpected-multiline": 1,
+    // "no-multi-str": 1,
+    // "no-irregular-whitespace": 1,
 
-    // os/git options
-    "no-trailing-spaces": 1,
-    "linebreak-style": 0,
-    "eol-last": 1
+    // // os/git options
+    // "no-trailing-spaces": 1,
+    // "linebreak-style": 0,
+    // "eol-last": 1
   }
 }
