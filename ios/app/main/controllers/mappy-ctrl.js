@@ -1,10 +1,13 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($log, complainables, Geolocation, ThreeOneOne) {
+.controller('MappyCtrl', function ($rootScope, $log, Geolocation) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
   mappyCtrl.thing = {};
+
+  // Getting the threeoneones resolved in the main abstract controller.
+  mappyCtrl.threeOneOneMarkers = $rootScope.threeoneones;
 
   // Defaults.
   mappyCtrl.zoom = 12;
@@ -55,22 +58,23 @@ angular.module('main')
         initializeMap(mappyCtrl.boston);
       });
   };
+  getLocation();
 
-  var get311Markers = function () {
-    ThreeOneOne.get311(complainables.GRIPES)
-      .then(function got311 (markers) {
-        $log.log(markers);
+  // var get311Markers = function () {
+  //   ThreeOneOne.get311(complainables.GRIPES)
+  //     .then(function got311 (markers) {
+  //       $log.log(markers);
 
-        mappyCtrl.threeOneOneMarkers = markers;
+  //       // mappyCtrl.threeOneOneMarkers = markers;
 
-        // This will check for availability of current location and then initialize the map with either the current loc or with default Boston.
-        getLocation();
-        // return markers;
-      }, function failedGetting311 (err) {
-        $log.log("Errrrrororrrr...", err);
-      });
-  };
+  //       // This will check for availability of current location and then initialize the map with either the current loc or with default Boston.
+  //       getLocation();
+  //       // return markers;
+  //     }, function failedGetting311 (err) {
+  //       $log.log("Errrrrororrrr...", err);
+  //     });
+  // };
 
-  get311Markers();
+  // get311Markers();
 
 });

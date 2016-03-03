@@ -16,13 +16,19 @@ angular.module('main', [
 .config(function ($stateProvider, $urlRouterProvider) {
 
   // ROUTING with ui.router
-  $urlRouterProvider.otherwise('/main/list');
+  $urlRouterProvider.otherwise('/main/mappy');
   $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
     .state('main', {
       url: '/main',
       abstract: true,
-      templateUrl: 'main/templates/tabs.html'
+      templateUrl: 'main/templates/tabs.html',
+      controller: 'MainCtrl as mainCtrl',
+      resolve: {
+        threeoneones: function (ThreeOneOne, complainables) {
+          return ThreeOneOne.get311(complainables.GRIPES);
+        }
+      }
     })
       .state('main.list', {
         url: '/list',
