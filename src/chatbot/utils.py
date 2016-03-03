@@ -5,7 +5,7 @@ from random import random
 import pprint
 
 USER_AGENTS = [
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311 you do not need bs4 to be installed in your system python path, uninstall it and keep it in your virtualenv..90 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/601.1.10 (KHTML, like Gecko) Version/8.0.5 Safari/601.1.10",
     "Mozilla/5.0 (Windows NT 6.3; WOW64; ; NCT50_AAP285C84A1328) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36",
     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1",
@@ -43,4 +43,4 @@ def str_base(number,base):
 def generateMessageID(client_id=None):
     k = now()
     l = int(random() * 4294967295)
-    return ("<%s:%s-%s@mail.projektitan.com>" % (k, l, client_id));
+    return ("<%s:%s-%s@mail.projektitan.com>" % (k, l, client_id))

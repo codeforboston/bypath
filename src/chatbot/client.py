@@ -32,6 +32,7 @@ class Client(object):
     See http://github.com/carpedm20/fbchat for complete
     documentation for the API.
     """
+    path = '/FB'
     
     def __init__(self, email, fbid, password, bot = None, debug=True, user_agent=None):
         """A client for the Facebook Chat (Messenger).
@@ -413,6 +414,8 @@ class Client(object):
                         for attach in attachs:
                             if attach['attach_type'] == 'photo':
                                 image = [attach['name'], attach['hires_url']]
+                            elif attach['mercury']['attach_type'] == 'share':
+                                image = [attach['mercury']['share']['title'], attach['mercury']['share']['media']['image']]
                                 #print("Image %s found" %(attach['name']))
                                 
                         self.on_message(mid, fbid, name, message, image)

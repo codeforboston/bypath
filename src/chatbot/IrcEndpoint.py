@@ -11,13 +11,15 @@ class IrcEndpoint:
     uname      = "ircusername"
     realname   = "realname"
     user       = "NotificationBot"
+    path       = "/irc"
     
     ircsock = None
-    
-    def __init__(self, channel):
+
+    def __init__(self, bot, channel = '#alexdevtest'):
         self.server = "irc.freenode.net"
         self.port = 6667
         self.channel = channel
+        self.bot = bot
         
     def Connect(self):
         self.ircsock = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
@@ -35,7 +37,7 @@ class IrcEndpoint:
         self.ircsock.send(bytes("JOIN "+ self.channel +"\n", 'UTF-8'))
         print("endpoint joined channel")
         
-    def CheckForMessages(self, bot):
+    def listen(self):
         #This will check continuesly so it should be run on another thread
         while 1:
             output = [None] * 6
@@ -62,45 +64,53 @@ class IrcEndpoint:
             if usrIdx >= 0:
                 user = m2[1:usrIdx] #first char is a ':' and we want to skip it
                 m2 = m2[usrIdx + 1:]
+
+                if len(user) <= 60 and user != self.user: # only accept user names that are less than 61 chars
                 
-                #grab the server name
-                serIdx = m2.find(' ')
-                server = m2[:serIdx]
-                m2 = m2[serIdx + 1:]
-                
-                #grab the message type
-                typeIdx = m2.find(' ')
-                mType = m2[:typeIdx]
-                m2 = m2[typeIdx + 1:]
-                
-                #grab the channel 
-                chanIdx = m2.find(' ')
-                channel = m2[:chanIdx]
-                m2 = m2[chanIdx + 1:]
-                
-                #finally get the message
-                #the first char is a ':' and we want to skip it
-                msg = m2[1:].strip()
-                cmd = None
-                
-                # if we have a command pull it out of the message
-                if msg[0] == '!':
-                    cmdIdx = msg.find(' ')
-                    cmd = msg[1:cmdIdx]
-                    msg = msg[cmdIdx + 1 :].strip()
-                    
-                    
-                #assign the values for the output
-                output[0] = user
-                output[1] = server
-                output[2] = mType
-                output[3] = channel
-                output[4] = cmd
-                output[5] = msg
-                
-                #If we have a command then pass it to the bot for processing
-                if cmd != None:
-                    bot.RecieveMessage(self, output)
+                    #grab the server name
+                    serIdx = m2.find(' ')
+                    server = m2[:serIdx]
+                    m2 = m2[serIdx + 1:]
+
+                    #grab the message type
+                    typeIdx = m2.find(' ')
+                    mType = m2[:typeIdx]
+                    m2 = m2[typeIdx + 1:]
+
+                    #grab the channel
+                    chanIdx = m2.find(' ')
+                    channel = m2[:chanIdx]
+                    m2 = m2[chanIdx + 1:]
+
+                    #finally get the message
+                    #the first char is a ':' and we want to skip it
+                    msg = m2[1:].strip()
+                    cmd = None
+
+                    # if we have a command pull it out of the message
+                    if msg[0] == '!':
+                        cmdIdx = msg.find(' ')
+                        cmd = msg[1:cmdIdx]
+                        msg = msg[cmdIdx + 1 :].strip()
+
+
+                    #assign the values for the output
+                    output[0] = user
+                    output[1] = server
+                    output[2] = mType
+                    output[3] = channel
+                    output[4] = cmd
+                    output[5] = msg
+
+                    user = [user]
+                    message = msg
+
+                    if cmd != None:
+                        self.bot.RecieveMessage(self, user, message)
+
+                    #If we have a command then pass it to the bot for processing
+                    #if cmd != None:
+                        #bot.RecieveMessage(self, output)
                         
             else:
                 #If the servers pings us we need to respond in kind
@@ -110,7 +120,8 @@ class IrcEndpoint:
                 
             
                 
-    def SendMessage(self, message):
+    def send(self, user, message):
+        print("irc bot sending message")
         self.ircsock.send(bytes("PRIVMSG "+ self.channel +" :"+ message + "\n", 'UTF-8'))
         
     def ping(self):
