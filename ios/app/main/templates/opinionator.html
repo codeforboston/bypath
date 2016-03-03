@@ -8,12 +8,26 @@
         <span class="calm">
         <i class="icon ion-ios-location"></i>&nbsp;</span>
         <span class="text-muted">
-        Looks like you're near {{ opCtrl.isAt }}.</span>
+        Looks like you're near {{ isAt }}.</span>
       </p>
     </div>
 
+    <ion-list>
+      <ion-item class="item item-divider" ng-repeat="opinion in opinions">
+        {{ opinion.where | json }} <br>
+        {{ opinion.text }}
+      </ion-item>
+    </ion-list>
 
 
+  <div class="list">
+    <label class="item item-input">
+      <textarea ng-model="msg" placeholder="Add your opinion about something around here."></textarea>
+    </label>
+    <button class="button button-block button-balanced" ng-model="addOpinion(msg)">
+      Add it!
+    </button>
+  </div>
 
 
   </ion-content>

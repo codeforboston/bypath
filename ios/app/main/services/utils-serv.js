@@ -1,5 +1,10 @@
 'use strict';
 angular.module('main')
+
+.factory('Ref', ['$window', 'FBURL', function($window, FBURL) {
+  return new $window.Firebase(FBURL);
+}])
+
 .factory('Utils', function ($log) {
 
   $log.log('Hello from your Service: Utils in module main');

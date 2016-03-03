@@ -1,9 +1,14 @@
 'use strict';
+
+angular.module('firebase.config', [])
+  .constant('FBURL', 'https://snowranger.firebaseio.com');
+
 angular.module('main', [
   'ionic',
   'ngCordova',
   'ui.router',
   'firebase',
+  'firebase.config',
   'uiGmapgoogle-maps'
 
   // TODO: load other modules selected during generation
@@ -60,7 +65,12 @@ angular.module('main', [
         views: {
           'tab-opinionate': {
             templateUrl: 'main/templates/opinionator.html',
-            controller: 'OpinionatorCtrl as opCtrl'
+            controller: 'OpinionatorCtrl',
+            resolve: {
+              opinions: function (Opinions) {
+                return Opinions.index();
+              }
+            }
           }
         }
       })
