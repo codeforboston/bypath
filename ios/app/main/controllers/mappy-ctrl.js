@@ -19,7 +19,6 @@ angular.module('main')
     //\\
     // $log.log('initializeMap position -> ', position);
 
-
     // Create the Google Map
     mappyCtrl.map = {
       center: {
@@ -27,8 +26,6 @@ angular.module('main')
         longitude: position.coords.longitude
       },
       zoom: mappyCtrl.zoom,
-      // bounds: '',
-      // bounds="mappyCtrl.map.bounds"
       // control: {},
       // styles: mappyStyle,
       // markers: get311Markers(),
@@ -40,19 +37,8 @@ angular.module('main')
            mappyCtrl.map.infoIcon = model.icon;
            mappyCtrl.map.infoDescription = model.description;
            mappyCtrl.map.infoAddress = model.address;
-           // alert(model.address);
-           // mappyCtrl.map.window.model = model;
-           // mappyCtrl.map.window.show = true;
          }
        }
-       // ,window: {
-       //    marker: {},
-       //    show: false,
-       //    closeClick: function() {
-       //      this.show = false;
-       //    },
-       //    options: {}
-       //  }
     };
   };
 
@@ -64,8 +50,8 @@ angular.module('main')
       },
       function (err) { // Error. Possibly/probably because it wasn't allowed.
         $log.log("Shit! (Maybe geolocation wasn't allowed?).\nError: ", err);
-        // return err;
-        // return mappyCtrl.boston;
+
+        // so we'll use Boston instead of current loc
         initializeMap(mappyCtrl.boston);
       });
   };
@@ -84,9 +70,6 @@ angular.module('main')
         $log.log("Errrrrororrrr...", err);
       });
   };
-
-  // getLocation();
-
 
   get311Markers();
 
