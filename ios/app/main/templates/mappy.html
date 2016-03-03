@@ -26,11 +26,21 @@
       templateParameter="mappyCtrl.map.window">
     </ui-gmap-window> -->
 
+    <!-- opinion markers -->
+    <ui-gmap-markers
+      models="mappyCtrl.opinionMarkers"
+      coords="'location.coords'"
+      icon=""
+      events="mappyCtrl.map.markersEventsOpinions"
+      options="'options'">
+    </ui-gmap-markers>
+
+    <!-- 311 markers -->
     <ui-gmap-markers
       models="mappyCtrl.threeOneOneMarkers"
       coords="'location'"
       icon="'icon'"
-      events="mappyCtrl.map.markersEvents"
+      events="mappyCtrl.map.markersEvents311"
       options="'options'">
     </ui-gmap-markers>
 
@@ -40,7 +50,7 @@
 
   <div class="padding" style="position: absolute; bottom: 0; left: 0; z-index: 10; background-color: white; border-bottom-left-radius: 20px;">
     <p class="text-dark">
-      <span><img ng-src="{{ mappyCtrl.map.infoIcon}}" alt="">
+      <span><img ng-src="{{ mappyCtrl.map.infoIcon}}" alt="" style="max-height: 14px;">
     <strong>
 
       {{ mappyCtrl.map.infoDescription }}

@@ -13,10 +13,12 @@ angular.module('main')
   var downvotesFBArray = $firebaseArray(downvotesRef);
 
   listyCtrl.getComplaintUpvotes = function (id) {
-    return upvotesFBArray.$getRecord(id);
+    var countable = upvotesFBArray.$getRecord(id);
+    return countable;
   };
   listyCtrl.getComplaintDownvotes = function (id) {
-    return downvotesFBArray.$getRecord(id);
+    var countable = downvotesFBArray.$getRecord(id);
+    return countable;
   };
 
 

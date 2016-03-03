@@ -17,7 +17,8 @@ angular.module('main')
   $scope.addOpinion = function (message) {
     if (message.length > 0) {
       $scope.opinions.$add({
-        location: {
+        id: Math.random().toString()
+        , location: {
             address: $scope.where.address
             , coords: {
               latitude: $scope.where.position.coords.latitude

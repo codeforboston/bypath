@@ -27,6 +27,9 @@ angular.module('main', [
       resolve: {
         threeoneones: function (ThreeOneOne, complainables) {
           return ThreeOneOne.get311(complainables.GRIPES);
+        },
+        opinions: function (Opinions) {
+          return Opinions.index();
         }
       }
     })
@@ -71,12 +74,7 @@ angular.module('main', [
         views: {
           'tab-opinionate': {
             templateUrl: 'main/templates/opinionator.html',
-            controller: 'OpinionatorCtrl',
-            resolve: {
-              opinions: function (Opinions) {
-                return Opinions.index();
-              }
-            }
+            controller: 'OpinionatorCtrl'
           }
         }
       })

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($rootScope, $log, Geolocation) {
+.controller('MappyCtrl', function ($rootScope, $log, Geolocation, opinions) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
@@ -8,6 +8,11 @@ angular.module('main')
 
   // Getting the threeoneones resolved in the main abstract controller.
   mappyCtrl.threeOneOneMarkers = $rootScope.threeoneones;
+  // Set arbitrary ids for opinion markers
+  mappyCtrl.opinionMarkers = opinions;
+  mappyCtrl.pathToSnowflakeIcon = 'main/assets/images/snowflake-icon.png';
+
+
 
   // Defaults.
   mappyCtrl.zoom = 12;
@@ -34,14 +39,22 @@ angular.module('main')
       // markers: get311Markers(),
       options: {scrollwheel: false},
       disableDefaultUI: false,
-      markersEvents: {
-         click: function(marker, eventName, model) {
-           console.log('Click marker');
-           mappyCtrl.map.infoIcon = model.icon;
-           mappyCtrl.map.infoDescription = model.description;
-           mappyCtrl.map.infoAddress = model.address;
-         }
-       }
+      markersEvents311: {
+        click: function(marker, eventName, model) {
+          console.log('Click marker');
+          mappyCtrl.map.infoIcon = model.icon;
+          mappyCtrl.map.infoDescription = model.description;
+          mappyCtrl.map.infoAddress = model.address;
+        }
+      },
+      markersEventsOpinions: {
+        click: function(marker, eventName, model) {
+          console.log('Click marker');
+          mappyCtrl.map.infoIcon = 'main/assets/images/snowflake-icon.png';
+          mappyCtrl.map.infoDescription = model.text;
+          mappyCtrl.map.infoAddress = model.location.address;
+        }
+      }
     };
   };
 
