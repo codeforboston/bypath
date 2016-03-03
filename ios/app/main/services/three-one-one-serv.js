@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.factory('ThreeOneOne', function ($log, $http, $q) {
+.factory('ThreeOneOne', function ($log, $http, $q, complainables) {
   //\\
   $log.log('ThreeOneOne Factory in module main ready for action.');
 
@@ -42,10 +42,11 @@ angular.module('main')
     // var testString = "SELECT * WHERE open_dt > '2016-03-01T00:00:00' AND case_status = 'Open' AND STARTS_WITH(case_title, 'Metrolist Survery')";
     // var encodedQuery = encodeURIComponent(queryString);
     var encodedQuery = queryString;
+    var orderer = "&$order=open_dt DESC";
 
     // var queryable = bostonUrl + "$query=" + encodedQuery;
     // var queryable = bostonUrl + "?$query=" + encodedQuery;
-    var queryable = bostonUrl + "?$limit=100" + encodedQuery;
+    var queryable = bostonUrl + "?$limit=100" + encodedQuery + orderer;
       //\\
       $log.log("full query url encoded:", queryable);
     return queryable;
@@ -109,7 +110,8 @@ angular.module('main')
                 id: "311" + i.toString(),
                 description: data.data[i].case_title,
                 location: loc,
-                address: data.data[i].location
+                address: data.data[i].location,
+                open_dt: data.data[i].open_dt
             });
         }
         defer.resolve(boston311MarkerInfos);
@@ -121,8 +123,29 @@ angular.module('main')
     return defer.promise;
   };
 
+  var getFake311Data = function (complaintTypes) {
+    var boston311MarkerInfosTESTES = [];
+    var example = complainables.TESTES;
+    for (var i = 0; i < example.length; i++) {
+        var loc = {
+            latitude: example[i].latitude,
+            longitude: example[i].longitude
+        };
+        boston311MarkerInfosTESTES.push({
+            id: "311" + i.toString(),
+            description: example[i].case_title,
+            location: loc,
+            address: example[i].location,
+            open_dt: example[i].open_dt
+        });
+    }
+    return boston311MarkerInfosTESTES;
+  }
+
+
   // Angular Factories, being singletons, have to return a thing.
   return {
-    get311: getBoston311Data
+    get311: getBoston311Data,
+    get311Fake: getFake311Data
   };
 });

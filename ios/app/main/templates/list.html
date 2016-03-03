@@ -9,8 +9,14 @@
         type="item-text-wrap"
         >
         <img ng-src="{{complaint.icon}}" style="height: 20px; width: auto;">
-        <h2>{{complaint.description}}</h2>
-        <p>{{complaint.address}}</p>
+        <h2>{{complaint.description}}
+
+        </h2>
+        <span style="color: lightgray; font-size:.8em;">{{complaint.open_dt}}</span>
+        <p>{{complaint.address}}
+
+        </p>
+
         <!-- <i class="icon ion-chevron-right icon-accessory"></i> -->
       </ion-item>
     </ion-list>
