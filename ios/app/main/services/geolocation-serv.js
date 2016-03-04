@@ -15,11 +15,21 @@ angular.module('main')
     };
     $cordovaGeolocation.getCurrentPosition(options)
       .then(
-        function (position) { // Success.
+        function gotPositionCordova (position) { // Success.
           defer.resolve(position); // Resolve position.
         },
         // Error.
-        function (error) { defer.reject({ERROR: error}); console.log('ERROR: ' + error); }
+        function (error) {
+          // defer.reject({ERROR: error});
+          // console.log('ERROR: ' + error);
+
+          // No cordova? Let's try HTML5 for kicks.
+          navigator.geolocation.getCurrentPosition(function gotPositionHTML (position) {
+            defer.resolve(position);
+          }, function noPositionHTML(err) {
+            defer.reject({ERROR: error});
+          });
+        }
       );
     return defer.promise;
   };
