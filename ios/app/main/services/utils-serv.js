@@ -6,6 +6,7 @@ angular.module('main')
 }])
 
 
+
 // // http://learn.ionicframework.com/formulas/cordova-camera/
 // .factory('CameraFactory', ['$q', function($q) {
 

@@ -48,13 +48,72 @@ angular.module('main', [
           }
         }
       })
-      .state('main.listDetail', {
-        url: '/list/detail',
+      .state('main.opinionDetailMappy', {
+        url: 'map/opinion/:opinionId',
+        views: {
+          'tab-mappy': {
+            templateUrl: 'main/templates/show.html',
+            controller: 'ShowCtrl as showCtrl',
+            resolve: {
+              showResource: function () {
+                return 'opinion';
+              },
+              resourceObj: function ($stateParams) {
+                return $stateParams.opinionId;
+              }
+            }
+          },
+        }
+      })
+      .state('main.opinionDetailListy', {
+        url: 'list/opinion/:opinionId',
         views: {
           'tab-list': {
-            templateUrl: 'main/templates/list-detail.html'
-            // controller: 'SomeCtrl as ctrl'
-          }
+            templateUrl: 'main/templates/show.html',
+            controller: 'ShowCtrl as showCtrl',
+            resolve: {
+              showResource: function () {
+                return 'opinion';
+              },
+              resourceObj: function ($stateParams) {
+                return $stateParams.opinionId;
+              }
+            }
+          },
+        }
+      })
+      .state('main.complaintDetailMappy', {
+        url: 'map/complaint/:complaintId',
+        views: {
+          'tab-mappy': {
+            templateUrl: 'main/templates/show.html',
+            controller: 'ShowCtrl as showCtrl',
+            resolve: {
+              showResource: function () {
+                return 'complaint';
+              },
+              resourceObj: function ($stateParams, $filter, threeoneones) {
+                return $filter('filter')(threeoneones, function (a) {return a.id == $stateParams.complaintId })[0];
+              }
+            }
+          },
+        }
+      })
+      .state('main.complaintDetailListy', {
+        url: 'list/complaint/:complaintId',
+        views: {
+          'tab-list': {
+            templateUrl: 'main/templates/show.html',
+            controller: 'ShowCtrl as showCtrl',
+            resolve: {
+              showResource: function () {
+                return 'complaint';
+              },
+              resourceObj: function ($stateParams, $filter, threeoneones) {
+                return $filter('filter')(threeoneones, function (a) {return a.id == $stateParams.complaintId })[0];
+              }
+            }
+          },
         }
       })
       .state('main.debug', {

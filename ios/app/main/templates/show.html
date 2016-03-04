@@ -1,0 +1,38 @@
+<ion-view view-title="{{showCtrl.resource.title}}">
+  <!-- do you want padding? -->
+  <ion-content class="padding">
+
+    <!-- content goes here -->
+
+    <!-- icon & description -->
+    <h2>
+      <img ng-src="{{ showCtrl.resource.icon }}" ng-if="showCtrl.resource.icon !== null">
+      {{ showCtrl.resource.description }}
+    </h2>
+
+    <!-- address -->
+    <p class="type type-muted">
+      {{ showCtrl.resource.address }}
+    </p>
+
+    <!-- open & closed -->
+    <p>
+      <span class="type type-balanced">
+        Opened:
+      </span>
+      <span>{{ showCtrl.resource.open_dt }}</span>
+      <span ng-if="showCtrl.resource.closed_dt">
+        <br>
+        <span class="type type-assertive">
+          Closed:
+        </span>
+        <span>{{ showCtrl.resource.closed_dt }}</span>
+      </span>
+    </p>
+
+    <img data-ng-src="data:image/jpeg;base64,{{ showCtrl.resource.image}}" ng-if="showCtrl.resource.image !== 'none'" style="width: 100%; height: auto; margin-top: 10px;">
+
+    <a ui-sref="main.list">back to list</a>
+
+  </ion-content>
+</ion-view>

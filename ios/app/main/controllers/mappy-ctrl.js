@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($rootScope, $log, Geolocation, opinions) {
+.controller('MappyCtrl', function ($rootScope, $state, $log, Geolocation, opinions) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
@@ -41,6 +41,9 @@ angular.module('main')
       markersEvents311: {
         click: function(marker, eventName, model) {
           $log.log('Click marker');
+          $log.log('model.id: ' + model.id);
+          // var stateable = 'main.complaintDetail({complaintId: "' + model.id + '"})';
+          $state.go('main.complaintDetailMappy', {complaintId: model.id});
           // mappyCtrl.map.infoIcon = model.icon;
           // mappyCtrl.map.infoDescription = model.description;
           // mappyCtrl.map.infoAddress = model.address;
@@ -49,6 +52,10 @@ angular.module('main')
       markersEventsOpinions: {
         click: function(marker, eventName, model) {
           $log.log('Click marker');
+          var keyable = model.$id; // the angularfire key/id thingey (NOT model.id)
+          $log.log('key: ' + keyable);
+          // var stateable = 'main.opinionDetail({opinionId: "' + keyable + '"})';
+          $state.go('main.opinionDetailMappy', {opinionId: keyable});
           // mappyCtrl.map.infoIcon = 'main/assets/images/snowflake-icon.png';
           // mappyCtrl.map.infoDescription = model.text;
           // mappyCtrl.map.infoAddress = model.location.address;
