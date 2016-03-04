@@ -41,17 +41,17 @@ angular.module('main')
       markersEvents311: {
         click: function(marker, eventName, model) {
           $log.log('Click marker');
-          mappyCtrl.map.infoIcon = model.icon;
-          mappyCtrl.map.infoDescription = model.description;
-          mappyCtrl.map.infoAddress = model.address;
+          // mappyCtrl.map.infoIcon = model.icon;
+          // mappyCtrl.map.infoDescription = model.description;
+          // mappyCtrl.map.infoAddress = model.address;
         }
       },
       markersEventsOpinions: {
         click: function(marker, eventName, model) {
           $log.log('Click marker');
-          mappyCtrl.map.infoIcon = 'main/assets/images/snowflake-icon.png';
-          mappyCtrl.map.infoDescription = model.text;
-          mappyCtrl.map.infoAddress = model.location.address;
+          // mappyCtrl.map.infoIcon = 'main/assets/images/snowflake-icon.png';
+          // mappyCtrl.map.infoDescription = model.text;
+          // mappyCtrl.map.infoAddress = model.location.address;
         }
       }
     };
