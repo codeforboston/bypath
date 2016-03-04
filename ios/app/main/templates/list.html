@@ -68,7 +68,7 @@
 
             <p>{{opinion.location.address}}</p>
 
-            <img ng-if="opinion.image !== 'none'" ng-src="data:image/jpeg;base64,{{opinion.image}}" style="height: 400px; width: auto; margin-top: 10px;">
+            <img ng-if="opinion.image !== 'none'" data-ng-src="data:image/jpeg;base64,{{opinion.image}}" style="height: 400px; width: auto; margin-top: 10px;">
             <img ng-if="opinion.image === 'none'" ng-src="{{listyCtrl.test.test_img_src}}" style="height: 400px; width: auto; margin-top: 10px;">
 
             <!--   <div class="buttons" style="display: block;">

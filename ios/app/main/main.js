@@ -16,7 +16,7 @@ angular.module('main', [
 // for the camera
 // http://learn.ionicframework.com/formulas/cordova-camera/
 .config(function($compileProvider){
-  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel|data):/); // data is safe!
 })
 .config(function ($stateProvider, $urlRouterProvider) {
 
