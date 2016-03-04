@@ -5,7 +5,8 @@ angular.module('main')
   var listyCtrl = this;
 
 
-
+  listyCtrl.test = {};
+  listyCtrl.test.test_img_src = 'main/assets/images/snowflake.png';
 
   // Root root resolution!
   listyCtrl.complaints = $rootScope.threeoneones;
