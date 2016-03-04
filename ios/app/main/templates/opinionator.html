@@ -32,10 +32,16 @@
     <label class="item item-input">
       <textarea ng-model="msg.text" placeholder="A brief descripton of what's up."></textarea>
     </label>
-    <button class="button button-block button-balanced" ng-click="addOpinion(msg.text)">
-      Add it!
+    <button class="button button-block button-balanced button-icon-left" ng-click="addOpinion(msg.text)">
+      <i class="icon ion-plus-round"></i>
+      Add your advice
     </button>
+    <a href="tel:+1-617-635-4500" class="button button-block button-positive button-outline" >
+      <i class="icon ion-ios-telephone"></i>
+      Call 311
+    </a>
   </div>
+
 
   <!-- https://www.airpair.com/ionic-framework/posts/ionic-firebase-camera-app -->
 <!--   <div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">

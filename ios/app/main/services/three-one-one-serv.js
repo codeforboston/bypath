@@ -11,10 +11,11 @@ angular.module('main')
   //              : limit integer
   //              :
 
-  var buildQueryString = function (limit, opened_date, complaintTypes) {
+  var buildQueryString = function (limit, status, opened_date, complaintTypes) {
 
     // Set defaults if no val passed.
     limit = typeof limit !== 'undefined' ? limit : 100;
+    status = typeof status !== 'undefined' ? status : 'Either'; // default to include either open or closed
     opened_date = typeof opened_date !== 'undefined' ? opened_date : '2016-03-01T00:00:00';
     complaintTypes = typeof complaintTypes !== 'undefined' ? complaintTypes : complainables.GRIPES;
 
@@ -23,9 +24,22 @@ angular.module('main')
 
     // Let's build a query string!
     var queryString = "";
+    queryString += "&$where=";
 
-    queryString += "&$where=case_status = 'Open'";
-    queryString += " AND open_dt > '" + opened_date + "'";
+    // Status picker.
+    if (status === 'Open'){
+      queryString += "case_status = 'Open'  AND ";
+    }
+    else if (status === 'Closed') {
+      queryString += "case_status = 'Closed'  AND ";
+    }
+    else {
+      // queryString += "case_status = 'Open'";
+    }
+
+
+
+    queryString += "open_dt > '" + opened_date + "'";
     // queryString += " AND STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Park Maintenance')";
     queryString += " AND ("
 
@@ -97,7 +111,9 @@ angular.module('main')
                 description: data.data[i].case_title,
                 location: loc,
                 address: data.data[i].location,
-                open_dt: data.data[i].open_dt
+                case_status: data.data[i].case_status,
+                open_dt: data.data[i].open_dt,
+                closed_dt: data.data[i].closed_dt
             });
         }
         var boston311MarkerInfos_WithIcons = Utils.setIcons(boston311MarkerInfos);
