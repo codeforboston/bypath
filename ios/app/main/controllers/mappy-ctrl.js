@@ -37,7 +37,7 @@ angular.module('main')
       // styles: mappyStyle,
       // markers: get311Markers(),
       options: {scrollwheel: false},
-      disableDefaultUI: true,
+      disableDefaultUI: true, // see if this lets the markers be clickable...
       markersEvents311: {
         click: function(marker, eventName, model) {
           $log.log('Click marker');
