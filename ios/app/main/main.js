@@ -30,9 +30,6 @@ angular.module('main', [
       templateUrl: 'main/templates/tabs.html',
       controller: 'MainCtrl as mainCtrl',
       resolve: {
-        // currentLocation: function (Geolocation) {
-        //   return Geolocation.get();
-        // },
         here: function (Geolocation) {
           return Geolocation.get().then(function(loc) {
             return Geolocation.getNearByCity(loc.coords.latitude, loc.coords.longitude).then(function (add) {
@@ -40,6 +37,19 @@ angular.module('main', [
             });
           });
         },
+            // returns as -->
+            // here: {
+            //   location: {
+            //     coords: {
+                  // altitude: null
+                  // altitudeAccuracy: null
+                  // heading: null
+                  // latitude: 42.40128642893472
+                  // longitude: -71.12408442000427
+                  // speed: null
+            //   },
+            //   address: '47 paulina st stomervilel'
+            // }
         threeoneones: function (ThreeOneOne) {
           var query = ThreeOneOne.buildQuery(50, undefined, undefined);
           return ThreeOneOne.get311(query);
