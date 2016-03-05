@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($rootScope, $state, $log, Geolocation, opinions) {
+.controller('MappyCtrl', function ($rootScope, $state, $log, Geolocation, opinions, here) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
@@ -64,20 +64,29 @@ angular.module('main')
     };
   };
 
-  var getLocation = function () {
-    Geolocation.get()
-      .then(function (position) { // Success.
-        // return position
-        initializeMap(position);
-      },
-      function (err) { // Error. Possibly/probably because it wasn't allowed.
-        $log.log("Shit! (Maybe geolocation wasn't allowed?).\nError: ", err);
+  if (typeof here !== 'undefined') {
+    initializeMap(here.location);
+  } else {
+    initializeMap(mappyCtrl.boston);
+  }
 
-        // so we'll use Boston instead of current loc
-        initializeMap(mappyCtrl.boston);
-      });
-  };
-  getLocation();
+  // var initializeInitializingMap = function () {
+    // if (here typeof !== 'undefined') {
+
+    // }
+    // Geolocation.get()
+    //   .then(function (position) { // Success.
+    //     // return position
+    //     initializeMap(position);
+    //   },
+    //   function (err) { // Error. Possibly/probably because it wasn't allowed.
+    //     $log.log("Shit! (Maybe geolocation wasn't allowed?).\nError: ", err);
+
+    //     // so we'll use Boston instead of current loc
+    //     initializeMap(mappyCtrl.boston);
+    //   });
+  // };
+  // initializeInitializingMap(position);
 
   // var get311Markers = function () {
   //   ThreeOneOne.get311(complainables.GRIPES)

@@ -2,8 +2,18 @@
   <!-- do you want padding? -->
   <ion-content class="padding">
 
+    <!-- {{ bug.cases | json }} -->
+
+    <p ng-repeat="case in test.cases | orderBy:'-count'">
+      <span class="type type-muted">case_title:</span>{{ case.title }}
+      <br>
+      <span class="type type-muted">count_case_title: </span>{{ case.count }}
+      <!-- <br>
+      <span class="type type-muted">count_int: </span>{{ case.count_int }} -->
+    </p>
+
     <!-- content goes here -->
-    <ion-list>
+    <!-- <ion-list>
 
       <ion-item class="item item-divider">
         Some basic checks
@@ -46,7 +56,7 @@
           ng-bind="ctrl.password.strength"></span>
       </ion-item>
 
-    </ion-list>
+    </ion-list> -->
 
   </ion-content>
 </ion-view>

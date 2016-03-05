@@ -45,14 +45,21 @@ angular.module('main')
   // Accepts lat + lng, returns location json data from google.
   function getNearByCity (latitude, longitude){
       var defer = $q.defer();
-      var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude +',' + longitude +'&sensor=true';
-      $http({method: 'GET', url: url}).
-        success(function(data, status, headers, config) {
-             defer.resolve({data : data});
-        }).
-        error(function(data, status, headers, config) {
-          defer.reject({error: 'City not found'});
-        });
+
+      // fake cuz google started rejecting my api requests....
+      defer.resolve({data: {
+                        results: [{'formatted_address': 'here i am'}]
+                    }});
+
+
+      // var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude +',' + longitude +'&sensor=true';
+      // $http({method: 'GET', url: url}).
+      //   success(function(data, status, headers, config) {
+      //        defer.resolve({data : data});
+      //   }).
+      //   error(function(data, status, headers, config) {
+      //     defer.reject({error: 'City not found'});
+      //   });
       return defer.promise;
   }
 

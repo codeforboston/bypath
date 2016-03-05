@@ -4,6 +4,30 @@ angular.module('main')
   //\\
   $log.log('ThreeOneOne Factory in module main ready for action.');
 
+  var uniqueThreeOneOneGripes = function () {
+    var defer = $q.defer();
+
+    var bostonUrl = 'https://data.cityofboston.gov/resource/awu8-dc52.json';
+    var stringer = '?$limit=10000&$select=case_title,COUNT(case_title)&$group=case_title';
+    var queryable = bostonUrl + stringer;
+
+    $http({
+      method: 'GET',
+      url: queryable,
+      headers: {
+        'X-App-Token': 'zdkQROnSL8UlsDCjuiBcc3VHq' //'k7chiGNz0GPFKd4dS03IEfKuE'
+      }
+    }).success(function (data, status, headers, config) {
+        defer.resolve({data: data});
+      })
+      .error(function (data, status, headers, config) {
+        defer.reject({status: status, data: data});
+      });
+
+
+    return defer.promise;
+  };
+
   // Set up query string for grabbing multiple complaint types at once.
   // -------------------------------------------------------------------------------
   // should accept: complaintTypes []
@@ -16,11 +40,11 @@ angular.module('main')
     // Set defaults if no val passed.
     limit = typeof limit !== 'undefined' ? limit : 100;
     status = typeof status !== 'undefined' ? status : 'Either'; // default to include either open or closed
-    opened_date = typeof opened_date !== 'undefined' ? opened_date : '2016-03-01T00:00:00';
+    opened_date = typeof opened_date !== 'undefined' ? opened_date : '2016-03-01';
     complaintTypes = typeof complaintTypes !== 'undefined' ? complaintTypes : complainables.GRIPES;
 
     // Base url.
-    var bostonUrl = 'https://data.cityofboston.gov/resource/awu8-dc52.json'
+    var bostonUrl = 'https://data.cityofboston.gov/resource/awu8-dc52.json';
 
     // Let's build a query string!
     var queryString = "";
@@ -37,9 +61,7 @@ angular.module('main')
       // queryString += "case_status = 'Open'";
     }
 
-
-
-    queryString += "open_dt > '" + opened_date + "'";
+    queryString += "open_dt > '" + opened_date + "T00:00:00'";
     // queryString += " AND STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Park Maintenance')";
     queryString += " AND ("
 
@@ -146,7 +168,8 @@ angular.module('main')
   // Angular Factories, being singletons, have to return a thing.
   return {
     get311: getBoston311Data,
-    buildQuery: buildQueryString
+    buildQuery: buildQueryString,
+    uniqueCases: uniqueThreeOneOneGripes
     // , get311Fake: getFake311Data
   };
 });

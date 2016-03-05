@@ -141,7 +141,7 @@ angular.module('main', [
         views: {
           'tab-debug': {
             templateUrl: 'main/templates/debug.html',
-            controller: 'DebugCtrl as ctrl'
+            controller: 'DebugCtrl'
           }
         }
       })
