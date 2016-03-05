@@ -30,13 +30,13 @@ angular.module('main', [
       templateUrl: 'main/templates/tabs.html',
       controller: 'MainCtrl as mainCtrl',
       resolve: {
-        currentLocation: function (Geolocation) {
-          return Geolocation.get();
-        },
-        currentAddress: function (Geolocation) {
+        // currentLocation: function (Geolocation) {
+        //   return Geolocation.get();
+        // },
+        here: function (Geolocation) {
           return Geolocation.get().then(function(loc) {
             return Geolocation.getNearByCity(loc.coords.latitude, loc.coords.longitude).then(function (add) {
-              return add.data.results[0]['formatted_address'];
+              return {location: loc, address: add.data.results[0]['formatted_address']}
             });
           });
         },

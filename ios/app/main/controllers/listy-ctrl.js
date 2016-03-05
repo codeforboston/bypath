@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('ListyCtrl', function ($scope, $rootScope, $log, Ref, opinions, $firebaseArray, Geolocation, Geo, currentLocation, currentAddress) {
+.controller('ListyCtrl', function ($scope, $rootScope, $log, Ref, opinions, $firebaseArray, Geolocation, Geo, here) {
 
   var listyCtrl = this;
 
@@ -14,8 +14,8 @@ angular.module('main')
   // Geolocation.get().then(function gotLoc (loc) {
 
       // listyCtrl.test.location = loc.coords.latitude;;
-      listyCtrl.test.location = currentLocation.coords.latitude;
-      listyCtrl.test.address = currentAddress;
+      listyCtrl.test.location = here.location.coords.latitude;
+      listyCtrl.test.address = here.address;
 
   // });
 
