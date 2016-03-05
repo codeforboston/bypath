@@ -17,26 +17,6 @@ angular.module('main')
   $scope.where.image = 'none'; // default // FIXME: should be null or something
   $scope.where.image_src = 'data:image/jpeg;base64,' + $scope.where.image;
 
-  // $scope.upload = function() {
-  //         var options = {
-  //             quality : 75,
-  //             destinationType : Camera.DestinationType.DATA_URL,
-  //             sourceType : Camera.PictureSourceType.CAMERA,
-  //             allowEdit : true,
-  //             encodingType: Camera.EncodingType.JPEG,
-  //             popoverOptions: CameraPopoverOptions,
-  //             targetWidth: 500,
-  //             targetHeight: 500,
-  //             saveToPhotoAlbum: false
-  //         };
-  //         $cordovaCamera.getPicture(options).then(function(imageData) {
-  //             syncArray.$add({image: imageData}).then(function() {
-  //                 alert("Image has been uploaded");
-  //             });
-  //         }, function(error) {
-  //             console.error(error);
-  //         });
-  //     }
 
   $scope.takePhoto = function() {
     var options = {
@@ -53,10 +33,8 @@ angular.module('main')
 
     // set image data (as base64) to scope
     $cordovaCamera.getPicture(options).then(function(imageData) {
-        // syncArray.$add({image: imageData}).then(function() {
-        //     alert("Image has been uploaded");
-        // });
-        $scope.where.image = imageData;
+        $scope.where.image = imageData; // saves for uploading
+        $scope.where.image_src = 'data:image/jpeg;base64,' + $scope.where.image; // preview
 
     }, function(error) {
         $log.log(error);
@@ -99,6 +77,8 @@ angular.module('main')
           $log.log('error: ', err);
         });
       });
+    } else {
+      alert("Hey! You've got to say something!");
     }
   };
 
@@ -122,7 +102,10 @@ angular.module('main')
             // formattedAddress += ' in ';
             // formattedAddress += data.data.results[1]['address_components'][3]['short_name'] + ', ' ; // Cambridge
             // formattedAddress += data.data.results[1]['address_components'][5]['short_name'] ; // MA
+
             $scope.where.address = formattedAddress;
+
+
             defer.resolve();
           },
           function (err) {

@@ -25,6 +25,11 @@
 
               <h2><img ng-src="{{complaint.icon}}">&nbsp;{{complaint.description}}</h2>
 
+              <p>{{complaint.address}}</p>
+              <p class="type type-muted type-small">
+                {{listyCtrl.distanceToHere(complaint.location) | number:2}} miles away
+              </p>
+
               <span class="type type-balanced type-small">Opened: </span>
                 <span class="type type-muted type-small">{{complaint.open_dt}}</span>
 
@@ -36,8 +41,7 @@
 
               </span>
 
-              <p>{{complaint.address}}</p>
-              <!-- <em>{{ listyCtrl.distanceToHere(complaint.id) }}</em> -->
+
 
 
               <div class="button-bar" style="margin-bottom: -10px;">

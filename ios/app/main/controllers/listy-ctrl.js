@@ -14,8 +14,11 @@ angular.module('main')
   // Geolocation.get().then(function gotLoc (loc) {
 
       // listyCtrl.test.location = loc.coords.latitude;;
-      listyCtrl.test.location = here.location.coords.latitude;
+      listyCtrl.test.location = here.location.coords;
+      listyCtrl.test.locArr = [here.location.coords.latitude, here.location.coords.longitude];
       listyCtrl.test.address = here.address;
+      // listyCtrl.test.location = $rootScope.location.position;
+      // listyCtrl.test.address = $rootScope.location.address;
 
   // });
 
@@ -43,6 +46,13 @@ angular.module('main')
 
 
   // geoables
+  listyCtrl.distanceToHere = function (locObj) {
+    // $log.log(locObj);
+    var a = parseFloat(locObj.latitude);
+    var b = parseFloat(locObj.longitude);
+    var locArr = [a,b];
+    return GeoFire.distance(locArr, listyCtrl.test.locArr);
+  };
 
 
   // listyCtrl.distanceToHere = function (id) {

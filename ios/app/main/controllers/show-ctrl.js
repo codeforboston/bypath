@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('ShowCtrl', function ($rootScope, $log, $filter, showResource, Ref, $firebaseObject, resourceObj, opinions) {
+.controller('ShowCtrl', function ($rootScope, $log, $filter, showResource, Ref, $firebaseObject, $firebaseArray, resourceObj, opinions, here) {
 
   $log.log('Hello from your Controller: ShowCtrl in module main:. This is your controller:', this);
 
@@ -11,7 +11,12 @@ angular.module('main')
 
   showCtrl.data = {};
 
+  // This demonstrates why it's important to have standardized data sets.
+  // TODO: Standardize dem objects.
   if (showCtrl.resource.type === 'complaint') {
+
+    var peanutGalleryRef = Ref.child('comments').child(resourceObj.id); // just id cuz its a 311 obj
+    var comments = $firebaseArray(peanutGalleryRef);
 
     // Set title.
     showCtrl.resource.title = '311 Complaint';
@@ -41,6 +46,9 @@ angular.module('main')
 
   } else {
 
+    var peanutGalleryRef = Ref.child('comments').child(resourceObj); // $id cuz its a firebase thingey
+    var comments = $firebaseArray(peanutGalleryRef);
+
     // Set title.
     showCtrl.resource.title = 'Public Advisory';
 
@@ -67,6 +75,34 @@ angular.module('main')
     });
 
   }
+
+  showCtrl.peanuts = {};
+  showCtrl.peanuts.comments = comments;
+  showCtrl.peanuts.newComment = '';
+  // showCtrl.peanuts.location = here.
+  showCtrl.addComment = function (message) {
+    if (message.length > 0) {
+
+      var loc = {
+        latitude: here.location.coords.latitude,
+        longitude: here.location.coords.longitude
+      };
+
+      showCtrl.peanuts.comments.$add({
+        message: message,
+        location: loc,
+        address: here.address,
+        time: Firebase.ServerValue.TIMESTAMP
+      }).then(function (ref) {
+        $log.log('Comment add at ' + ref.key());
+        showCtrl.peanuts.newComment = '';
+      }, function (err) {
+        $log.err('Error adding comment', err);
+      });
+    } else {
+      alert('Speak up! Youre mumbling');
+    }
+  };
 
 
 });

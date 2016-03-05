@@ -33,6 +33,31 @@
     <img data-ng-src="data:image/jpeg;base64,{{ showCtrl.resource.image}}" ng-if="showCtrl.resource.image !== 'none'" style="width: 100%; height: auto; margin-top: 10px;">
 
     <a ui-sref="main.list">back to list</a>
+    <br>
+
+    <div class="padding">
+      <p class="type type-balanced">
+        What do you think about this?
+      </p>
+      <input type="text" ng-model="showCtrl.peanuts.newComment">
+      <button class="button button-block button-balanced button-icon-left" ng-click="showCtrl.addComment(showCtrl.peanuts.newComment)">
+        <i class="icon ion-plus-round"></i>
+        Submit comment
+      </button>
+    </div>
+
+    <div class="padding">
+      <p class="type type-positive">What your fellow man thinks about this one</p>
+
+      <div class="card padding" ng-repeat="comment in showCtrl.peanuts.comments | orderBy:'-time'">
+        <p>
+          {{ comment.message }}
+        </p>
+        <p class="type type-muted">
+          in {{ comment.address }} at {{ comment.time }}
+        </p>
+      </div>
+    </div>
 
   </ion-content>
 </ion-view>
