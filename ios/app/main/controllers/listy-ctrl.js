@@ -1,11 +1,25 @@
 'use strict';
 angular.module('main')
-.controller('ListyCtrl', function ($rootScope, $log, Ref, opinions, $firebaseArray) {
+.controller('ListyCtrl', function ($scope, $rootScope, $log, Ref, opinions, $firebaseArray, Geolocation, Geo, currentLocation, currentAddress) {
 
   var listyCtrl = this;
 
 
   listyCtrl.test = {};
+  // listyCtrl.currentLocation = currentLocation;
+  // Geolocation.get().then(function (location) {
+  //   listyCtrl.test.loc = location.coords;
+  // });
+  // listyCtrl.test.loc = $rootScope.test.location;
+  // Geolocation.get().then(function gotLoc (loc) {
+
+      // listyCtrl.test.location = loc.coords.latitude;;
+      listyCtrl.test.location = currentLocation.coords.latitude;
+      listyCtrl.test.address = currentAddress;
+
+  // });
+
+
   listyCtrl.test.test_img_src = 'main/assets/images/snowflake.png';
 
   // Root root resolution!
@@ -28,7 +42,31 @@ angular.module('main')
   setViewTitle(0);
 
 
+  // geoables
 
+
+  // listyCtrl.distanceToHere = function (id) {
+  //   Geolocation.get().then(function (there) {
+  //     // $log.log(there);
+  //     Gelocation.get().then(function (here) {
+  //       hereLat = here.coords.latitude;
+  //       hereLon = here.coords.longitude;
+  //       hereArr = [hereLat, hereLon];
+  //       // $log.log('asdfasdfasdfadsf', there, here);
+  //       return GeoFire.distance(there, hereArr);
+  //     });
+  //   }, function (err) {
+  //     $log.log(err);
+  //   });
+  // };
+  // distanceToHere('101001727324');
+
+  // function getThere (id) {
+  //   return var there = Geo.get(id);
+  // };
+  // function getHere () {
+  //   return
+  // };
 
 
   // votableables

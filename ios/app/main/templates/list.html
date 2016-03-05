@@ -1,6 +1,12 @@
 <ion-view view-title="{{ listyCtrl.viewTitle }}" >
   <ion-content>
 
+    <div class="test">
+      {{listyCtrl.test.location | json }}
+      <hr>
+      {{listyCtrl.test.address | json }}
+    </div>
+
     <!-- content goes here -->
     <!-- SLIDEABLE -->
     <ion-slide-box active-slide="0" class="" show-pager="false" on-slide-changed="listyCtrl.slideChanged(index)">
@@ -31,6 +37,7 @@
               </span>
 
               <p>{{complaint.address}}</p>
+              <!-- <em>{{ listyCtrl.distanceToHere(complaint.id) }}</em> -->
 
 
               <div class="button-bar" style="margin-bottom: -10px;">

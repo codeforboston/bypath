@@ -11,7 +11,7 @@ angular.module('main')
   $scope.msg.text = '';
   $scope.where = {};
 
-  $scope.where.position = location;
+  // $scope.where.position = location;
 
 
   $scope.where.image = 'none'; // default // FIXME: should be null or something

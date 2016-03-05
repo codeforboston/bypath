@@ -30,6 +30,16 @@ angular.module('main', [
       templateUrl: 'main/templates/tabs.html',
       controller: 'MainCtrl as mainCtrl',
       resolve: {
+        currentLocation: function (Geolocation) {
+          return Geolocation.get();
+        },
+        currentAddress: function (Geolocation) {
+          return Geolocation.get().then(function(loc) {
+            return Geolocation.getNearByCity(loc.coords.latitude, loc.coords.longitude).then(function (add) {
+              return add.data.results[0]['formatted_address'];
+            });
+          });
+        },
         threeoneones: function (ThreeOneOne) {
           var query = ThreeOneOne.buildQuery(50, undefined, undefined);
           return ThreeOneOne.get311(query);

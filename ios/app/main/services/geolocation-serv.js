@@ -1,13 +1,18 @@
 'use strict';
 angular.module('main')
 
+.factory('Geo', ['Ref', function (Ref) {
+  return new GeoFire(Ref.child('geo'));
+}])
+
 // Promise to get current user's geolocation and ( and we could set it in a userGeo ref)
-.factory('Geolocation', function ($cordovaGeolocation, $q, $http) {
+.factory('Geolocation', function ($cordovaGeolocation, $log, $q, $http) {
   console.log('GeoLocate Factory reporting for duty.');
 
   // Calling GeoLocation.get() will attempt to get the current location of the
   // device in use.
   function get () {
+    $log.log('Getting current location...');
     var defer = $q.defer();
     var options = {
       timeout: 10000,
@@ -16,6 +21,7 @@ angular.module('main')
     $cordovaGeolocation.getCurrentPosition(options)
       .then(
         function gotPositionCordova (position) { // Success.
+          $log.log('Got location with Cordova:', position);
           defer.resolve(position); // Resolve position.
         },
         // Error.
@@ -25,8 +31,10 @@ angular.module('main')
 
           // No cordova? Let's try HTML5 for kicks.
           navigator.geolocation.getCurrentPosition(function gotPositionHTML (position) {
+            $log.log('Got location with navigator:', position);
             defer.resolve(position);
           }, function noPositionHTML(err) {
+            $log.log('Coudlnt get location at all');
             defer.reject({ERROR: error});
           });
         }
