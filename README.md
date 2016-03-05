@@ -13,7 +13,7 @@ Existing 311 data references civil complaints of all kinds - from rodent issues 
 - Web via Python
 - Firebase
 
-# Who is us? 
+## Who is us? 
 - Alex: wants a real job
 - Andrew: weirdly good at math
 - Addu: likes wires and sparky things
