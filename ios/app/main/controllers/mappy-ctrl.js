@@ -7,6 +7,12 @@ angular.module('main')
 
   mappyCtrl.thing = {};
   mappyCtrl.space = {};
+  mappyCtrl.queryer = {};
+
+  mappyCtrl.queryer.limit = 50; // default
+  mappyCtrl.queryer.openorclosed = 'Open';
+  mappyCtrl.queryer.complainies = complainables.GRIPES; // default.
+
 
   // Getting the threeoneones resolved in the main abstract controller.
   mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
@@ -14,8 +20,35 @@ angular.module('main')
   mappyCtrl.opinionMarkers = opinions;
 
 
-  mappyCtrl.testClose = function () {
-    var query = BuildAQuery.boston311Query(10, 'Closed', undefined, undefined);
+  // mappyCtrl.testClose = function () {
+  //   var query = BuildAQuery.boston311Query(10, 'Closed', undefined, undefined);
+  //   ThreeOneOne.getBoston311Data(query).then(function (data) {
+  //     // MarkerFactory.parseDataToMarkers(data);
+  //     // mappyCtrl.space.threeoneones = MarkerFactory.currentMarkers;
+  //     $rootScope.space.threeoneones = data;
+  //     mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+  //   });
+  // };
+  // mappyCtrl.testOpen = function () {
+  //   var query = BuildAQuery.boston311Query(10, 'Open', undefined, undefined);
+  //   ThreeOneOne.getBoston311Data(query).then(function (data) {
+  //     // MarkerFactory.parseDataToMarkers(data);
+  //     // mappyCtrl.space.threeoneones = MarkerFactory.currentMarkers;
+  //     $rootScope.space.threeoneones = data;
+  //     mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+  //   });
+  // };
+
+  mappyCtrl.adjustQuery = function () {
+    var query = BuildAQuery.boston311Query(
+        mappyCtrl.queryer.limit,
+        mappyCtrl.queryer.openorclosed,
+        undefined, // TODO: date me
+        mappyCtrl.queryer.complainies
+      );
+
+    $log.log(query);
+
     ThreeOneOne.getBoston311Data(query).then(function (data) {
       // MarkerFactory.parseDataToMarkers(data);
       // mappyCtrl.space.threeoneones = MarkerFactory.currentMarkers;
@@ -23,15 +56,26 @@ angular.module('main')
       mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
     });
   };
-  mappyCtrl.testOpen = function () {
-    var query = BuildAQuery.boston311Query(10, 'Open', undefined, undefined);
-    ThreeOneOne.getBoston311Data(query).then(function (data) {
-      // MarkerFactory.parseDataToMarkers(data);
-      // mappyCtrl.space.threeoneones = MarkerFactory.currentMarkers;
-      $rootScope.space.threeoneones = data;
-      mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
-    });
+
+  mappyCtrl.queryChangeOpenOrClosed = function (string) {
+    $log.log('I got clicked!');
+    mappyCtrl.queryer.openorclosed = string;
+    mappyCtrl.adjustQuery();
   };
+
+  mappyCtrl.addOrRemoveComplaintTitle = function (string) {
+    var indexy = mappyCtrl.queryer.complainies.indexOf(string);
+    if (indexy > -1) {
+      mappyCtrl.queryer.complainies.splice(indexy, 1);
+    } else {
+      mappyCtrl.queryer.complainies.push(string);
+    }
+    mappyCtrl.adjustQuery();
+  }
+
+  // mappyCtrl.$watch('queryer', function (newVal, oldVal) {
+
+  // });
 
   mappyCtrl.filterables = {};
   mappyCtrl.filterables.withIcons = [];

@@ -2,7 +2,7 @@
 angular.module('main')
 
 .factory('Geo', ['Ref', function (Ref) {
-  return new GeoFire(Ref.child('geo'));
+  return new GeoFire(Ref.child('geo').child('311'));
 }])
 
 // Promise to get current user's geolocation and ( and we could set it in a userGeo ref)
@@ -46,20 +46,20 @@ angular.module('main')
   function getNearByCity (latitude, longitude){
       var defer = $q.defer();
 
-      // fake cuz google started rejecting my api requests....
-      defer.resolve({data: {
-                        results: [{'formatted_address': 'here i am'}]
-                    }});
+      // // fake cuz google started rejecting my api requests....
+      // defer.resolve({data: {
+      //                   results: [{'formatted_address': 'here i am'}]
+      //               }});
 
 
-      // var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude +',' + longitude +'&sensor=true';
-      // $http({method: 'GET', url: url}).
-      //   success(function(data, status, headers, config) {
-      //        defer.resolve({data : data});
-      //   }).
-      //   error(function(data, status, headers, config) {
-      //     defer.reject({error: 'City not found'});
-      //   });
+      var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude +',' + longitude +'&sensor=true';
+      $http({method: 'GET', url: url}).
+        success(function(data, status, headers, config) {
+             defer.resolve({data : data});
+        }).
+        error(function(data, status, headers, config) {
+          defer.reject({error: 'City not found'});
+        });
       return defer.promise;
   }
 

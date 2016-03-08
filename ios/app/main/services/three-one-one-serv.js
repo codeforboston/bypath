@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.factory('ThreeOneOne', function ($log, $http, $q, complainables, Utils, Geo) {
+.factory('ThreeOneOne', function ($log, $http, $q, $rootScope, complainables, Utils, Geo, Ref) {
   //\\
   $log.log('ThreeOneOne Factory in module main ready for action.');
 
@@ -54,12 +54,36 @@ angular.module('main')
 
 
   /*----------  Add key, loc[] to geofire (for Geofire distance helper)  ----------*/
+  var geoLastUpdateRef = Ref.child('updates').child('geo311').child('last');
 
-  var addToGeofire = function (key, locArray) {
-    Geo.set(key, locArray).then(function () {
-      $log.log('added to geofire case id: ' + key + ' at ' + locArray);
+  var checkLastUpdated = function () {
+    geoLastUpdateRef.once('value', function (snap) {
+      var snapVal = snap.val();
+      // firebase timestamp is in milliseconds since unix epoc.
+      var aDay = 24 * 60 * 60 * 1000; // milliseconds in a day
+      var now = parseInt(Firebase.ServerValue.TIMESTAMP);
+      var withinADay = now - aDay;
+      if (snapVal.time < withinADay) {
+        $log.log('updating cuz it aint fresh');
+        return true;
+      } else {
+        $log.log('geo311 data is fresh enough; not updateing');
+      }
     });
   };
+
+  var addToGeofire = function (key, locArray) {
+
+    if (checkLastUpdated()) {
+      geoLastUpdateRef.set({time: Firebase.ServerValue.TIMESTAMP});
+
+      Geo.set(key, locArray).then(function () {
+        $log.log('added to geofire case id: ' + key + ' at ' + locArray);
+      });
+    }
+
+  };
+
 
   return {
     getBoston311Data: getBoston311Data,

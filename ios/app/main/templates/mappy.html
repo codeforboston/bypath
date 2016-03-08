@@ -66,23 +66,38 @@
 
   <!-- <ui-view name="filterer" class="filterer-container"></ui-view> -->
   <div class="filterer-container">
+<!--   <div class="row padding">
+    <label for="" class="item item-input">
+      <input type="text" ng-model="mappyCtrl.queryer.limit">
+    </label>
+  </div> -->
   <div class="row text-center padding">
     <div class="col-25" ng-repeat='case in mappyCtrl.filterables.withIcons'>
-
+      <button class="button button-positive " ng-class="{'button-outline' : mappyCtrl.queryer.complainies.indexOf(case.title) > -1, 'button-clear' : mappyCtrl.queryer.complainies.indexOf(case.title) === -1}" ng-click="mappyCtrl.addOrRemoveComplaintTitle(case.title)">
         <img ng-src="{{case.icon}}" alt="">
-
+      </button>
 
     </div>
   </div>
-  <div class="test" style="height: 40px;" >
-    {{ mainCtrl.testes }}
-    <button class="button button-large button-assertive" ng-click="mappyCtrl.testClose()">
+  <div class="row text-center" style="" >
+    <div class="col-50 padding">
+    <button class="button button-small button-assertive button-block" ng-class="{'button-outline' : mappyCtrl.queryer.openorclosed !== 'Closed'}"  ng-click="mappyCtrl.queryChangeOpenOrClosed('Closed')">
       Closed
     </button>
-    <button class="button button-large button-positive" ng-click="mappyCtrl.testOpen()">
+    </div>
+    <div class="col-50 padding">
+    <button class="button button-small button-balanced button-block"  ng-class="{'button-outline' : mappyCtrl.queryer.openorclosed !== 'Open'}" ng-click="mappyCtrl.queryChangeOpenOrClosed('Open')">
       Open
     </button>
+    </div>
   </div>
+
+<!--   <div class="row padding text-center ">
+    <button class="button button-small button-balanced button-block button-icon-left">
+      <i class="icon ion-aperture"></i>
+      Filter em!
+    </button>
+  </div> -->
   </div>
 
 
