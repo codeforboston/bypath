@@ -3,25 +3,19 @@
   <ion-content class="padding">
 
 
+  <!-- should be able to click image (if one already taken) to retake -->
+  <!-- set image by taking a picture which is not saved to photo library -->
+  <div class="padding picture-button-wrapper" ng-click="takePhoto()">
 
-<!--     <ion-list>
-      <div class="card" ng-repeat="opinion in opinions">
-        <div class="item item-text-wrap">
-          <p>
-            {{ opinion.text }}  <br>
-            <span class="text-muted">{{ opinion.location.address }}</span>
-          </p>
-        </div>
-      </div>
-    </ion-list> -->
-
-  <div class="padding picture-button-wrapper" >
-    <div class="picture-button" ng-click="getPhoto()">
-
+    <div class="picture-button" ng-if="where.image === 'none'">
         <p class="picture-icon">
           <i class="icon ion-camera"></i>
         </p>
+    </div>
 
+    <!-- preview if there is an image (clicking image should also be retake) -->
+    <div class="picture-image" ng-if="!(where.image === 'none')">
+      <img data-ng-src="{{where.image_src}}" >
     </div>
   </div>
 
@@ -38,13 +32,19 @@
     <label class="item item-input">
       <textarea ng-model="msg.text" placeholder="A brief descripton of what's up."></textarea>
     </label>
-    <button class="button button-block button-balanced" ng-click="addOpinion(msg.text)">
-      Add it!
+    <button class="button button-block button-balanced button-icon-left" ng-click="addOpinion(msg.text)">
+      <i class="icon ion-plus-round"></i>
+      Add your advice
     </button>
+    <a href="tel:+1-617-635-4500" class="button button-block button-positive button-outline" >
+      <i class="icon ion-ios-telephone"></i>
+      Call 311
+    </a>
   </div>
 
+
   <!-- https://www.airpair.com/ionic-framework/posts/ionic-firebase-camera-app -->
-  <div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
+<!--   <div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
               <div class="col col-25" ng-if="$index < images.length">
                   <img ng-src="data:image/jpeg;base64,{{images[$index].image}}" width="100%" />
               </div>
@@ -58,7 +58,7 @@
                   <img ng-src="data:image/jpeg;base64,{{images[$index + 3].image}}" width="100%" />
               </div>
           </div>
-
+ -->
 
   </ion-content>
 </ion-view>

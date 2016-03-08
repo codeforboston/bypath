@@ -1,6 +1,12 @@
 <ion-view view-title="{{ listyCtrl.viewTitle }}" >
   <ion-content>
 
+<!--     <div class="test">
+      {{listyCtrl.test.location | json }}
+      <hr>
+      {{listyCtrl.test.address | json }}
+    </div> -->
+
     <!-- content goes here -->
     <!-- SLIDEABLE -->
     <ion-slide-box active-slide="0" class="" show-pager="false" on-slide-changed="listyCtrl.slideChanged(index)">
@@ -9,33 +15,55 @@
       <ion-slide>
         <div class="row padding " style="width: 100%; margin-bottom: -20px;">
           <p class="text-muted" style="margin-left: auto; margin-right: auto;">
-            Slide right to see opinions&nbsp;
+            Slide right to see public advisories&nbsp;
             <i class="icon ion-arrow-right-c"></i>
           </p>
         </div>
         <ion-list ng-repeat="complaint in listyCtrl.complaints">
           <div class="card padding" style="margin-bottom: 0px;">
-            <div class="item item-text-wrap item-button-right">
+            <div class="item item-text-wrap item-icon-right">
 
               <h2><img ng-src="{{complaint.icon}}">&nbsp;{{complaint.description}}</h2>
 
-              <span style="color: lightgray; font-size:.8em;">{{complaint.open_dt}}</span>
-
               <p>{{complaint.address}}</p>
+              <p class="type type-muted type-small">
+                {{listyCtrl.distanceToHere(complaint.location) | number:2}} miles away
+              </p>
 
-              <div class="buttons" style="display: block;">
-                <button class="button button-balanced button-outline" ng-click="listyCtrl.upvote(complaint.id)" style="margin-bottom: 5px;">
+              <span class="type type-balanced type-small">Opened: </span>
+                <span class="type type-muted type-small">{{complaint.open_dt}}</span>
+
+              <span ng-if="complaint.closed_dt">
+              <br>
+
+              <span class="type type-assertive type-small">Closed: </span>
+                <span class="type type-muted type-small">{{complaint.closed_dt}}</span>
+
+              </span>
+
+
+
+
+              <div class="button-bar" style="margin-bottom: -10px;">
+                <a class="button button-icon-left button-balanced button-clear" ng-click="listyCtrl.upvote(complaint.id)">
                   <i class="icon ion-arrow-up-b"></i>
-                  <span>{{ listyCtrl.getComplaintUpvotes(complaint.id).$value || 0 }}</span>
-
-                </button>
-                <br>
-                <button class="button button-assertive button-outline" ng-click="listyCtrl.downvote(complaint.id)">
+                  {{ listyCtrl.getComplaintUpvotes(complaint.id).$value || 0 }}
+                </a>
+                <a class="button button-icon-left button-assertive button-clear" ng-click="listyCtrl.downvote(complaint.id)">
                   <i class="icon ion-arrow-down-b"></i>
-                  <span>{{ listyCtrl.getComplaintDownvotes(complaint.id).$value || 0 }}</span>
+                  {{ listyCtrl.getComplaintDownvotes(complaint.id).$value || 0 }}
+                </a>
 
-                </button>
+                 <a href="tel:+1-617-635-4500" class="button button-icon-left button-positive button-clear" >
+                  <i class="icon ion-ios-telephone"></i>
+
+                </a>
               </div>
+
+
+              <i class="icon ion-chevron-right" ui-sref="main.complaintDetailListy({ complaintId: complaint.id })"></i>
+
+
 
             </div>
           </div>
@@ -44,27 +72,32 @@
 
       <!-- SLIDE 1: opinions -->
       <ion-slide>
-        <div class="row padding" style="width: 100%; margin-bottom: -20px;">
+        <div class="row padding" style="width: 100%; ">
           <p class="text-muted" style="margin-left: auto; margin-right: auto;">
             <i class="icon ion-arrow-left-c"></i>&nbsp;
-            Slide left to see complaints
+            Slide left to see official 311 complaints
           </p>
-          <div style="display: inline-block; margin-left: auto; margin-right: auto;">
-            <button class="button button-small button-icon-left button-balanced" ui-sref="main.opinionate">
-              <i class="icon ion-plus-round"></i>
-              Add an opinion
-            </button>
-          </div>
+
+
         </div>
-        <ion-list ng-repeat="opinion in listyCtrl.opinions">
+        <div class="row padding" style="margin-bottom: -20px;">
+        <button class="button button-block button-small button-icon-left button-balanced" ui-sref="main.opinionate">
+          <i class="icon ion-plus-round"></i>
+          Add an advisory
+        </button>
+        </div>
+        <ion-list ng-repeat="opinion in listyCtrl.opinions | orderBy:'-time'">
           <div class="card padding" style="margin-bottom: 0px;">
-            <div class="item item-text-wrap item-button-right">
+            <div class="item item-text-wrap item-icon-right">
 
             <h2><img ng-src="main/assets/images/snowflake-icon.png" style="height: 14px; width: auto;">&nbsp;{{opinion.text}}</h2>
 
             <span style="color: lightgray; font-size:.8em;">{{opinion.time}}</span>
 
             <p>{{opinion.location.address}}</p>
+
+            <img ng-if="opinion.image !== 'none'" data-ng-src="data:image/jpeg;base64,{{opinion.image}}" style="height: auto; width: 100%; margin-top: 10px;">
+         <!--    <img ng-if="opinion.image === 'none'" ng-src="{{listyCtrl.test.test_img_src}}" style="height: auto; width: 100%; margin-top: 10px;"> -->
 
             <!--   <div class="buttons" style="display: block;">
                 <button class="button button-balanced button-outline" ng-click="listyCtrl.upvote(complaint.id)" style="margin-bottom: 5px;">
@@ -77,8 +110,9 @@
                   <i class="icon ion-arrow-down-b"></i>
                 </button>
               </div> -->
-
+             <i class="icon ion-chevron-right" ui-sref="main.opinionDetailListy({ opinionId: opinion.$id })"></i>
             </div>
+
           </div>
 
         <ion-list>

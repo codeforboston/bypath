@@ -16,7 +16,7 @@ angular.module('main', [
 // for the camera
 // http://learn.ionicframework.com/formulas/cordova-camera/
 .config(function($compileProvider){
-  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel|data):/); // data is safe!
 })
 .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -30,6 +30,26 @@ angular.module('main', [
       templateUrl: 'main/templates/tabs.html',
       controller: 'MainCtrl as mainCtrl',
       resolve: {
+        here: function (Geolocation) {
+          return Geolocation.get().then(function(loc) {
+            return Geolocation.getNearByCity(loc.coords.latitude, loc.coords.longitude).then(function (add) {
+              return {location: loc, address: add.data.results[0]['formatted_address']}
+            });
+          });
+        },
+            // returns as -->
+            // here: {
+            //   location: {
+            //     coords: {
+                  // altitude: null
+                  // altitudeAccuracy: null
+                  // heading: null
+                  // latitude: 42.40128642893472
+                  // longitude: -71.12408442000427
+                  // speed: null
+            //   },
+            //   address: '47 paulina st stomervilel'
+            // }
         threeoneones: function (ThreeOneOne) {
           var query = ThreeOneOne.buildQuery(50, undefined, undefined);
           return ThreeOneOne.get311(query);
@@ -48,13 +68,72 @@ angular.module('main', [
           }
         }
       })
-      .state('main.listDetail', {
-        url: '/list/detail',
+      .state('main.opinionDetailMappy', {
+        url: 'map/opinion/:opinionId',
+        views: {
+          'tab-mappy': {
+            templateUrl: 'main/templates/show.html',
+            controller: 'ShowCtrl as showCtrl',
+            resolve: {
+              showResource: function () {
+                return 'opinion';
+              },
+              resourceObj: function ($stateParams) {
+                return $stateParams.opinionId;
+              }
+            }
+          },
+        }
+      })
+      .state('main.opinionDetailListy', {
+        url: 'list/opinion/:opinionId',
         views: {
           'tab-list': {
-            templateUrl: 'main/templates/list-detail.html'
-            // controller: 'SomeCtrl as ctrl'
-          }
+            templateUrl: 'main/templates/show.html',
+            controller: 'ShowCtrl as showCtrl',
+            resolve: {
+              showResource: function () {
+                return 'opinion';
+              },
+              resourceObj: function ($stateParams) {
+                return $stateParams.opinionId;
+              }
+            }
+          },
+        }
+      })
+      .state('main.complaintDetailMappy', {
+        url: 'map/complaint/:complaintId',
+        views: {
+          'tab-mappy': {
+            templateUrl: 'main/templates/show.html',
+            controller: 'ShowCtrl as showCtrl',
+            resolve: {
+              showResource: function () {
+                return 'complaint';
+              },
+              resourceObj: function ($stateParams, $filter, threeoneones) {
+                return $filter('filter')(threeoneones, function (a) {return a.id == $stateParams.complaintId })[0];
+              }
+            }
+          },
+        }
+      })
+      .state('main.complaintDetailListy', {
+        url: 'list/complaint/:complaintId',
+        views: {
+          'tab-list': {
+            templateUrl: 'main/templates/show.html',
+            controller: 'ShowCtrl as showCtrl',
+            resolve: {
+              showResource: function () {
+                return 'complaint';
+              },
+              resourceObj: function ($stateParams, $filter, threeoneones) {
+                return $filter('filter')(threeoneones, function (a) {return a.id == $stateParams.complaintId })[0];
+              }
+            }
+          },
         }
       })
       .state('main.debug', {

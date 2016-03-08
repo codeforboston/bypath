@@ -24,6 +24,14 @@
       color: lightgray;
     }
   }
+
+  .picture-image {
+    img {
+      // @include vertical-align();
+      height: 300px;
+      width: auto;
+    }
+  }
 }
 
 

@@ -1,0 +1,41 @@
+//
+.type {
+  &.type-small {
+    font-size: .7em;
+  }
+  &.type-biggest {
+    font-size: 64px;
+  }
+
+  // COLORS
+  &.type-standard {
+    color: $light;
+  }
+  &.type-balanced {
+    color: $balanced;
+  }
+  &.type-julia-green {
+    color: #00aa16;
+  }
+  &.type-positive {
+    color: $positive;
+  }
+  &.type-serious {
+    color: $dark;
+  }
+  &.type-stable {
+    color: darken($stable, 10%);
+  }
+  &.type-assertive {
+    color: $assertive;
+  }
+  &.type-calm {
+    color: $calm;
+  }
+  &.type-muted {
+    color: gray;
+  }
+  &.type-dark {
+    color: $dark;
+  }
+}

@@ -6,37 +6,38 @@ angular.module('main')
 }])
 
 
-// http://learn.ionicframework.com/formulas/cordova-camera/
-.factory('Camera', ['$q', function($q) {
 
-   var options = {
-       quality : 75,
-       // destinationType : Camera.DestinationType.DATA_URL,
-       // sourceType : Camera.PictureSourceType.CAMERA,
-       // allowEdit : true,
-       // encodingType: Camera.EncodingType.JPEG,
-       // popoverOptions: CameraPopoverOptions,
-       targetWidth: 500,
-       targetHeight: 500,
-       saveToPhotoAlbum: false
-   };
+// // http://learn.ionicframework.com/formulas/cordova-camera/
+// .factory('CameraFactory', ['$q', function($q) {
 
-  var getPicture = function(options) {
-   var q = $q.defer();
+//    // var options = {
+//    //     quality : 75,
+//    //     // destinationType : Camera.DestinationType.DATA_URL,
+//    //     // sourceType : Camera.PictureSourceType.CAMERA,
+//    //     // allowEdit : true,
+//    //     // encodingType: Camera.EncodingType.JPEG,
+//    //     // popoverOptions: CameraPopoverOptions,
+//    //     targetWidth: 500,
+//    //     targetHeight: 500,
+//    //     saveToPhotoAlbum: false
+//    // };
 
-   navigator.camera.getPicture(function(result) {
-     // Do any magic you need
-     q.resolve(result);
-   }, function(err) {
-     q.reject(err);
-   }, options);
+//   var getPicture = function(options) {
+//    var q = $q.defer();
 
-   return q.promise;
-  };
+//    navigator.camera.getPicture(function(result) {
+//      // Do any magic you need
+//      q.resolve(result);
+//    }, function(err) {
+//      q.reject(err);
+//    }, options);
 
-  return {
-    getPicture: getPicture
-  };
+//    return q.promise;
+//   };
+
+//   return {
+//     getPicture: getPicture
+//   };
 
   // $scope.uploadPicture = function() {
   //        var options = {
@@ -59,7 +60,7 @@ angular.module('main')
   //        });
   //    }
 
-}])
+// }])
 
 .factory('Utils', function ($log) {
 

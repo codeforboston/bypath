@@ -7,7 +7,22 @@
       <img ng-src="main/assets/images/boston311.png" style="width: 20px; height: 20px">
   </div> -->
 
+<!--   <div class="row padding" style="position: relative; top: 50; width: 80%;">
 
+  <div class="padding" style="position: absolute; bottom: 0; left: 0; z-index: 10; background-color: white; border-bottom-left-radius: 20px;">
+    <p class="text-dark">
+      <span><img ng-src="{{ mappyCtrl.map.infoIcon}}" alt="" style="max-height: 14px;">
+    <strong>
+
+      {{ mappyCtrl.map.infoDescription }}
+      </strong></span><br>
+      <span style="color: gray;">
+      {{ mappyCtrl.map.infoAddress }}
+      </span>
+    </p>
+
+  </div>
+  </div> -->
 
   <!-- required scss in _mappy.scss -->
   <ui-gmap-google-map
@@ -16,6 +31,7 @@
   draggable='false'
   disableDefaultUI="mappyCtrl.map.disableDefaultUI"
   options="mappyCtrl.map.options"
+  data-tap-disabled="true"
   >
  <!--    <ui-gmap-window
       show="mappyCtrl.map.window.show"
@@ -46,22 +62,7 @@
 
   </ui-gmap-google-map>
 
-  <div class="row padding" style="position: relative; bottom: 50; width: 80%;">
 
-  <div class="padding" style="position: absolute; bottom: 0; left: 0; z-index: 10; background-color: white; border-bottom-left-radius: 20px;">
-    <p class="text-dark">
-      <span><img ng-src="{{ mappyCtrl.map.infoIcon}}" alt="" style="max-height: 14px;">
-    <strong>
-
-      {{ mappyCtrl.map.infoDescription }}
-      </strong></span><br>
-      <span style="color: gray;">
-      {{ mappyCtrl.map.infoAddress }}
-      </span>
-    </p>
-
-  </div>
-  </div>
 
 
 
