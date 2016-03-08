@@ -3,14 +3,17 @@ from Bot import *
 from IrcEndpoint import *
 
 import FirebaseAPI
+import Boston311
+from datetime import datetime, timedelta
 
 bot = None
 
 def main():
     CreateBot()
     #ConnectToIRC()
-    FB_Test()
+    #FB_Test()
     #ConnectToFacebook()
+    B311Test()
 
     while 1:
         pass
@@ -21,6 +24,9 @@ def CreateBot():
 
 def FB_Test():
     FirebaseAPI.Run()
+
+def B311Test():
+    three = Boston311.Boston311Endpoint()
 
 def ConnectToIRC():
     global bot

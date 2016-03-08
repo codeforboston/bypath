@@ -2,13 +2,18 @@ import os.path
 import json
 from firebase import firebase
 
-fb_url = 'https://snowranger.firebaseio.com/'
+fb_url = 'https://alexdev.firebaseio.com/'
 
 def getFBApplication():
     return firebase.FirebaseApplication(fb_url, None)
 
 def __getData(entry):
-    return {'latitude': entry['latitude'], 'longitude': entry['longitude'], 'geo-coords':entry['geocoded_location'], 'type': entry['type']}
+    lat = entry['latitude']
+    lon = entry['longitude']
+    geo = entry['geocoded_location']
+    type = entry['type']
+
+    return {'latitude': lat, 'longitude': lon, 'geo-coords': geo, 'type': type}
 
 class FB:
     last_checked_key = 'last_checked'
@@ -16,6 +21,9 @@ class FB:
 
     def __init__(self):
         self.firebaseApplication = getFBApplication()
+
+    def post(self, path, data):
+        self.firebaseApplication.post(path, data)
 
     def getLastChecked(self, path):
         return self.firebaseApplication.get(path + '/' + self.last_checked_key, None) or 0
