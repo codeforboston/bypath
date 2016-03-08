@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('ListyCtrl', function ($scope, $rootScope, $log, Ref, opinions, $firebaseArray, Geolocation, Geo, here) {
+.controller('ListyCtrl', function ($scope, $rootScope, $log, Ref, opinions, $firebaseArray, MarkerFactory, Geolocation, Geo, here) {
 
   var listyCtrl = this;
 
@@ -26,7 +26,12 @@ angular.module('main')
   listyCtrl.test.test_img_src = 'main/assets/images/snowflake.png';
 
   // Root root resolution!
-  listyCtrl.complaints = $rootScope.threeoneones;
+  // listyCtrl.complaints = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+  $rootScope.$watch('space.threeoneones', function updateList (newVal, oldVal) {
+    $log.log('rootscope.space.threeoneones change registered in listyCtrl!');
+    listyCtrl.complaints = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones); //$rootScope.space.threeoneones;
+  });
+
   // Get resolved opinions, too.
   listyCtrl.opinions = opinions;
 

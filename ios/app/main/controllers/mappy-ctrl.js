@@ -1,16 +1,38 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($rootScope, MainCtrl, $state, $log, Geolocation, Utils, complainables, opinions, here) {
+.controller('MappyCtrl', function ($rootScope, $state, $log, Geolocation, Utils, MarkerFactory, ThreeOneOne, BuildAQuery, complainables, opinions, here) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
 
   mappyCtrl.thing = {};
+  mappyCtrl.space = {};
 
   // Getting the threeoneones resolved in the main abstract controller.
-  mappyCtrl.threeOneOneMarkers = $rootScope.threeoneones;
+  mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
   // Set arbitrary ids for opinion markers
   mappyCtrl.opinionMarkers = opinions;
+
+
+  mappyCtrl.testClose = function () {
+    var query = BuildAQuery.boston311Query(10, 'Closed', undefined, undefined);
+    ThreeOneOne.getBoston311Data(query).then(function (data) {
+      // MarkerFactory.parseDataToMarkers(data);
+      // mappyCtrl.space.threeoneones = MarkerFactory.currentMarkers;
+      $rootScope.space.threeoneones = data;
+      mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+    });
+  };
+  mappyCtrl.testOpen = function () {
+    var query = BuildAQuery.boston311Query(10, 'Open', undefined, undefined);
+    ThreeOneOne.getBoston311Data(query).then(function (data) {
+      // MarkerFactory.parseDataToMarkers(data);
+      // mappyCtrl.space.threeoneones = MarkerFactory.currentMarkers;
+      $rootScope.space.threeoneones = data;
+      mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+    });
+  };
+
   mappyCtrl.filterables = {};
   mappyCtrl.filterables.withIcons = [];
   mappyCtrl.filterables.case_titles = complainables.GRIPES;
@@ -25,7 +47,7 @@ angular.module('main')
     mappyCtrl.filterables.withIcons.push(obj);
   }
 
-  mappyCtrl.mainCtrl_test = MainCtrl.testes;
+  // mappyCtrl.mainCtrl_test = MainCtrl.testes;
 
   // mappyCtrl.adjustCases = function (caseTitle) {
 

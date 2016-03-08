@@ -29,6 +29,8 @@ angular.module('main', [
       abstract: true,
       templateUrl: 'main/templates/tabs.html',
       controller: 'MainCtrl as mainCtrl',
+      // Resolve sets these vars as a dependency for the view and controller load, allowing
+      // the vars to be injected into the controller just like a factory.
       resolve: {
         here: function (Geolocation) {
           return Geolocation.get().then(function(loc) {
@@ -50,9 +52,12 @@ angular.module('main', [
             //   },
             //   address: '47 paulina st stomervilel'
             // }
-        threeoneones: function (ThreeOneOne) {
-          var query = ThreeOneOne.buildQuery(50, 'Open', undefined, undefined);
-          return ThreeOneOne.get311(query);
+
+        // Should return **data** (not markers), because we'll mess around with which markers get
+        // shown as per user-oriented filtering.
+        threeoneones: function (ThreeOneOne, BuildAQuery) {
+          var query = BuildAQuery.boston311Query(50, 'Open', undefined, undefined);
+          return ThreeOneOne.getBoston311Data(query);
         },
         opinions: function (Opinions) {
           return Opinions.index();
@@ -68,6 +73,9 @@ angular.module('main', [
           }
         }
       })
+      // This is kind of an ugly way to handle navigation that is redunandant for clicking on a
+      // marker on the map -> resource show page && clicking on an item in the list view -> resource show page.
+      // Sorry.
       .state('main.opinionDetailMappy', {
         url: 'map/opinion/:opinionId',
         views: {

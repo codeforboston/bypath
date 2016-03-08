@@ -55,7 +55,7 @@
 
     <!-- 311 markers -->
     <ui-gmap-markers
-      models="mappyCtrl.threeOneOneMarkers"
+      models="mappyCtrl.space.threeOneOneMarkers"
       coords="'location'"
       icon="'icon'"
       events="mappyCtrl.map.markersEvents311"
@@ -75,9 +75,13 @@
     </div>
   </div>
   <div class="test" style="height: 40px;" >
-    {{ mappyCtrl.mainCtrl_test }}
-    <br>
     {{ mainCtrl.testes }}
+    <button class="button button-large button-assertive" ng-click="mappyCtrl.testClose()">
+      Closed
+    </button>
+    <button class="button button-large button-positive" ng-click="mappyCtrl.testOpen()">
+      Open
+    </button>
   </div>
   </div>
 
