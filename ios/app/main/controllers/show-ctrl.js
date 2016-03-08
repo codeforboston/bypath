@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('ShowCtrl', function ($rootScope, $log, $filter, showResource, Ref, $firebaseObject, $firebaseArray, resourceObj, opinions, here) {
+.controller('ShowCtrl', function ($rootScope, $stateParams, $log, $filter, showResource, Ref, resourceObj, $firebaseObject, $firebaseArray, opinions, here) {
 
   $log.log('Hello from your Controller: ShowCtrl in module main:. This is your controller:', this);
 
@@ -11,9 +11,12 @@ angular.module('main')
 
   showCtrl.data = {};
 
-  // This demonstrates why it's important to have standardized data sets.
+  // This is why it's important to have standardized data sets.
+  // this sucks.
   // TODO: Standardize dem objects.
   if (showCtrl.resource.type === 'complaint') {
+
+    $log.log(resourceObj);
 
     var peanutGalleryRef = Ref.child('comments').child(resourceObj.id); // just id cuz its a 311 obj
     var comments = $firebaseArray(peanutGalleryRef);
@@ -45,6 +48,8 @@ angular.module('main')
     showCtrl.resource.address = resourceObj.address;
 
   } else {
+
+
 
     var peanutGalleryRef = Ref.child('comments').child(resourceObj); // $id cuz its a firebase thingey
     var comments = $firebaseArray(peanutGalleryRef);

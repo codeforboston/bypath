@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('MainCtrl', function ($rootScope, $log, $timeout, threeoneones, Geolocation) {
+.controller('MainCtrl', function ($rootScope, $log, $timeout, MarkerFactory, BuildAQuery, threeoneones, ThreeOneOne, Geolocation) {
 
   // The 311-s are *resolved* in main.js, which means they load before anything else.
   // Here, they've been passed in through the controller arg `threeoneones` and are
@@ -8,8 +8,18 @@ angular.module('main')
   // $scope which is availabe throughout the module.
   // This way, we only have to make the API call once, and the data is available anywhere
   // we want it in the app.
-  $rootScope.threeoneones = threeoneones;
+  $rootScope.space = {};
+  $rootScope.space.threeoneones = threeoneones;
 
+  var mainCtrl = this;
+  mainCtrl.testes = 'work!';
+
+  mainCtrl.testFilter = function () {
+    var query = BuildAQuery.boston311Query(10, 'Closed', undefined, undefined);
+    ThreeOneOne.getBoston311Data(query).then(function (data) {
+      $rootScope.space.threeoneones = data;
+    });
+  };
 
   // $rootScope.location = {};
   // $rootScope.location.position = {};

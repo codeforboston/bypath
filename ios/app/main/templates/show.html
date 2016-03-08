@@ -39,7 +39,9 @@
       <p class="type type-balanced">
         What do you think about this?
       </p>
-      <input type="text" ng-model="showCtrl.peanuts.newComment">
+      <label for="" class="item item-input">
+        <textarea type="text" ng-model="showCtrl.peanuts.newComment" placeholder="Have your say."></textarea>
+      </label>
       <button class="button button-block button-balanced button-icon-left" ng-click="showCtrl.addComment(showCtrl.peanuts.newComment)">
         <i class="icon ion-plus-round"></i>
         Submit comment

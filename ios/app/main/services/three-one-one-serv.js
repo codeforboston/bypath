@@ -1,70 +1,40 @@
 'use strict';
 angular.module('main')
-.factory('ThreeOneOne', function ($log, $http, $q, complainables, Utils, Geo) {
+.factory('ThreeOneOne', function ($log, $http, $q, $rootScope, complainables, Utils, Geo, Ref) {
   //\\
   $log.log('ThreeOneOne Factory in module main ready for action.');
 
-  // Set up query string for grabbing multiple complaint types at once.
-  // -------------------------------------------------------------------------------
-  // should accept: complaintTypes []
-  //              : open_dt string
-  //              : limit integer
-  //              :
 
-  var buildQueryString = function (limit, status, opened_date, complaintTypes) {
+  /*----------  Testing to see what most commom complaint types are  ----------*/
 
-    // Set defaults if no val passed.
-    limit = typeof limit !== 'undefined' ? limit : 100;
-    status = typeof status !== 'undefined' ? status : 'Either'; // default to include either open or closed
-    opened_date = typeof opened_date !== 'undefined' ? opened_date : '2016-03-01T00:00:00';
-    complaintTypes = typeof complaintTypes !== 'undefined' ? complaintTypes : complainables.GRIPES;
+  var uniqueThreeOneOneGripes = function () {
+    var defer = $q.defer();
 
-    // Base url.
-    var bostonUrl = 'https://data.cityofboston.gov/resource/awu8-dc52.json'
+    var bostonUrl = 'https://data.cityofboston.gov/resource/awu8-dc52.json';
+    var stringer = '?$limit=10000&$select=case_title,COUNT(case_title)&$group=case_title';
+    var queryable = bostonUrl + stringer;
 
-    // Let's build a query string!
-    var queryString = "";
-    queryString += "&$where=";
-
-    // Status picker.
-    if (status === 'Open'){
-      queryString += "case_status = 'Open'  AND ";
-    }
-    else if (status === 'Closed') {
-      queryString += "case_status = 'Closed'  AND ";
-    }
-    else {
-      // queryString += "case_status = 'Open'";
-    }
-
-
-
-    queryString += "open_dt > '" + opened_date + "'";
-    // queryString += " AND STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Park Maintenance')";
-    queryString += " AND ("
-
-    // STARTS_WITH(case_title, 'Request For Snow Plowing') OR STARTS_WITH(case_title, 'Ground Maintenance')
-    for (var i = 0; i < complaintTypes.length; i++) {
-      var type = complaintTypes[i];
-      var caseAttr = 'case_title';
-      queryString += "STARTS_WITH(" + caseAttr + ", '" + type + "')"
-      // if there are more than one complaint types and given type is not last in the array, then append an OR
-      if (complaintTypes.length > 1 && complaintTypes.indexOf(type) !== complaintTypes.length - 1) {
-        queryString += " OR ";
-      } else {
-        queryString += ")";
+    $http({
+      method: 'GET',
+      url: queryable,
+      headers: {
+        'X-App-Token': 'zdkQROnSL8UlsDCjuiBcc3VHq' //'k7chiGNz0GPFKd4dS03IEfKuE'
       }
-    }
+    }).success(function (data, status, headers, config) {
+        defer.resolve({data: data});
+      })
+      .error(function (data, status, headers, config) {
+        defer.reject({status: status, data: data});
+      });
 
-    var orderer = "&$order=open_dt DESC";
 
-    var queryable = bostonUrl + "?$limit=" + limit + queryString + orderer;
-      //\\
-      $log.log("full query url encoded:", queryable);
-    return queryable;
+    return defer.promise;
   };
 
-  function asyncHTTP(queryable) {
+
+  /*----------  Async http method to return json data  ----------*/
+
+  function getBoston311Data(queryable) {
     var defer = $q.defer();
 
     $http({
@@ -82,71 +52,44 @@ angular.module('main')
     return defer.promise;
   };
 
-  var addToGeofire = function (key, locArray) {
-    Geo.set(key, locArray).then(function () {
-      $log.log('added to geofire case id: ' + key + ' at ' + locArray);
+
+  /*----------  Add key, loc[] to geofire (for Geofire distance helper)  ----------*/
+  var geoLastUpdateRef = Ref.child('updates').child('geo311').child('last');
+
+  var checkLastUpdated = function () {
+    geoLastUpdateRef.once('value', function (snap) {
+      var snapVal = snap.val();
+      // firebase timestamp is in milliseconds since unix epoc.
+      var aDay = 24 * 60 * 60 * 1000; // milliseconds in a day
+      var now = parseInt(Firebase.ServerValue.TIMESTAMP);
+      var withinADay = now - aDay;
+      if (snapVal.time < withinADay) {
+        $log.log('updating cuz it aint fresh');
+        return true;
+      } else {
+        $log.log('geo311 data is fresh enough; not updateing');
+      }
     });
   };
 
-  var getBoston311Data = function(query) {
+  var addToGeofire = function (key, locArray) {
 
-    var defer = $q.defer();
-    // var query = buildQueryString(complaintTypes);
+    if (checkLastUpdated()) {
+      geoLastUpdateRef.set({time: Firebase.ServerValue.TIMESTAMP});
 
-    // This will hold an array object information for each complaint type.
-    // We're going to return this so the controller can populate markers on the map.
-    // [{description: 'People are annoying',
-    //   location: {
-    //     latitude: 42.123,
-    //     longitude: 71.12312
-    //   },
-    //   address: "51 Market Street, Cambride, MA"
-    // },{...}]
-    var boston311MarkerInfos = [];
-
-    asyncHTTP(query)
-      .then(function successful311Query(data) {
-        for (var i = 0; i < data.data.length; i++) {
-
-          // for geofire
-          var locArray = [
-            parseFloat(data.data[i].latitude),
-            parseFloat(data.data[i].longitude)
-          ];
-          addToGeofire(data.data[i].case_enquiry_id, locArray);
-
-          // for markers
-          var loc = {
-              latitude: data.data[i].latitude,
-              longitude: data.data[i].longitude
-          };
-
-          boston311MarkerInfos.push({
-              id: data.data[i].case_enquiry_id,
-
-              description: data.data[i].case_title,
-              location: loc,
-              address: data.data[i].location,
-              case_status: data.data[i].case_status,
-              open_dt: data.data[i].open_dt,
-              closed_dt: data.data[i].closed_dt
-          });
-        }
-        var boston311MarkerInfos_WithIcons = Utils.setIcons(boston311MarkerInfos);
-
-        defer.resolve(boston311MarkerInfos_WithIcons);
-      }, function error311Query(err) {
-        $log.log("Shit! Error. Status: " + err.status + "\n" + err.data);
-        defer.reject({error: err});
+      Geo.set(key, locArray).then(function () {
+        $log.log('added to geofire case id: ' + key + ' at ' + locArray);
       });
+    }
 
-    return defer.promise;
   };
 
-  // Angular Factories, being singletons, have to return a thing.
+
   return {
-    get311: getBoston311Data,
-    buildQuery: buildQueryString
+    getBoston311Data: getBoston311Data,
+    addToGeofire: addToGeofire,
+    // buildQuery: buildQueryString,
+    uniqueCases: uniqueThreeOneOneGripes
     // , get311Fake: getFake311Data
   };
 });

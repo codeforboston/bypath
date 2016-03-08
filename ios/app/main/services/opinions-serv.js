@@ -11,7 +11,6 @@ angular.module('main')
     index: function () {
       return opinions;
     }
-
   };
 
 });

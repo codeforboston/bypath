@@ -1,16 +1,107 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($rootScope, $state, $log, Geolocation, opinions) {
+.controller('MappyCtrl', function ($rootScope, $state, $log, Geolocation, Utils, MarkerFactory, ThreeOneOne, BuildAQuery, complainables, opinions, here) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
+
   mappyCtrl.thing = {};
+  mappyCtrl.space = {};
+  mappyCtrl.queryer = {};
+
+  mappyCtrl.queryer.limit = 50; // default
+  mappyCtrl.queryer.openorclosed = 'Open';
+  mappyCtrl.queryer.complainies = complainables.GRIPES; // default.
+
 
   // Getting the threeoneones resolved in the main abstract controller.
-  mappyCtrl.threeOneOneMarkers = $rootScope.threeoneones;
+  mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
   // Set arbitrary ids for opinion markers
   mappyCtrl.opinionMarkers = opinions;
 
+
+  // mappyCtrl.testClose = function () {
+  //   var query = BuildAQuery.boston311Query(10, 'Closed', undefined, undefined);
+  //   ThreeOneOne.getBoston311Data(query).then(function (data) {
+  //     // MarkerFactory.parseDataToMarkers(data);
+  //     // mappyCtrl.space.threeoneones = MarkerFactory.currentMarkers;
+  //     $rootScope.space.threeoneones = data;
+  //     mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+  //   });
+  // };
+  // mappyCtrl.testOpen = function () {
+  //   var query = BuildAQuery.boston311Query(10, 'Open', undefined, undefined);
+  //   ThreeOneOne.getBoston311Data(query).then(function (data) {
+  //     // MarkerFactory.parseDataToMarkers(data);
+  //     // mappyCtrl.space.threeoneones = MarkerFactory.currentMarkers;
+  //     $rootScope.space.threeoneones = data;
+  //     mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+  //   });
+  // };
+
+  mappyCtrl.adjustQuery = function () {
+    var query = BuildAQuery.boston311Query(
+        mappyCtrl.queryer.limit,
+        mappyCtrl.queryer.openorclosed,
+        undefined, // TODO: date me
+        mappyCtrl.queryer.complainies
+      );
+
+    $log.log(query);
+
+    ThreeOneOne.getBoston311Data(query).then(function (data) {
+      // MarkerFactory.parseDataToMarkers(data);
+      // mappyCtrl.space.threeoneones = MarkerFactory.currentMarkers;
+      $rootScope.space.threeoneones = data;
+      mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+    });
+  };
+
+  mappyCtrl.queryChangeOpenOrClosed = function (string) {
+    $log.log('I got clicked!');
+    mappyCtrl.queryer.openorclosed = string;
+    mappyCtrl.adjustQuery();
+  };
+
+  mappyCtrl.addOrRemoveComplaintTitle = function (string) {
+    var indexy = mappyCtrl.queryer.complainies.indexOf(string);
+    if (indexy > -1) {
+      mappyCtrl.queryer.complainies.splice(indexy, 1);
+    } else {
+      mappyCtrl.queryer.complainies.push(string);
+    }
+    mappyCtrl.adjustQuery();
+  }
+
+  // mappyCtrl.$watch('queryer', function (newVal, oldVal) {
+
+  // });
+
+  mappyCtrl.filterables = {};
+  mappyCtrl.filterables.withIcons = [];
+  mappyCtrl.filterables.case_titles = complainables.GRIPES;
+
+  for (var i = 0; i < mappyCtrl.filterables.case_titles.length; i++) {
+    var caser = mappyCtrl.filterables.case_titles[i];
+    var icon = Utils.matchIcon(caser);
+    var obj = {
+      title: caser,
+      icon: icon
+    };
+    mappyCtrl.filterables.withIcons.push(obj);
+  }
+
+  // mappyCtrl.mainCtrl_test = MainCtrl.testes;
+
+  // mappyCtrl.adjustCases = function (caseTitle) {
+
+
+  //   // Check if case title is in mappyCtrl.threeOneOneMarkers.
+  //   var check = mappyCtrl.threeOneOneMarkers.indexOf(caseTitle)
+  //     // If it is, remove it from the array.
+  //     // If it isn't, add it to the array.
+
+  // }
 
 
   // Defaults.
@@ -64,20 +155,29 @@ angular.module('main')
     };
   };
 
-  var getLocation = function () {
-    Geolocation.get()
-      .then(function (position) { // Success.
-        // return position
-        initializeMap(position);
-      },
-      function (err) { // Error. Possibly/probably because it wasn't allowed.
-        $log.log("Shit! (Maybe geolocation wasn't allowed?).\nError: ", err);
+  if (typeof here !== 'undefined') {
+    initializeMap(here.location);
+  } else {
+    initializeMap(mappyCtrl.boston);
+  }
 
-        // so we'll use Boston instead of current loc
-        initializeMap(mappyCtrl.boston);
-      });
-  };
-  getLocation();
+  // var initializeInitializingMap = function () {
+    // if (here typeof !== 'undefined') {
+
+    // }
+    // Geolocation.get()
+    //   .then(function (position) { // Success.
+    //     // return position
+    //     initializeMap(position);
+    //   },
+    //   function (err) { // Error. Possibly/probably because it wasn't allowed.
+    //     $log.log("Shit! (Maybe geolocation wasn't allowed?).\nError: ", err);
+
+    //     // so we'll use Boston instead of current loc
+    //     initializeMap(mappyCtrl.boston);
+    //   });
+  // };
+  // initializeInitializingMap(position);
 
   // var get311Markers = function () {
   //   ThreeOneOne.get311(complainables.GRIPES)
