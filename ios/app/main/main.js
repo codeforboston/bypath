@@ -151,6 +151,10 @@ angular.module('main', [
           'tab-mappy': {
             templateUrl: 'main/templates/mappy.html',
             controller: 'MappyCtrl as mappyCtrl'
+          },
+          'filterer': {
+            templateUrl: 'main/templates/filterer.html',
+            controller: 'MappyCtrl as mappyCtrl'
           }
         }
       })

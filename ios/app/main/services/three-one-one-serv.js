@@ -110,6 +110,10 @@ angular.module('main')
     });
   };
 
+  var parseDataMarkers = function (data) {
+
+  };
+
   var getBoston311Data = function(query) {
 
     var defer = $q.defer();
@@ -127,7 +131,7 @@ angular.module('main')
     var boston311MarkerInfos = [];
 
     asyncHTTP(query)
-      .then(function successful311Query(data) {
+      .then(function successful311Query (data) {
         for (var i = 0; i < data.data.length; i++) {
 
           // for geofire
