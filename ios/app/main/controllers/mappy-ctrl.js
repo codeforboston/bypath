@@ -1,16 +1,41 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($rootScope, $state, $log, Geolocation, opinions, here) {
+.controller('MappyCtrl', function ($rootScope, MainCtrl, $state, $log, Geolocation, Utils, complainables, opinions, here) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
+
   mappyCtrl.thing = {};
 
   // Getting the threeoneones resolved in the main abstract controller.
   mappyCtrl.threeOneOneMarkers = $rootScope.threeoneones;
   // Set arbitrary ids for opinion markers
   mappyCtrl.opinionMarkers = opinions;
+  mappyCtrl.filterables = {};
+  mappyCtrl.filterables.withIcons = [];
+  mappyCtrl.filterables.case_titles = complainables.GRIPES;
 
+  for (var i = 0; i < mappyCtrl.filterables.case_titles.length; i++) {
+    var caser = mappyCtrl.filterables.case_titles[i];
+    var icon = Utils.matchIcon(caser);
+    var obj = {
+      title: caser,
+      icon: icon
+    };
+    mappyCtrl.filterables.withIcons.push(obj);
+  }
+
+  mappyCtrl.mainCtrl_test = MainCtrl.testes;
+
+  // mappyCtrl.adjustCases = function (caseTitle) {
+
+
+  //   // Check if case title is in mappyCtrl.threeOneOneMarkers.
+  //   var check = mappyCtrl.threeOneOneMarkers.indexOf(caseTitle)
+  //     // If it is, remove it from the array.
+  //     // If it isn't, add it to the array.
+
+  // }
 
 
   // Defaults.

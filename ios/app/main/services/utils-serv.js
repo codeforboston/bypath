@@ -66,8 +66,8 @@ angular.module('main')
 
   $log.log('Hello from your Service: Utils in module main');
 
-  function matchIcon (obj) {
-    var desc = obj.description;
+  function matchIcon (string) {
+    var desc = string;
     var icon_path = '';
 
     var groundy = /ground/i;
@@ -98,7 +98,7 @@ angular.module('main')
 
     for (var i = 0; i < objArray.length; i++) {
       var a = objArray[i];
-      a.icon = matchIcon(a);
+      a.icon = matchIcon(a.description);
       dataWithIcons.push(a);
     }
 
@@ -106,6 +106,7 @@ angular.module('main')
   };
 
   return {
+    matchIcon: matchIcon,
     setIcons: setIcons
   };
 

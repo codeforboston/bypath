@@ -51,7 +51,7 @@ angular.module('main', [
             //   address: '47 paulina st stomervilel'
             // }
         threeoneones: function (ThreeOneOne) {
-          var query = ThreeOneOne.buildQuery(50, undefined, undefined);
+          var query = ThreeOneOne.buildQuery(50, 'Open', undefined, undefined);
           return ThreeOneOne.get311(query);
         },
         opinions: function (Opinions) {

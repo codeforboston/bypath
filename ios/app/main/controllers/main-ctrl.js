@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('MainCtrl', function ($rootScope, $log, $timeout, threeoneones, Geolocation) {
+.controller('MainCtrl', function ($rootScope, $scope, $log, $timeout, threeoneones, Geolocation) {
 
   // The 311-s are *resolved* in main.js, which means they load before anything else.
   // Here, they've been passed in through the controller arg `threeoneones` and are
@@ -9,6 +9,10 @@ angular.module('main')
   // This way, we only have to make the API call once, and the data is available anywhere
   // we want it in the app.
   $rootScope.threeoneones = threeoneones;
+
+  var mainCtrl = this;
+
+  mainCtrl.testes = 'it works';
 
 
   // $rootScope.location = {};

@@ -30,10 +30,11 @@ angular.module('main')
 
   // Set up query string for grabbing multiple complaint types at once.
   // -------------------------------------------------------------------------------
-  // should accept: complaintTypes []
-  //              : open_dt string
-  //              : limit integer
-  //              :
+  // should accept:
+  //              : limit <100>
+  //              : status <'Open'|'Closed'|'Either'|undefined>
+  //              : open_dt <'2016-03-01'>
+  //              : complaintTypes <['Request for Snow Plowing', 'Damn Rats']>
 
   var buildQueryString = function (limit, status, opened_date, complaintTypes) {
 
@@ -111,57 +112,45 @@ angular.module('main')
   };
 
   var parseDataMarkers = function (data) {
+    var dataMarkers = [];
+    for (var i = 0; i < data.data.length; i++) {
 
+      // Add to Geofire.
+      addToGeofire(data.data[i].case_enquiry_id, [
+        parseFloat(data.data[i].latitude),
+        parseFloat(data.data[i].longitude)
+      ]);
+
+      // Push to map marker array.
+      dataMarkers.push({
+          id: data.data[i].case_enquiry_id,
+
+          description: data.data[i].case_title,
+          location: {
+            latitude: data.data[i].latitude,
+            longitude: data.data[i].longitude
+          },
+          address: data.data[i].location,
+          case_status: data.data[i].case_status,
+          open_dt: data.data[i].open_dt,
+          closed_dt: data.data[i].closed_dt
+      });
+    }
+
+    // Finally, set constructed array to also hold path urls for associated images.
+    return Utils.setIcons(dataMarkers);
   };
 
   var getBoston311Data = function(query) {
 
     var defer = $q.defer();
-    // var query = buildQueryString(complaintTypes);
-
-    // This will hold an array object information for each complaint type.
-    // We're going to return this so the controller can populate markers on the map.
-    // [{description: 'People are annoying',
-    //   location: {
-    //     latitude: 42.123,
-    //     longitude: 71.12312
-    //   },
-    //   address: "51 Market Street, Cambride, MA"
-    // },{...}]
-    var boston311MarkerInfos = [];
 
     asyncHTTP(query)
       .then(function successful311Query (data) {
-        for (var i = 0; i < data.data.length; i++) {
 
-          // for geofire
-          var locArray = [
-            parseFloat(data.data[i].latitude),
-            parseFloat(data.data[i].longitude)
-          ];
-          addToGeofire(data.data[i].case_enquiry_id, locArray);
-
-          // for markers
-          var loc = {
-              latitude: data.data[i].latitude,
-              longitude: data.data[i].longitude
-          };
-
-          boston311MarkerInfos.push({
-              id: data.data[i].case_enquiry_id,
-
-              description: data.data[i].case_title,
-              location: loc,
-              address: data.data[i].location,
-              case_status: data.data[i].case_status,
-              open_dt: data.data[i].open_dt,
-              closed_dt: data.data[i].closed_dt
-          });
-        }
-        var boston311MarkerInfos_WithIcons = Utils.setIcons(boston311MarkerInfos);
-
-        defer.resolve(boston311MarkerInfos_WithIcons);
+        defer.resolve(parseDataMarkers(data));
       }, function error311Query(err) {
+
         $log.log("Shit! Error. Status: " + err.status + "\n" + err.data);
         defer.reject({error: err});
       });

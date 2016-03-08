@@ -64,7 +64,22 @@
 
   </ui-gmap-google-map>
 
-  <ui-view name="filterer" class="filterer-container"></ui-view>
+  <!-- <ui-view name="filterer" class="filterer-container"></ui-view> -->
+  <div class="filterer-container">
+  <div class="row text-center padding">
+    <div class="col-25" ng-repeat='case in mappyCtrl.filterables.withIcons'>
+
+        <img ng-src="{{case.icon}}" alt="">
+
+
+    </div>
+  </div>
+  <div class="test" style="height: 40px;" >
+    {{ mappyCtrl.mainCtrl_test }}
+    <br>
+    {{ mainCtrl.testes }}
+  </div>
+  </div>
 
 
 
