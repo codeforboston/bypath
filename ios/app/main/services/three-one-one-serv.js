@@ -1,8 +1,11 @@
 'use strict';
 angular.module('main')
-.factory('ThreeOneOne', function ($log, $http, $q, $rootScope, complainables, Utils, Geo, Ref) {
+.factory('ThreeOneOne', function ($log, $http, $q, $rootScope, complainables, Utils, Geo, Ref, $firebaseArray) {
   //\\
   $log.log('ThreeOneOne Factory in module main ready for action.');
+
+
+
 
 
   /*----------  Testing to see what most commom complaint types are  ----------*/
@@ -30,6 +33,8 @@ angular.module('main')
 
     return defer.promise;
   };
+
+
 
 
   /*----------  Async http method to return json data  ----------*/
@@ -64,10 +69,10 @@ angular.module('main')
       var now = parseInt(Firebase.ServerValue.TIMESTAMP);
       var withinADay = now - aDay;
       if (snapVal.time < withinADay) {
-        $log.log('updating cuz it aint fresh');
+        // $log.log('updating cuz it aint fresh');
         return true;
       } else {
-        $log.log('geo311 data is fresh enough; not updateing');
+        // $log.log('geo311 data is fresh enough; not updateing');
       }
     });
   };

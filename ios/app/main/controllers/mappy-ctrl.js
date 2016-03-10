@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($rootScope, $state, $log, Geolocation, Utils, MarkerFactory, ThreeOneOne, BuildAQuery, complainables, opinions, here) {
+.controller('MappyCtrl', function ($rootScope, $state, $log, $filter, toos, Geolocation, Utils, MarkerFactory, ThreeOneOne, BuildAQuery, complainables, opinions, here) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
@@ -15,9 +15,15 @@ angular.module('main')
 
 
   // Getting the threeoneones resolved in the main abstract controller.
-  mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+  mappyCtrl.space.threeOneOneMarkers = toos; // MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+
+
   // Set arbitrary ids for opinion markers
   mappyCtrl.opinionMarkers = opinions;
+
+  // mappyCtrl.testLog = function (thing) {
+  //   $log.log(thing);
+  // };
 
 
   // mappyCtrl.testClose = function () {
@@ -39,30 +45,56 @@ angular.module('main')
   //   });
   // };
 
-  mappyCtrl.adjustQuery = function () {
-    var query = BuildAQuery.boston311Query(
-        mappyCtrl.queryer.limit,
-        mappyCtrl.queryer.openorclosed,
-        undefined, // TODO: date me
-        mappyCtrl.queryer.complainies
-      );
+  // mappyCtrl.adjustQuery = function () {
+  //   var query = BuildAQuery.boston311Query(
+  //       mappyCtrl.queryer.limit,
+  //       mappyCtrl.queryer.openorclosed,
+  //       undefined, // TODO: date me
+  //       mappyCtrl.queryer.complainies
+  //     );
 
-    $log.log(query);
+  //   $log.log(query);
 
-    ThreeOneOne.getBoston311Data(query).then(function (data) {
-      // MarkerFactory.parseDataToMarkers(data);
-      // mappyCtrl.space.threeoneones = MarkerFactory.currentMarkers;
-      $rootScope.space.threeoneones = data;
-      mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
-    });
-  };
+  //   ThreeOneOne.getBoston311Data(query).then(function (data) {
+  //     // MarkerFactory.parseDataToMarkers(data);
+  //     // mappyCtrl.space.threeoneones = MarkerFactory.currentMarkers;
+  //     $rootScope.space.threeoneones = data;
+  //     mappyCtrl.space.threeOneOneMarkers = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+  //   });
+  // };
+
 
   mappyCtrl.queryChangeOpenOrClosed = function (string) {
     $log.log('I got clicked!');
     mappyCtrl.queryer.openorclosed = string;
-    mappyCtrl.adjustQuery();
+    // mappyCtrl.adjustQuery();
+    mappyCtrl.space.threeOneOneMarkers = $filter('filter')(toos, {status: string});
+
   };
 
+  // mappyCtrl.addOrRemoveComplaintTitle = function (string) {
+  //   var indexy = mappyCtrl.queryer.complainies.indexOf(string);
+  //   if (indexy > -1) {
+  //     mappyCtrl.queryer.complainies.splice(indexy, 1);
+  //   } else {
+  //     mappyCtrl.queryer.complainies.push(string);
+  //   }
+  //   mappyCtrl.space.threeOneOneMarkers = $filter('byTitle')(toos, {title: mappyCtrl.queryer.complainies.join(' ')})
+  // };
+
+  // mappyCtrl.$watch('queryer', function (newVal, oldVal) {
+
+  // });
+
+  // mappyCtrl.addOrRemoveComplaintTitle = function (string) {
+  //   var indexy = mappyCtrl.queryer.complainies.indexOf(string);
+  //   if (indexy > -1) {
+  //     mappyCtrl.queryer.complainies.splice(indexy, 1);
+  //   } else {
+  //     mappyCtrl.queryer.complainies.push(string);
+  //   }
+  //   mappyCtrl.adjustQuery();
+  // }
   mappyCtrl.addOrRemoveComplaintTitle = function (string) {
     var indexy = mappyCtrl.queryer.complainies.indexOf(string);
     if (indexy > -1) {
@@ -70,8 +102,8 @@ angular.module('main')
     } else {
       mappyCtrl.queryer.complainies.push(string);
     }
-    mappyCtrl.adjustQuery();
-  }
+    mappyCtrl.space.threeOneOneMarkers = $filter('byType')(toos, mappyCtrl.queryer.complainies);
+  };
 
   // mappyCtrl.$watch('queryer', function (newVal, oldVal) {
 
@@ -79,13 +111,13 @@ angular.module('main')
 
   mappyCtrl.filterables = {};
   mappyCtrl.filterables.withIcons = [];
-  mappyCtrl.filterables.case_titles = complainables.GRIPES;
+  mappyCtrl.filterables.case_types = complainables.GRIPES;
 
-  for (var i = 0; i < mappyCtrl.filterables.case_titles.length; i++) {
-    var caser = mappyCtrl.filterables.case_titles[i];
+  for (var i = 0; i < mappyCtrl.filterables.case_types.length; i++) {
+    var caser = mappyCtrl.filterables.case_types[i];
     var icon = Utils.matchIcon(caser);
     var obj = {
-      title: caser,
+      type: caser,
       icon: icon
     };
     mappyCtrl.filterables.withIcons.push(obj);

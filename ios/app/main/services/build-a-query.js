@@ -48,7 +48,7 @@ angular.module('main')
     // Set 'OR' relationship to include all specified complaints types in [].
     for (var i = 0; i < complaintTypes.length; i++) {
       var type = complaintTypes[i];
-      var caseAttr = 'case_title';
+      var caseAttr = 'type';
       queryString += "STARTS_WITH(" + caseAttr + ", '" + type + "')"
       // if there are more than one complaint types and given type is not last in the array, then append an OR
       if (complaintTypes.length > 1 && complaintTypes.indexOf(type) !== complaintTypes.length - 1) {

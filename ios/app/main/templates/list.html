@@ -23,9 +23,9 @@
           <div class="card padding" style="margin-bottom: 0px;">
             <div class="item item-text-wrap item-icon-right">
 
-              <h2><img ng-src="{{complaint.icon}}">&nbsp;{{complaint.description}}</h2>
+              <h2><img ng-src="{{complaint.icon_path}}">&nbsp;{{complaint.title}}</h2>
 
-              <p>{{complaint.address}}</p>
+              <p>{{complaint.location.address}}</p>
               <p class="type type-muted type-small">
                 {{listyCtrl.distanceToHere(complaint.location) | number:2}} miles away
               </p>

@@ -55,6 +55,9 @@ angular.module('main', [
 
         // Should return **data** (not markers), because we'll mess around with which markers get
         // shown as per user-oriented filtering.
+        toos: function (Ref, $firebaseArray) {
+          return $firebaseArray(Ref.child('tooMaster'));
+        },
         threeoneones: function (ThreeOneOne, BuildAQuery) {
           var query = BuildAQuery.boston311Query(50, 'Open', undefined, undefined);
           return ThreeOneOne.getBoston311Data(query);
@@ -86,7 +89,7 @@ angular.module('main', [
               showResource: function () {
                 return 'opinion';
               },
-              resourceObj: function ($stateParams) {
+              resourceId: function ($stateParams) {
                 return $stateParams.opinionId;
               }
             }
@@ -103,7 +106,7 @@ angular.module('main', [
               showResource: function () {
                 return 'opinion';
               },
-              resourceObj: function ($stateParams) {
+              resourceId: function ($stateParams) {
                 return $stateParams.opinionId;
               }
             }
@@ -120,13 +123,14 @@ angular.module('main', [
               showResource: function () {
                 return 'complaint';
               },
-              resourceObj: function ($stateParams, ThreeOneOne, MarkerFactory) {
-                var base = 'https://data.cityofboston.gov/resource/awu8-dc52.json';
-                var q = '?case_enquiry_id=' + $stateParams.complaintId;
+              resourceId: function ($stateParams) {
+                // var base = 'https://data.cityofboston.gov/resource/awu8-dc52.json';
+                // var q = '?case_enquiry_id=' + $stateParams.complaintId;
 
-                return ThreeOneOne.getBoston311Data(base + q).then(function (data) {
-                  return MarkerFactory.parseDataToMarkers(data)[0];
-                });
+                // return ThreeOneOne.getBoston311Data(base + q).then(function (data) {
+                //   return MarkerFactory.parseDataToMarkers(data)[0];
+                // });
+                return $stateParams.complaintId;
               }
             }
           },
@@ -142,13 +146,14 @@ angular.module('main', [
               showResource: function () {
                 return 'complaint';
               },
-              resourceObj: function ($stateParams, ThreeOneOne, MarkerFactory) {
-                var base = 'https://data.cityofboston.gov/resource/awu8-dc52.json';
-                var q = '?case_enquiry_id=' + $stateParams.complaintId;
+              resourceId: function ($stateParams) {
+                // var base = 'https://data.cityofboston.gov/resource/awu8-dc52.json';
+                // var q = '?case_enquiry_id=' + $stateParams.complaintId;
 
-                return ThreeOneOne.getBoston311Data(base + q).then(function (data) {
-                  return MarkerFactory.parseDataToMarkers(data)[0];
-                });
+                // return ThreeOneOne.getBoston311Data(base + q).then(function (data) {
+                //   return MarkerFactory.parseDataToMarkers(data)[0];
+                // });
+                return $stateParams.complaintId;
               }
             }
           },

@@ -2,7 +2,7 @@
 angular.module('main')
 
 .factory('Geo', ['Ref', function (Ref) {
-  return new GeoFire(Ref.child('geo').child('311'));
+  return new GeoFire(Ref.child('geo'));
 }])
 
 // Promise to get current user's geolocation and ( and we could set it in a userGeo ref)
