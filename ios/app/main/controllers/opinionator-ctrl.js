@@ -53,7 +53,7 @@ angular.module('main')
                 , longitude: $scope.where.position.coords.longitude
               }
           }
-          , text: message
+          , title: message
           , image: $scope.where.image || 'none' // eehhhhh. rather have null.
           , time: Firebase.ServerValue.TIMESTAMP // <-- won't compile with standard eslint because the gulp default eslinter is a heartless bastard. same with Camera
         }, function (error) {
