@@ -5,7 +5,7 @@ angular.module('main')
   var listyCtrl = this;
 
   // testing 311 -> firebase updater
-  var queer = BuildAQuery.boston311Query(10, 'Open', undefined, complainables.GRIPES);
+  var queer = BuildAQuery.boston311Query(200, 'Open', '2016-02-01', complainables.GRIPES);
   $log.log('qeer', queer);
   tooFirebase.updateFirebase(queer);
 
@@ -60,11 +60,11 @@ angular.module('main')
   // geoables
   listyCtrl.distanceToHere = function (locObj) {
     // $log.log(locObj);
-    var a = parseFloat(locObj.latitude);
-    var b = parseFloat(locObj.longitude);
+    var a = parseFloat(locObj.coords.latitude);
+    var b = parseFloat(locObj.coords.longitude);
     var locArr = [a,b];
-    // return GeoFire.distance(locArr, listyCtrl.test.locArr);
-    return 4;
+    return GeoFire.distance(locArr, listyCtrl.test.locArr);
+    // return 4;
   };
 
 

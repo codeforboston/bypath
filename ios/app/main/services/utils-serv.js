@@ -20,8 +20,8 @@ angular.module('main')
           out: []
       };
       angular.forEach(cases, function (value, key) {
-        $log.log('value.type', value.type);
-        $log.log('types.indexOf(value.type)', types.indexOf(value.type));
+        // $log.log('value.type', value.type);
+        // $log.log('types.indexOf(value.type)', types.indexOf(value.type));
           if (types.indexOf(value.type) > -1) {
             this.out.push(value);
           }

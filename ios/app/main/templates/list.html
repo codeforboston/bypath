@@ -95,6 +95,9 @@
             <span style="color: lightgray; font-size:.8em;">{{opinion.time}}</span>
 
             <p>{{opinion.location.address}}</p>
+            <p class="type type-muted type-small">
+              {{listyCtrl.distanceToHere(opinion.location) | number:2}} miles away
+            </p>
 
             <div class="button-bar" style="margin-bottom: -10px;">
               <a class="button button-icon-left button-balanced button-clear" ng-click="listyCtrl.upvote(opinion.id)">
