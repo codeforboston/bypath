@@ -1,8 +1,13 @@
 'use strict';
 angular.module('main')
-.controller('ListyCtrl', function ($scope, $rootScope, $log, Ref, opinions, $firebaseArray, MarkerFactory, Geolocation, Geo, here) {
+.controller('ListyCtrl', function ($scope, $rootScope, $log, Ref, toos, tooFirebase, opinions, $firebaseArray, MarkerFactory, BuildAQuery, Geolocation, Geo, here, complainables) {
 
   var listyCtrl = this;
+
+  // testing 311 -> firebase updater
+  var queer = BuildAQuery.boston311Query(100, 'Open', '2016-03-01', complainables.GRIPES);
+  $log.log('qeer', queer);
+  tooFirebase.updateFirebase(queer);
 
 
   listyCtrl.test = {};
@@ -29,8 +34,10 @@ angular.module('main')
   // listyCtrl.complaints = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
   $rootScope.$watch('space.threeoneones', function updateList (newVal, oldVal) {
     $log.log('rootscope.space.threeoneones change registered in listyCtrl!');
-    listyCtrl.complaints = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones); //$rootScope.space.threeoneones;
+    // listyCtrl.complaints = MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones); //$rootScope.space.threeoneones;
   });
+
+  listyCtrl.complaints = toos;
 
   // Get resolved opinions, too.
   listyCtrl.opinions = opinions;
@@ -53,10 +60,11 @@ angular.module('main')
   // geoables
   listyCtrl.distanceToHere = function (locObj) {
     // $log.log(locObj);
-    var a = parseFloat(locObj.latitude);
-    var b = parseFloat(locObj.longitude);
+    var a = parseFloat(locObj.coords.latitude);
+    var b = parseFloat(locObj.coords.longitude);
     var locArr = [a,b];
     return GeoFire.distance(locArr, listyCtrl.test.locArr);
+    // return 4;
   };
 
 

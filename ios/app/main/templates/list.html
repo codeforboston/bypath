@@ -19,13 +19,13 @@
             <i class="icon ion-arrow-right-c"></i>
           </p>
         </div>
-        <ion-list ng-repeat="complaint in listyCtrl.complaints">
+        <ion-list ng-repeat="complaint in listyCtrl.complaints | orderBy:'-open_dt'">
           <div class="card padding" style="margin-bottom: 0px;">
             <div class="item item-text-wrap item-icon-right">
 
-              <h2><img ng-src="{{complaint.icon}}">&nbsp;{{complaint.description}}</h2>
+              <h2><img ng-src="{{complaint.icon_path}}">&nbsp;{{complaint.title}}</h2>
 
-              <p>{{complaint.address}}</p>
+              <p>{{complaint.location.address}}</p>
               <p class="type type-muted type-small">
                 {{listyCtrl.distanceToHere(complaint.location) | number:2}} miles away
               </p>
@@ -90,11 +90,30 @@
           <div class="card padding" style="margin-bottom: 0px;">
             <div class="item item-text-wrap item-icon-right">
 
-            <h2><img ng-src="main/assets/images/snowflake-icon.png" style="height: 14px; width: auto;">&nbsp;{{opinion.text}}</h2>
+            <h2><img ng-src="main/assets/images/snowflake-icon.png" style="height: 14px; width: auto;">&nbsp;{{opinion.title}}</h2>
 
             <span style="color: lightgray; font-size:.8em;">{{opinion.time}}</span>
 
             <p>{{opinion.location.address}}</p>
+            <p class="type type-muted type-small">
+              {{listyCtrl.distanceToHere(opinion.location) | number:2}} miles away
+            </p>
+
+            <div class="button-bar" style="margin-bottom: -10px;">
+              <a class="button button-icon-left button-balanced button-clear" ng-click="listyCtrl.upvote(opinion.id)">
+                <i class="icon ion-arrow-up-b"></i>
+                {{ listyCtrl.getComplaintUpvotes(opinion.id).$value || 0 }}
+              </a>
+              <a class="button button-icon-left button-assertive button-clear" ng-click="listyCtrl.downvote(opinion.id)">
+                <i class="icon ion-arrow-down-b"></i>
+                {{ listyCtrl.getComplaintDownvotes(opinion.id).$value || 0 }}
+              </a>
+
+               <a href="tel:+1-617-635-4500" class="button button-icon-left button-positive button-clear" >
+                <i class="icon ion-ios-telephone"></i>
+
+              </a>
+            </div>
 
             <img ng-if="opinion.image !== 'none'" data-ng-src="data:image/jpeg;base64,{{opinion.image}}" style="height: auto; width: 100%; margin-top: 10px;">
          <!--    <img ng-if="opinion.image === 'none'" ng-src="{{listyCtrl.test.test_img_src}}" style="height: auto; width: 100%; margin-top: 10px;"> -->

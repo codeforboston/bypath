@@ -1,4 +1,4 @@
-<ion-view view-title="{{showCtrl.resource.title}}">
+<ion-view view-title="{{showCtrl.resource.data.title}}">
   <!-- do you want padding? -->
   <ion-content class="padding">
 
@@ -6,13 +6,13 @@
 
     <!-- icon & description -->
     <h2>
-      <img ng-src="{{ showCtrl.resource.icon }}" ng-if="showCtrl.resource.icon !== null">
-      {{ showCtrl.resource.description }}
+      <img ng-src="{{ showCtrl.resource.data.icon_path }}" ng-if="showCtrl.resource.data.icon_path !== null">
+      {{ showCtrl.resource.data.title }}
     </h2>
 
     <!-- address -->
     <p class="type type-muted">
-      {{ showCtrl.resource.address }}
+      {{ showCtrl.resource.data.location.address }}
     </p>
 
     <!-- open & closed -->
@@ -20,17 +20,17 @@
       <span class="type type-balanced">
         Opened:
       </span>
-      <span>{{ showCtrl.resource.open_dt }}</span>
-      <span ng-if="showCtrl.resource.closed_dt">
+      <span>{{ showCtrl.resource.data.open_dt }}</span>
+      <span ng-if="showCtrl.resource.data.closed_dt">
         <br>
         <span class="type type-assertive">
           Closed:
         </span>
-        <span>{{ showCtrl.resource.closed_dt }}</span>
+        <span>{{ showCtrl.resource.data.closed_dt }}</span>
       </span>
     </p>
 
-    <img data-ng-src="data:image/jpeg;base64,{{ showCtrl.resource.image}}" ng-if="showCtrl.resource.image !== 'none'" style="width: 100%; height: auto; margin-top: 10px;">
+    <img data-ng-src="data:image/jpeg;base64,{{ showCtrl.resource.data.image}}" ng-if="showCtrl.resource.data.image !== 'none'" style="width: 100%; height: auto; margin-top: 10px;">
 
     <a ui-sref="main.list">back to list</a>
     <br>
@@ -56,7 +56,7 @@
           {{ comment.message }}
         </p>
         <p class="type type-muted">
-          in {{ comment.address }} at {{ comment.time }}
+          near {{ comment.address }} at {{ comment.time }}
         </p>
       </div>
     </div>

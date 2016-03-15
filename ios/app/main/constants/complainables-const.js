@@ -6,7 +6,7 @@ angular.module('main')
     'Ground Maintenance'
     , 'Request for Snow Plowing'
     , 'Park Maintenance'
-    , 'Unsafe/Dangerous Conditions'
+    , 'Unsafe Dangerous Conditions'
     // , 'Metrolist Survey'
   ],
 

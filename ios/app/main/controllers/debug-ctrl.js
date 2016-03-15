@@ -1,15 +1,22 @@
 'use strict';
 angular.module('main')
-.controller('DebugCtrl', function ($scope, $window, $log, Main, complainables, threeoneones, ThreeOneOne) {
+.controller('DebugCtrl', function ($scope, $window, $log, $filter, Main, complainables, threeoneones, ThreeOneOne, toos) {
 
   $log.log('Hello from your Controller: DebugCtrl in module main:. This is your controller:', this);
 
   // var bug = this;
+  $scope.test = toos;
 
+  $scope.testFilter = function (array, expression, comparator) {
+    $scope.test = $filter('filter')(toos, {title: 'a'});
+  };
+  $scope.testFilter2 = function (array, expression, comparator) {
+    $scope.test = $filter('filter')(toos, {title: 'danger'});
+  };
 
-  $scope.test = {};
-  $scope.test.cases = [];
-  $scope.test.case_titles_json = complainables.ALL_CASE_TITLES;
+  // $scope.test = {};
+  // $scope.test.cases = [];
+  // $scope.test.case_titles_json = complainables.ALL_CASE_TITLES;
 
 
   // ThreeOneOne.uniqueCases().then(function(data) {

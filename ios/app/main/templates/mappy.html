@@ -56,8 +56,8 @@
     <!-- 311 markers -->
     <ui-gmap-markers
       models="mappyCtrl.space.threeOneOneMarkers"
-      coords="'location'"
-      icon="'icon'"
+      coords="'location.coords'"
+      icon="'icon_path';"
       events="mappyCtrl.map.markersEvents311"
       options="'options'">
     </ui-gmap-markers>
@@ -73,7 +73,7 @@
   </div> -->
   <div class="row text-center padding">
     <div class="col-25" ng-repeat='case in mappyCtrl.filterables.withIcons'>
-      <button class="button button-positive " ng-class="{'button-outline' : mappyCtrl.queryer.complainies.indexOf(case.title) > -1, 'button-clear' : mappyCtrl.queryer.complainies.indexOf(case.title) === -1}" ng-click="mappyCtrl.addOrRemoveComplaintTitle(case.title)">
+      <button class="button button-positive " ng-class="{'button-outline' : mappyCtrl.queryer.complainies.indexOf(case.type) > -1, 'button-clear' : mappyCtrl.queryer.complainies.indexOf(case.type) === -1}" ng-click="mappyCtrl.addOrRemoveComplaintTitle(case.type)">
         <img ng-src="{{case.icon}}" alt="">
       </button>
 

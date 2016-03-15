@@ -5,6 +5,31 @@ angular.module('main')
   return new $window.Firebase(FBURL);
 }])
 
+.filter('byType', function ($log) {
+  return function (cases, types) {
+    // var out = [];
+    //   angular.forEach(cases, function (value, key) {
+    //     if (this.titles[value.title] === true) {
+    //       out.push(value);
+    //     }
+    //   }, out)
+    // return out;
+    $log.log('types', types);
+    var items = {
+          types: types,
+          out: []
+      };
+      angular.forEach(cases, function (value, key) {
+        // $log.log('value.type', value.type);
+        // $log.log('types.indexOf(value.type)', types.indexOf(value.type));
+          if (types.indexOf(value.type) > -1) {
+            this.out.push(value);
+          }
+      }, items);
+      return items.out;
+  }
+})
+
 
 
 // // http://learn.ionicframework.com/formulas/cordova-camera/
