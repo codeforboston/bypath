@@ -5,7 +5,7 @@ angular.module('main')
   var listyCtrl = this;
 
   // testing 311 -> firebase updater
-  var queer = BuildAQuery.boston311Query(200, 'Open', '2016-02-01', complainables.GRIPES);
+  var queer = BuildAQuery.boston311Query(100, 'Open', '2016-03-01', complainables.GRIPES);
   $log.log('qeer', queer);
   tooFirebase.updateFirebase(queer);
 

@@ -58,10 +58,10 @@ angular.module('main', [
         toos: function (Ref, $firebaseArray) {
           return $firebaseArray(Ref.child('tooMaster'));
         },
-        threeoneones: function (ThreeOneOne, BuildAQuery) {
-          var query = BuildAQuery.boston311Query(50, 'Open', undefined, undefined);
-          return ThreeOneOne.getBoston311Data(query);
-        },
+        // threeoneones: function (ThreeOneOne, BuildAQuery) {
+        //   var query = BuildAQuery.boston311Query(50, 'Open', undefined, undefined);
+        //   return ThreeOneOne.getBoston311Data(query);
+        // },
         opinions: function (Opinions) {
           return Opinions.index();
         }

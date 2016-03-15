@@ -19,7 +19,7 @@
             <i class="icon ion-arrow-right-c"></i>
           </p>
         </div>
-        <ion-list ng-repeat="complaint in listyCtrl.complaints">
+        <ion-list ng-repeat="complaint in listyCtrl.complaints | orderBy:'-open_dt'">
           <div class="card padding" style="margin-bottom: 0px;">
             <div class="item item-text-wrap item-icon-right">
 
