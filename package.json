@@ -12,11 +12,11 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "start": "node app.js",
-    "postinstall": "cd web && bower install && cd .. && cd ios && gulp build && cd .. && cd web"
+    "start": "node web/app.js",
+    "postinstall": "bower install"
   },
   "description": "Civilized complaining for civilized people.",
-  "main": "app.js",
+  "main": "web/app.js",
   "author": "Code For Boston",
   "license": "ISC"
 }
