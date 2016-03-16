@@ -52,7 +52,7 @@ angular.module('main')
       //               }});
 
 
-      var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude +',' + longitude +'&sensor=true';
+      var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude +',' + longitude +'&sensor=true';
       $http({method: 'GET', url: url}).
         success(function(data, status, headers, config) {
              defer.resolve({data : data});
