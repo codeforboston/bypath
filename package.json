@@ -6,9 +6,6 @@
     "bower": "^1.7.7",
     "connect": "latest",
     "serve-static": "latest",
-    "gulp": "latest"
-  },
-  "devDependencies": {
     "browser-sync": "^2.8.3",
     "chalk": "^1.1.0",
     "cordova": "5.4.0",
@@ -53,6 +50,9 @@
     "vinyl-paths": "^2.0.0",
     "wiredep": "^2.2.2",
     "xml2js": "^0.4.9"
+  },
+  "devDependencies": {
+
   },
   "engines": {
     "node": ">=0.10.0"
