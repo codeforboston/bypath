@@ -9,7 +9,6 @@ angular.module('main')
   $log.log('qeer', queer);
   tooFirebase.updateFirebase(queer);
 
-
   listyCtrl.test = {};
   // listyCtrl.currentLocation = currentLocation;
   // Geolocation.get().then(function (location) {
@@ -26,7 +25,6 @@ angular.module('main')
       // listyCtrl.test.address = $rootScope.location.address;
 
   // });
-
 
   listyCtrl.test.test_img_src = 'main/assets/images/snowflake.png';
 

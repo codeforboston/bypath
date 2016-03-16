@@ -74,7 +74,7 @@ target/
 .ipynb_checkpoints
 
 #Eclipse project files
-.project
-.pydevproject
+# .project
+# .pydevproject
 
 scratch/
