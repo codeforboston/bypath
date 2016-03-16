@@ -59,7 +59,7 @@
   },
   "scripts": {
     "start": "node web/app.js",
-    "postinstall": "bower install && echo bower install done, moving to ios &&  cd ios && bower install && gulp build"
+    "postinstall": "bower install && echo bower install done, moving to ios &&  cd ios && bower install && gulp build && cp -a ./www ../web/www"
   },
   "description": "Civilized complaining for civilized people.",
   "main": "web/app.js",
