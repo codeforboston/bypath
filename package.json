@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "node web/app.js",
-    "postinstall": "bower install"
+    "postinstall": "bower install && cd ios && npm install && npm install require-dir && bower install && gulp build"
   },
   "description": "Civilized complaining for civilized people.",
   "main": "web/app.js",
