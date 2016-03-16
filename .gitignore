@@ -74,8 +74,8 @@ target/
 .ipynb_checkpoints
 
 #Eclipse project files
-.project
-.pydevproject
+#.project
+#.pydevproject
 
 scratch/
 
@@ -85,3 +85,4 @@ bower_content
 # web
 web/bower_components
 node_modules
+web/www/*
