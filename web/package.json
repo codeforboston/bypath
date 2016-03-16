@@ -1,0 +1,22 @@
+{
+  "name": "snowranger",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "bower": "^1.7.7",
+    "connect": "latest",
+    "serve-static": "latest"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "postinstall": "cd web && bower install && cd .. && cd ios && gulp build && cd .. && cd web"
+  },
+  "description": "Civilized complaining for civilized people.",
+  "main": "app.js",
+  "author": "Code For Boston",
+  "license": "ISC"
+}
