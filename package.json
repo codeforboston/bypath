@@ -1,0 +1,16 @@
+{
+  "name": "SnowrangerNode",
+  "version": "0.0.0",
+  "description": "SnowrangerNode",
+  "main": "server.js",
+  "author": {
+    "name": "Alex",
+    "email": ""
+  },
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4",
+    "firebase": "^2.4.1"
+  }
+}
