@@ -1,37 +1,30 @@
-﻿var firebase = require('firebase');
+﻿/* db_firebase.js
+ * this is the module for accessing the firebase db
+*/ 
 
-var firebase_url = "https://alexdev.firebaseio.com/";
-var fbRef = new firebase(firebase_url);
+// Includes
+var firebase = require('firebase');
 
+// Constants
 var MASTER = 'MASTER';
 var VALUE = 'VALUE'
 var PATH = 'PATH';
 var DATA = 'DATA';
 
-function generateSchema(data) {
-    // Grab change the data's format to fit the db
-    // in the form of <path>: <values>
-    var values = [];
-    //output['/master'] = { 'id': data['id'] };
-    values.push(createSchemaItem('/open', data['open']));
-    values.push(createSchemaItem('/type', data['type']));
-    values.push(createSchemaItem('/title', data['title']));
-    values.push(createSchemaItem('/location', data['loc']));
-    values.push(createSchemaItem('/geo', data['geo']));
-    
-    var output = {
-        MASTER: createSchemaItem('/master', { 'id': data['id'] }),
-        VALUE : values
-    }
-    
-    return output;
-}
+// Private vars
+var firebase_url = "https://alexdev.firebaseio.com/";
+var fbRef = new firebase(firebase_url);
 
-function createSchemaItem(path, item) {
-    return { PATH : path, DATA : item };
-}
-
+// Public methods
 module.exports = {
+    init: function (){
+
+    },
+    
+    start: function (){
+
+    },
+
     addItem: function (data){
         // generate the schema from the data passed in
 
@@ -55,3 +48,26 @@ module.exports = {
     }
 }
 
+// Private functions
+function generateSchema(data) {
+    // Grab change the data's format to fit the db
+    // in the form of <path>: <values>
+    var values = [];
+    //output['/master'] = { 'id': data['id'] };
+    values.push(createSchemaItem('/open', data['open']));
+    values.push(createSchemaItem('/type', data['type']));
+    values.push(createSchemaItem('/title', data['title']));
+    values.push(createSchemaItem('/location', data['loc']));
+    values.push(createSchemaItem('/geo', data['geo']));
+    
+    var output = {
+        MASTER: createSchemaItem('/master', { 'id': data['id'] }),
+        VALUE : values
+    }
+    
+    return output;
+}
+
+function createSchemaItem(path, item) {
+    return { PATH : path, DATA : item };
+}

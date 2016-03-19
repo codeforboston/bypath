@@ -30,19 +30,24 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="auth\keymanager.js" />
     <Compile Include="database\db_firebase.js" />
-    <Compile Include="database\schema.js" />
-    <Compile Include="routes\incident.js" />
-    <Compile Include="routes\index.js" />
+    <Compile Include="rest\rest_server.js" />
+    <Compile Include="rest\routes\incident.js" />
+    <Compile Include="rest\routes\index.js" />
     <Compile Include="server.js" />
+    <Compile Include="util\modules.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <Content Include="views\addIncident.html" />
+    <Content Include="rest\views\addIncident.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="database\" />
-    <Folder Include="routes\" />
-    <Folder Include="views\" />
+    <Folder Include="auth\" />
+    <Folder Include="util\" />
+    <Folder Include="rest\" />
+    <Folder Include="rest\routes\" />
+    <Folder Include="rest\views\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
