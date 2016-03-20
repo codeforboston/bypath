@@ -12,13 +12,15 @@ var PATH = 'PATH';
 var DATA = 'DATA';
 
 // Private vars
-var firebase_url = "https://alexdev.firebaseio.com/";
-var fbRef = new firebase(firebase_url);
+var firebase_url;
+var fbRef;
 
 // Public methods
 module.exports = {
     init: function (){
-
+        // This link will need to get moved to the key file at some point
+        firebase_url = "https://alexdev.firebaseio.com/";
+        fbRef = new firebase(firebase_url);
     },
     
     start: function (){
@@ -34,11 +36,12 @@ module.exports = {
         // Get the master
         master = result[MASTER];
         
+        // We set the id of the relitive tables based on what is generated when master is added to the db
         var response = fbRef.child(master[PATH]).push(master[DATA]);
-        
-        console.log(response.path.u[1]);
 
         var values = result[VALUE];
+        
+        // Iter though each item in the schema and set them on the db relitive to their path
         for (i in values) {
             var item = values[i];
             fbRef.child(item[PATH] + '/' + response.path.u[1]).set(item[DATA]);
@@ -53,7 +56,7 @@ function generateSchema(data) {
     // Grab change the data's format to fit the db
     // in the form of <path>: <values>
     var values = [];
-    //output['/master'] = { 'id': data['id'] };
+
     values.push(createSchemaItem('/open', data['open']));
     values.push(createSchemaItem('/type', data['type']));
     values.push(createSchemaItem('/title', data['title']));
@@ -68,6 +71,7 @@ function generateSchema(data) {
     return output;
 }
 
+// Simple helper function for normailzing the data being sent to the server
 function createSchemaItem(path, item) {
     return { PATH : path, DATA : item };
 }
