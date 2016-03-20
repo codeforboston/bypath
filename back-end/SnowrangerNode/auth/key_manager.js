@@ -1,4 +1,4 @@
-﻿/* keymanager.js
+﻿/* key_manager.js
  * this file will load all of the keys from an external file
  * so that we can move the sensitive data out of the repo
 */
@@ -11,7 +11,9 @@ var KEY_FILE = 'keys.txt';
 var keys = [];
 var keysLoaded = false;
 
-
+// Currently this reads lines and splits on '='
+// I would like to change it to reading a json file
+// Also add encryption so keys are not stored in plain text
 function loadKeysFromFile(file){
     if (!keysLoaded) {
         fs.readFile(file, function (err, data) {

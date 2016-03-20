@@ -2,6 +2,7 @@
  * this file contains all the controllers for modify, add, delete for incidents
 */
 
+// Includes
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
@@ -16,7 +17,7 @@ router.get('/', function (req, res) {
 });
 
 router.post('/add', urlencodedParser, function (req, res) {
-	
+	// Create the item for the db
     item = {
         'id': 1234123412,
 		'title':req.body.title,
@@ -26,11 +27,11 @@ router.post('/add', urlencodedParser, function (req, res) {
 		'geo': {'lat': req.body.lat, 'lon': req.body.lon}
 	};
     
-    // This needs to get send to a module for sending to the database
+    // Get the database module and give it the item to push to the db
     fb = modules.getModule('firebase');
-    tst = modules.getModules();
     fb.addItem(item);
-
+    
+    // Just give them the json that was submitted to the db
 	res.end(JSON.stringify(item));
 });
 

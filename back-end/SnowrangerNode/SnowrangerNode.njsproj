@@ -30,8 +30,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="auth\keymanager.js" />
+    <Compile Include="auth\key_manager.js" />
     <Compile Include="database\db_firebase.js" />
+    <Compile Include="data\data_manager.js" />
     <Compile Include="rest\rest_server.js" />
     <Compile Include="rest\routes\incident.js" />
     <Compile Include="rest\routes\index.js" />
@@ -44,6 +45,7 @@
   <ItemGroup>
     <Folder Include="database\" />
     <Folder Include="auth\" />
+    <Folder Include="data\" />
     <Folder Include="util\" />
     <Folder Include="rest\" />
     <Folder Include="rest\routes\" />
