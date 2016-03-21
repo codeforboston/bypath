@@ -1,0 +1,114 @@
+﻿/* boston311.js
+ * This will go out and grab relivent data from the boston's 311 data and send it to the firebase
+*/ 
+
+// Includes
+var modules = require('./../util/modules.js');
+var cronJob = require('cron').CronJob;
+var request = require('request');
+
+var UPDATE_PATH = '/updates/311';
+
+var serviceKey;
+
+// Not sure why I am caching this.
+// Maybe in case I need to stop it
+var cJob;
+
+module.exports = {
+    init: function (){
+
+    },
+
+    start: function (){
+        var keymrg = modules.getModule('key_manager');
+        console.log(keymrg);
+        serviceKey = keymrg.getKey('boston311');
+        // Create the cron job and start it
+        retieve311Data();
+        //cJob = new cronJob('0 * * * * *', retieve311Data, null, true, 'UTC');
+
+        
+    }
+}
+
+function retieve311Data() {
+    var db = modules.getModule('firebase');
+
+    db.getItem(UPDATE_PATH, function (data) {
+        console.log(data);
+        var date = data;
+        if (data === null) {
+            // Create a formated date that we can use if one does not exist
+            var date = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString();
+            date = date.replace('Z', '');
+        }
+        
+        query311(date, function (res) {
+            // Add the result of the query to the db
+            addToDb(res);
+            
+            // Might want to do some checks to make sure there were no errors when
+            // sending the data to the db before setting the last upated time
+            console.log('setting time');
+            db.setItem(UPDATE_PATH, new Date().toISOString().replace('Z', ''));
+        });
+    });
+}
+
+function query311(date, callback){
+    // Need to move this to an external resource
+    var bostonUrl = "https://data.cityofboston.gov/resource/wc8w-nujj.json?$query=";
+    
+    // Need to add based on case types
+    var stmnt = "SELECT * WHERE open_dt > '" + date + "' AND CASE_STATUS = 'Open' AND (STARTS_WITH(case_title, 'Unsafe/Dangerous Conditions') OR STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Request for Snow Plowing') OR STARTS_WITH(case_title, 'Park Maintenance')) LIMIT 100";
+    var query = bostonUrl + stmnt;
+
+    var options = {
+        method: 'GET',
+        url: query,
+        headers: {
+            'X-App-Token': serviceKey
+        }
+    };
+
+    var req = request(options, function (error, response, body) {
+        console.log('response: ' + response.statusCode);
+        if (error) {
+            console.log(error);
+        }
+        else {
+            callback(body);
+        }
+    });
+}
+
+function addToDb(body){
+    var db = modules.getModule('firebase');
+    var r = JSON.parse(body);
+    console.log(r);
+    
+    for (i in r) {
+        try {
+            item = {
+                'id': r[i]['case_enquiry_id'],
+                'title': r[i]['case_title'],
+                'type': r[i]['type'],
+                'loc': r[i]['location'],
+                'open': r[i]['open_dt'],
+                'geo': {
+                    'l': {
+                        '0': r[i]['latitude'], 
+                        '1': r[i]['longitude']
+                    }
+                }
+            };
+            
+            db.addItem(item);
+        }
+                catch (e) {
+            console.log(e);
+        }
+    }
+    
+}

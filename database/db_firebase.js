@@ -24,14 +24,19 @@ module.exports = {
     },
     
     start: function (){
-
+        // Nothing to start
+    },
+    
+    getItem: function (path, onComplete){
+        // Async call the callback once the request has completed
+        fbRef.child(path).once('value', function (snapshot) {
+            onComplete(snapshot.val());
+        });
     },
 
     addItem: function (data){
         // generate the schema from the data passed in
-
         var result = generateSchema(data);
-        //console.log(result);
         
         // Get the master
         master = result[MASTER];
@@ -44,10 +49,13 @@ module.exports = {
         // Iter though each item in the schema and set them on the db relitive to their path
         for (i in values) {
             var item = values[i];
-            fbRef.child(item[PATH] + '/' + response.path.u[1]).set(item[DATA]);
+            
+            fbRef.child(item[PATH] + '/' + response.key()).set(item[DATA]);
         }
-        
-        
+    },
+
+    setItem: function (path, value){
+        fbRef.child(path).set(value);
     }
 }
 

@@ -2,16 +2,18 @@
  * this module will get and manage the data that is stored in the database
 */
 
+var b311 = require('./Boston311.js');
+
 // These are the data sources
 var endpoints = [];
 
 module.exports = {
     init: function (){
-
+        b311.init();
     },
 
     start: function (){
-
+        b311.start();
     },
 
     addEndpoint: function (endpoint){

@@ -16,32 +16,27 @@ var keysLoaded = false;
 // Also add encryption so keys are not stored in plain text
 function loadKeysFromFile(file){
     if (!keysLoaded) {
-        fs.readFile(file, function (err, data) {
-            if (err) {
-                // Figure out how to handle errors
-                console.log(err);
-            }
-            else {
-                var lines = data.toString().split('\n');
+        var file = fs.readFileSync(file).toString();
+        var lines = file.toString().split('\n');
+        
+        // Itr though the lines 
+        for (i in lines) {
+            var line = lines[i];
+            var idx = line.indexOf('=');
+            
+            if (idx > -1) {
+                // Split the string into id and key
+                var id = line.substring(0, idx);
+                var key = line.substring(idx + 1);
                 
-                // Itr though the lines 
-                for (i in lines) {
-                    var line = lines[i];
-                    var idx = line.indexOf('=');
-                    
-                    if (idx > -1) {
-                        // Split the string into id and key
-                        var id = line.substring(0, idx);
-                        var key = line.substring(idx + 1);
-                        
-                        // Set the id, key pair
-                        keys[id] = key;
-                    }
-                    
-                    keysLoaded = true;
-                }
+                // Set the id, key pair
+                keys[id] = key;
             }
-        });
+            
+            keysLoaded = true;
+        }
+        
+        console.log(keys);
     }
 }
 
@@ -53,6 +48,7 @@ module.exports = {
     init: function (){
         // The only thing to do is load the keys
         loadKeysFromFile(KEY_FILE);
+        console.log('keys loaded');
     },
     
     start: function (){
@@ -69,6 +65,7 @@ module.exports = {
     getKey: function (id){
 
         // Check if the key exists before trying to get it out
+        console.log(keys);
         if (id in keys) {
             return keys[id];
         }
