@@ -32,6 +32,7 @@
   <ItemGroup>
     <Compile Include="auth\key_manager.js" />
     <Compile Include="database\db_firebase.js" />
+    <Compile Include="data\boston311.js" />
     <Compile Include="data\data_manager.js" />
     <Compile Include="rest\rest_server.js" />
     <Compile Include="rest\routes\incident.js" />
