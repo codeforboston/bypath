@@ -22,12 +22,11 @@ module.exports = {
 
     start: function (){
         var keymrg = modules.getModule('key_manager');
-        console.log(keymrg);
+        
         serviceKey = keymrg.getKey('boston311');
-        console.log("test key " + keymrg.getKey("test"));
         // Create the cron job and start it
-        retieve311Data();
-        //cJob = new cronJob('0 * * * * *', retieve311Data, null, true, 'UTC');
+        //retieve311Data();
+        //cJob = new cronJob('00 05 * * * *', retieve311Data, null, true, 'UTC');
 
         
     }
@@ -37,7 +36,6 @@ function retieve311Data() {
     var db = modules.getModule('firebase');
 
     db.getItem(UPDATE_PATH, function (data) {
-        console.log(data);
         var date = data;
         if (data === null) {
             // Create a formated date that we can use if one does not exist
@@ -87,7 +85,6 @@ function query311(date, callback){
 function addToDb(body){
     var db = modules.getModule('firebase');
     var r = JSON.parse(body);
-    console.log(r);
     
     for (i in r) {
         try {
@@ -95,21 +92,15 @@ function addToDb(body){
                 'id': r[i]['case_enquiry_id'],
                 'title': r[i]['case_title'],
                 'type': r[i]['type'],
-                'loc': r[i]['location'],
-                'open': r[i]['open_dt'],
-                'geo': {
-                    'l': {
-                        '0': r[i]['latitude'], 
-                        '1': r[i]['longitude']
-                    }
-                }
+                'loc': r[i]['location'] || null,
+                'open': r[i]['open_dt'] || null,
+                'geo': r[i]['latitude'] + ',' + r[i]['longitude']
             };
             
             db.addItem(item);
         }
-                catch (e) {
+        catch (e) {
             console.log(e);
         }
-    }
-    
+    }    
 }

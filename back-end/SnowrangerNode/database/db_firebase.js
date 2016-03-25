@@ -34,7 +34,7 @@ module.exports = {
         });
     },
 
-    addItem: function (data){
+    addNewItem: function (data){
         // generate the schema from the data passed in
         var result = generateSchema(data);
         
@@ -53,9 +53,26 @@ module.exports = {
             fbRef.child(item[PATH] + '/' + response.key()).set(item[DATA]);
         }
     },
+    
+    addItem: function(path, value){
+        fbRef.chile(path).push(value);
+    },
 
     setItem: function (path, value){
         fbRef.child(path).set(value);
+    },
+    
+    // values will be in the format of 
+    // [{path: path, data: value }, ...]
+    // Say we are updating the title it would be
+    // itemId = "-KCSxk6n0DImMtOLx88K"
+    // values = [{path:title, value:'tree in park'}]
+    updateItem: function (itemId, values){
+        for(i in values){
+            var value = values[i];
+            
+            setItem(value[PATH] + "/" + itemId, value[DATA]);
+        }
     }
 }
 
