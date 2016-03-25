@@ -23,7 +23,7 @@ router.post('/add', urlencodedParser, function (req, res) {
 		'title':req.body.title,
 		'type': req.body.type,
         'loc': req.body.loc,
-        'open': new Date().toISOString(),
+        'open': new Date().toISOString().replace('Z', ''),
 		'geo': {'lat': req.body.lat, 'lon': req.body.lon}
 	};
     

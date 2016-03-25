@@ -24,6 +24,7 @@ module.exports = {
         var keymrg = modules.getModule('key_manager');
         console.log(keymrg);
         serviceKey = keymrg.getKey('boston311');
+        console.log("test key " + keymrg.getKey("test"));
         // Create the cron job and start it
         retieve311Data();
         //cJob = new cronJob('0 * * * * *', retieve311Data, null, true, 'UTC');
@@ -61,7 +62,7 @@ function query311(date, callback){
     var bostonUrl = "https://data.cityofboston.gov/resource/wc8w-nujj.json?$query=";
     
     // Need to add based on case types
-    var stmnt = "SELECT * WHERE open_dt > '" + date + "' AND CASE_STATUS = 'Open' AND (STARTS_WITH(case_title, 'Unsafe/Dangerous Conditions') OR STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Request for Snow Plowing') OR STARTS_WITH(case_title, 'Park Maintenance')) LIMIT 100";
+    var stmnt = "SELECT * WHERE open_dt > '" + date + "' AND CASE_STATUS = 'Open' AND (STARTS_WITH(case_title, 'Unsafe/Dangerous Conditions') OR STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Request for Snow Plowing') OR STARTS_WITH(case_title, 'Park Maintenance'))";
     var query = bostonUrl + stmnt;
 
     var options = {
