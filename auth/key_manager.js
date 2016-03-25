@@ -35,8 +35,6 @@ function loadKeysFromFile(file){
             
             keysLoaded = true;
         }
-        
-        console.log(keys);
     }
 }
 
@@ -48,7 +46,6 @@ module.exports = {
     init: function (){
         // The only thing to do is load the keys
         loadKeysFromFile(KEY_FILE);
-        console.log('keys loaded');
     },
     
     start: function (){
@@ -65,7 +62,6 @@ module.exports = {
     getKey: function (id){
 
         // Check if the key exists before trying to get it out
-        console.log(keys);
         if (id in keys) {
             return keys[id];
         }

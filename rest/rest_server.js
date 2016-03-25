@@ -24,10 +24,7 @@ module.exports = {
     start: function (){
         
         var server = app.listen(8080, function () {
-            console.log("starting server");
         });
-
-        console.log("rest server started");
     }
 }
 

@@ -27,22 +27,22 @@ function Server(){
         // System is the list of systems that are created and used by this server
         // They are in the format of [0]module name, [1]module object
         // I might want to move this so it is confined 
-        systemList = [
+        moduleList = [
             ['rest_server', rest_server],
             ['firebase', firebase],
             ['key_manager', key_manager],
             ['data_manager', data_manager]
         ];
         
-        createSystems(systemList);
+        createModules(moduleList);
         startModules();
     }
     
     // Private methods
-    function createSystems(systemList) {
-        for (i in systemList) {
-            var modName = systemList[i][MODULE_NAME_IDX];
-            var modObject = systemList[i][MODULE_OBJECT_IDX];
+    function createModules(moduleList) {
+        for (i in moduleList) {
+            var modName = moduleList[i][MODULE_NAME_IDX];
+            var modObject = moduleList[i][MODULE_OBJECT_IDX];
             
             // The order we initialize and add the object to the modules list 
             // shouldn't matter since module::init() should not ref other modules
