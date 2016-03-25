@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($rootScope, $state, $log, $filter, toos, Geolocation, Utils, MarkerFactory, ThreeOneOne, BuildAQuery, complainables, opinions, here) {
+.controller('MappyCtrl', function ($rootScope, $state, $log, $filter, $firebaseArray, $firebaseObject, $q, Ref, toos, Geolocation, Utils, MarkerFactory, ThreeOneOne, BuildAQuery, complainables, opinions, here, Database) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
@@ -15,6 +15,19 @@ angular.module('main')
 
 
   // Getting the threeoneones resolved in the main abstract controller.
+  
+  Database.getObject(['type', 'title'], function (data) {
+      console.log(data);
+    });
+  
+  Database.getObjectAll(function (data) {
+        console.log(data);
+    });
+  
+  Database.getItem('geo/311/101001731106', function(data){
+        console.log(data);
+    });
+  
   mappyCtrl.space.threeOneOneMarkers = toos; // MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
 
 
