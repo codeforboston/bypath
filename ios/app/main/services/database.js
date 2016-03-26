@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.factory('Database', function ($log, $http, $q, $rootScope, complainables, Utils, Geo, Ref, $firebaseArray) {
+.factory('Database', function ($log, $http, $httpParamSerializer, $q, $rootScope, complainables, Utils, Geo, Ref, $firebaseArray) {
     
     // Tables will be in the format of a list of string
     // each string will be the name of a table you want
@@ -104,13 +104,28 @@ angular.module('main')
     };
     
     function add(path, item){
-    }
+    };
+    
+    function addNewItem(item){
+        
+        var url = 'http://127.0.0.1:8080/incident/addNew';
+        var data = item;
+        var config = {'Content-Type': 'application/x-www-form-urlencoded'};
+        
+        $http({
+            method: 'POST',
+            url: url,
+            data: $httpParamSerializer(data),
+            headers: config
+        });
+    };
     
     return {
         
         getObject: getObject,
         getObjectAll: getObjectAll,
         getItem: getItem,
+        addNewItem: addNewItem,
     };
     
 });

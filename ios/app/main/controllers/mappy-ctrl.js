@@ -28,6 +28,13 @@ angular.module('main')
         console.log(data);
     });
   
+  Database.addNewItem({
+        id:'12435',
+        title:'Park',
+        type: 'Unsafe',
+        geo: '42,-71'
+    });
+  
   mappyCtrl.space.threeOneOneMarkers = toos; // MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
 
 
