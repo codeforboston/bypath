@@ -85,7 +85,7 @@ function generateSchema(data) {
     values.push(createSchemaItem('/open', data['open']));
     values.push(createSchemaItem('/type', data['type']));
     values.push(createSchemaItem('/title', data['title']));
-    values.push(createSchemaItem('/location', data['loc']));
+    values.push(createSchemaItem('/location', data['loc'] || null));
     values.push(createSchemaItem('/geo', data['geo']));
     
     var output = {

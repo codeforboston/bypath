@@ -18,14 +18,13 @@ router.get('/', function (req, res) {
 
 router.post('/addNew', urlencodedParser, function (req, res) {
     // Create the item for the db
-    console.log(req.body);
+    console.log('Adding new');
     item = {
-        'id': 1234123412,
+        'id': req.body.id,
         'title':req.body.title,
         'type': req.body.type,
-        'loc': req.body.loc,
         'open': new Date().toISOString().replace('Z', ''),
-        'geo': {'lat': req.body.lat, 'lon': req.body.lon}
+        'geo': req.body.geo
     };
     
     // Get the database module and give it the item to push to the db
@@ -51,8 +50,13 @@ router.post('/add', urlencodedParser, function(req, res){
     var path = req.body.path;
     var value = req.body.value;
     
+    console.log('Add recieved');
+    console.log(req);
+    
     db = modules.getModule('firebase');
-    fb.addItem(path, value);
+    //fb.addItem(path, value);
+    
+    res.end('thanks');
     
 });
 
