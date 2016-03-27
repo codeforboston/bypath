@@ -25,6 +25,7 @@ module.exports = {
     
     start: function (){
         // Nothing to start
+        console.log('firebase module started');
     },
     
     getItem: function (path, onComplete){
@@ -54,14 +55,6 @@ module.exports = {
         }
     },
     
-    addItem: function(path, value){
-        fbRef.chile(path).push(value);
-    },
-
-    setItem: function (path, value){
-        fbRef.child(path).set(value);
-    },
-    
     // values will be in the format of 
     // [{path: path, data: value }, ...]
     // Say we are updating the title it would be
@@ -73,7 +66,17 @@ module.exports = {
             
             setItem(value[PATH] + "/" + itemId, value[DATA]);
         }
-    }
+    },
+    
+    addItem: function(path, value){
+        fbRef.chile(path).push(value);
+    },
+
+    setItem: function (path, value){
+        fbRef.child(path).set(value);
+    },
+    
+    
 }
 
 // Private functions

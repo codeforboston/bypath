@@ -28,12 +28,14 @@ angular.module('main')
         console.log(data);
     });
   
-  Database.addNewItem({
+  /*Database.addNewItem({
         id:'12435',
         title:'Park',
         type: 'Unsafe',
         geo: '42,-71'
-    });
+    });*/
+  
+  Database.update('-KDpKJ8NIhM_BaxZBFmV', [{'path': 'type', 'value': 'snow'}, {'path': 'title', 'value': 'change me'}, {'path': 'pizza', 'value': 'concrete'}]);
   
   mappyCtrl.space.threeOneOneMarkers = toos; // MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
 

@@ -24,6 +24,7 @@ function Server(){
     
     // Public methods
     Server.prototype.init = function () {
+        console.log('starting server');
         // System is the list of systems that are created and used by this server
         // They are in the format of [0]module name, [1]module object
         // I might want to move this so it is confined 

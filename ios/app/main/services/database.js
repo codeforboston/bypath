@@ -99,8 +99,13 @@ angular.module('main')
     
     // All updates and adds will not be sent to the firebase
     // but rather our server to process the request
-    function update(path, value){
+    // Values are an array of json objects that are in the format of
+    // {'path': path, 'value': value}
+    function update(id, values){
+        var url = 'http://127.0.0.1:8080/incident/update';
+        var data = {'id': id, 'values': values};
         
+        post(url, data);
     };
     
     function add(path, item){
@@ -110,6 +115,11 @@ angular.module('main')
         
         var url = 'http://127.0.0.1:8080/incident/addNew';
         var data = item;
+        
+        post(url, data);
+    };
+    
+    function post(url, data){
         var config = {'Content-Type': 'application/x-www-form-urlencoded'};
         
         $http({
@@ -126,6 +136,7 @@ angular.module('main')
         getObjectAll: getObjectAll,
         getItem: getItem,
         addNewItem: addNewItem,
+        update: update,
     };
     
 });

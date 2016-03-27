@@ -40,8 +40,14 @@ router.post('/update', urlencodedParser, function(req, res){
     var values = req.body.values;
     
     db = modules.getModule('firebase');
-    db.updateItem(id, value);
     
+    for(i in values){
+        var value = JSON.parse(values[i]);
+        
+        db.setItem(value['path'] +'/'+ id, value['value']);
+    }
+    
+    res.end('thanks');
 });
 
 router.post('/add', urlencodedParser, function(req, res){

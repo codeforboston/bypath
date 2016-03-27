@@ -49,6 +49,7 @@ module.exports = {
     },
     
     start: function (){
+        console.log('key manager module started');
         // Nothing to do on start
     },
 
