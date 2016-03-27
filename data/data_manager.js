@@ -13,6 +13,7 @@ module.exports = {
     },
 
     start: function (){
+        console.log('data manager module started');
         b311.start();
     },
 
