@@ -14,7 +14,7 @@ var modules = require('./util/modules.js');
 
 var rest_server = require('./rest/rest_server.js');
 var firebase = require('./database/db_firebase.js');
-var key_manager = require('./auth/key_manager.js');
+var resource_manager = require('./util/ext_resource_manager.js');
 var data_manager = require('./data/data_manager.js');
 
 function Server(){
@@ -31,7 +31,7 @@ function Server(){
         moduleList = [
             ['rest_server', rest_server],
             ['firebase', firebase],
-            ['key_manager', key_manager],
+            ['resource_manager', resource_manager],
             ['data_manager', data_manager]
         ];
         

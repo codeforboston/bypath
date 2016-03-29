@@ -4,7 +4,7 @@
 
 // Includes
 var firebase = require('firebase');
-
+var modules = require('./../util/modules.js');
 // Constants
 var MASTER = 'MASTER';
 var VALUE = 'VALUE'
@@ -18,13 +18,16 @@ var fbRef;
 // Public methods
 module.exports = {
     init: function (){
-        // This link will need to get moved to the key file at some point
-        firebase_url = "https://alexdev.firebaseio.com/";
-        fbRef = new firebase(firebase_url);
+        // Nothing initialize
+        //firebase_url = 'https://alexdev.firebaseio.com/'//resourceMgr.getResource('firebase_url');
+        //fbRef = new firebase(firebase_url);
     },
     
     start: function (){
-        // Nothing to start
+        var resourceMgr = modules.getModule('resource_manager');
+        firebase_url = resourceMgr.getResource('firebase_url');
+        fbRef = new firebase(firebase_url);
+
         console.log('firebase module started');
     },
     
@@ -68,8 +71,8 @@ module.exports = {
         }
     },
     
-    addItem: function(path, value){
-        fbRef.chile(path).push(value);
+    addItem: function (path, value){
+        fbRef.child(path).push(value);
     },
 
     setItem: function (path, value){
