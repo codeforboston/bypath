@@ -4,7 +4,7 @@
 
 // Includes
 var firebase = require('firebase');
-
+var modules = require('./../util/modules.js');
 // Constants
 var MASTER = 'MASTER';
 var VALUE = 'VALUE'
@@ -18,13 +18,17 @@ var fbRef;
 // Public methods
 module.exports = {
     init: function (){
-        // This link will need to get moved to the key file at some point
-        firebase_url = "https://alexdev.firebaseio.com/";
-        fbRef = new firebase(firebase_url);
+        // Nothing initialize
+        //firebase_url = 'https://alexdev.firebaseio.com/'//resourceMgr.getResource('firebase_url');
+        //fbRef = new firebase(firebase_url);
     },
     
     start: function (){
-        // Nothing to start
+        var resourceMgr = modules.getModule('resource_manager');
+        firebase_url = resourceMgr.getResource('firebase_url');
+        fbRef = new firebase(firebase_url);
+
+        console.log('firebase module started');
     },
     
     getItem: function (path, onComplete){
@@ -34,7 +38,7 @@ module.exports = {
         });
     },
 
-    addItem: function (data){
+    addNewItem: function (data){
         // generate the schema from the data passed in
         var result = generateSchema(data);
         
@@ -53,10 +57,29 @@ module.exports = {
             fbRef.child(item[PATH] + '/' + response.key()).set(item[DATA]);
         }
     },
+    
+    // values will be in the format of 
+    // [{path: path, data: value }, ...]
+    // Say we are updating the title it would be
+    // itemId = "-KCSxk6n0DImMtOLx88K"
+    // values = [{path:title, value:'tree in park'}]
+    updateItem: function (itemId, values){
+        for(i in values){
+            var value = values[i];
+            
+            setItem(value[PATH] + "/" + itemId, value[DATA]);
+        }
+    },
+    
+    addItem: function (path, value){
+        fbRef.child(path).push(value);
+    },
 
     setItem: function (path, value){
         fbRef.child(path).set(value);
-    }
+    },
+    
+    
 }
 
 // Private functions
@@ -68,7 +91,7 @@ function generateSchema(data) {
     values.push(createSchemaItem('/open', data['open']));
     values.push(createSchemaItem('/type', data['type']));
     values.push(createSchemaItem('/title', data['title']));
-    values.push(createSchemaItem('/location', data['loc']));
+    values.push(createSchemaItem('/location', data['loc'] || null));
     values.push(createSchemaItem('/geo', data['geo']));
     
     var output = {

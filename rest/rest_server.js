@@ -22,12 +22,9 @@ module.exports = {
     },
 
     start: function (){
-        
+        console.log('rest server module started');
         var server = app.listen(8080, function () {
-            console.log("starting server");
         });
-
-        console.log("rest server started");
     }
 }
 
