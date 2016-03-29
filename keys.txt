@@ -1,2 +1,1 @@
-boston311=k7chiGNz0GPFKd4dS03IEfKuE
-test=12346
+boston_311_key=k7chiGNz0GPFKd4dS03IEfKuE

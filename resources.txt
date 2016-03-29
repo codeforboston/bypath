@@ -1,0 +1,2 @@
+boston_311_url=https://data.cityofboston.gov/resource/wc8w-nujj.json?$query=
+firebase_url=https://alexdev.firebaseio.com/

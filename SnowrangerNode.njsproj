@@ -30,7 +30,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="auth\key_manager.js" />
+    <Compile Include="util\ext_resource_manager.js" />
     <Compile Include="database\db_firebase.js" />
     <Compile Include="data\boston311.js" />
     <Compile Include="data\data_manager.js" />
