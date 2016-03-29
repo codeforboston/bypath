@@ -1,1 +1,1 @@
-boston311=k7chiGNz0GPFKd4dS03IEfKuE
+boston_311_key=k7chiGNz0GPFKd4dS03IEfKuE

@@ -10,6 +10,7 @@ var request = require('request');
 var UPDATE_PATH = '/updates/311';
 
 var serviceKey;
+var queryPath;
 
 // Not sure why I am caching this.
 // Maybe in case I need to stop it
@@ -21,12 +22,14 @@ module.exports = {
     },
 
     start: function (){
-        var keymrg = modules.getModule('key_manager');
-        console.log(keymrg);
-        serviceKey = keymrg.getKey('boston311');
+        var resourceMgr = modules.getModule('resource_manager');
+        
+        serviceKey = resourceMgr.getKey('boston_311_key');
+        queryPath = resourceMgr.getResource('boston_311_url');
+
         // Create the cron job and start it
         retieve311Data();
-        //cJob = new cronJob('0 * * * * *', retieve311Data, null, true, 'UTC');
+        //cJob = new cronJob('00 05 * * * *', retieve311Data, null, true, 'UTC');
 
         
     }
@@ -36,7 +39,6 @@ function retieve311Data() {
     var db = modules.getModule('firebase');
 
     db.getItem(UPDATE_PATH, function (data) {
-        console.log(data);
         var date = data;
         if (data === null) {
             // Create a formated date that we can use if one does not exist
@@ -56,13 +58,10 @@ function retieve311Data() {
     });
 }
 
-function query311(date, callback){
-    // Need to move this to an external resource
-    var bostonUrl = "https://data.cityofboston.gov/resource/wc8w-nujj.json?$query=";
-    
+function query311(date, callback){    
     // Need to add based on case types
-    var stmnt = "SELECT * WHERE open_dt > '" + date + "' AND CASE_STATUS = 'Open' AND (STARTS_WITH(case_title, 'Unsafe/Dangerous Conditions') OR STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Request for Snow Plowing') OR STARTS_WITH(case_title, 'Park Maintenance')) LIMIT 100";
-    var query = bostonUrl + stmnt;
+    var stmnt = "SELECT * WHERE open_dt > '" + date + "' AND CASE_STATUS = 'Open' AND (STARTS_WITH(case_title, 'Unsafe/Dangerous Conditions') OR STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Request for Snow Plowing') OR STARTS_WITH(case_title, 'Park Maintenance'))";
+    var query = queryPath + stmnt;
 
     var options = {
         method: 'GET',
@@ -86,29 +85,23 @@ function query311(date, callback){
 function addToDb(body){
     var db = modules.getModule('firebase');
     var r = JSON.parse(body);
-    console.log(r);
-    
+
     for (i in r) {
         try {
             item = {
                 'id': r[i]['case_enquiry_id'],
                 'title': r[i]['case_title'],
                 'type': r[i]['type'],
-                'loc': r[i]['location'],
-                'open': r[i]['open_dt'],
-                'geo': {
-                    'l': {
-                        '0': r[i]['latitude'], 
-                        '1': r[i]['longitude']
-                    }
-                }
+                'loc': r[i]['location'] || null,
+                'open': r[i]['open_dt'] || null,
+                'geo': r[i]['latitude'] + ',' + r[i]['longitude']
             };
             
-            db.addItem(item);
+            db.addNewItem(item);
         }
-                catch (e) {
+        catch (e) {
+            console.log('error in creating new item');
             console.log(e);
         }
-    }
-    
+    }    
 }
