@@ -106,3 +106,6 @@ function generateSchema(data) {
 function createSchemaItem(path, item) {
     return { PATH : path, DATA : item };
 }
+
+
+
