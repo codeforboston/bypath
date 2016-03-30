@@ -20,7 +20,7 @@ router.post('/addNew', urlencodedParser, function (req, res) {
     // Create the item for the db
     console.log('Adding new');
     item = {
-        'id': req.body.id,
+        'id': '23456',//req.body.id,
         'title':req.body.title,
         'type': req.body.type,
         'open': new Date().toISOString().replace('Z', ''),
