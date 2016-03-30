@@ -11,8 +11,8 @@ Existing 311 data references civil complaints of all kinds - from rodent issues 
 ## What we're running. 
 - Ionic, for iOS and Web (Android coming soon.)
 - Firebase
-- Angular.JS
-- Node.JS
+- AngularJS
+- NodeJS
 - Google Maps API
 
 ## Who is us? 
