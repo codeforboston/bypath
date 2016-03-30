@@ -15,28 +15,28 @@ angular.module('main')
 
 
   // Getting the threeoneones resolved in the main abstract controller.
-  
+
   Database.getObject(['type', 'title'], function (data) {
       console.log(data);
     });
-  
+
   Database.getObjectAll(function (data) {
         console.log(data);
     });
-  
+
   Database.getItem('geo/311/101001731106', function(data){
         console.log(data);
     });
-  
+
   /*Database.addNewItem({
         id:'12435',
         title:'Park',
         type: 'Unsafe',
         geo: '42,-71'
     });*/
-  
-  Database.update('-KDpKJ8NIhM_BaxZBFmV', [{'path': 'type', 'value': 'snow'}, {'path': 'title', 'value': 'change me'}, {'path': 'pizza', 'value': 'concrete'}]);
-  
+
+  Database.update('-KDpKJ8NIhM_BaxZBFmV', [{'path': 'type', 'value': 'snow'}, {'path': 'title', 'value': 'i will never change!!'}, {'path': 'pizza', 'value': 'pepperoni'}, {'path': 'description', 'value': 'encripstionsed!!!!'}]);
+
   mappyCtrl.space.threeOneOneMarkers = toos; // MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
 
 

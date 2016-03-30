@@ -82,6 +82,7 @@ function query311(date, callback){
     });
 }
 
+// This is kind of a big deal. 
 function addToDb(body){
     var db = modules.getModule('firebase');
     var r = JSON.parse(body);
