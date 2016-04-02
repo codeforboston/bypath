@@ -20,15 +20,16 @@ angular.module('main')
    * This is that good shit from Alex.
    */
   Database.getObject(['type', 'title'], function (data) {
-      $log.log(data);
+      $log.log('getObject@mappyCtrl ->', data);
     });
 
   Database.getObjectAll(function (data) {
-        $log.log(data);
+        $log.log('getObjectAll@mappyCtrl ->', data);
+        // mappyCtrl.space.threeOneOneMarkers
     });
 
   Database.getItem('geo/311/101001731106', function(data){
-        $log.log(data);
+        $log.log('getItem@mappyCtrl ->', data);
     });
 
   /*Database.addNewItem({
@@ -40,7 +41,7 @@ angular.module('main')
 
   Database.update('-KDpKJ8NIhM_BaxZBFmV', [{'path': 'type', 'value': 'snow'}, {'path': 'title', 'value': 'i will never change!!'}, {'path': 'pizza', 'value': 'pepperoni'}, {'path': 'description', 'value': 'encripstionsed!!!!'}]);
 
-  mappyCtrl.space.threeOneOneMarkers = toos; // MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
+  // mappyCtrl.space.threeOneOneMarkers = toos; // MarkerFactory.parseDataToMarkers($rootScope.space.threeoneones);
 
 
   // Set arbitrary ids for opinion markers

@@ -1,65 +1,38 @@
 'use strict';
 angular.module('main')
-.controller('DebugCtrl', function ($scope, $window, $log, $filter, Main, complainables, threeoneones, ThreeOneOne, toos) {
+.controller('DebugCtrl', function ($scope, Database) {
 
-  $log.log('Hello from your Controller: DebugCtrl in module main:. This is your controller:', this);
+  $scope.data = {};
 
-  // var bug = this;
-  $scope.test = toos;
+  // The difference between getObject and getObjectAll is
+  // getObject allows you to specify which properties your wnat your returned
+  // objects to have; while getObjectAll returns same data in pre-formatted structure
+  // including all available properties.
+  // Factory method Database.getObjectAll must be manually defined to sync with properites
+  // made available through the back-end API 311 getter.
+  Database.getObject(['type', 'title'], function (data) {
+      // $log.log('getObject@mappyCtrl ->', data);
+      $scope.data.getObject = data;
+  });
+  Database.getObjectAll(function (data) {
+      // $log.log('getObjectAll@mappyCtrl ->', data);
+      $scope.data.getObjectAll = data;
+  });
 
-  $scope.testFilter = function (array, expression, comparator) {
-    $scope.test = $filter('filter')(toos, {title: 'a'});
-  };
-  $scope.testFilter2 = function (array, expression, comparator) {
-    $scope.test = $filter('filter')(toos, {title: 'danger'});
-  };
+  Database.getItem('geo/311/101001731106', function(data){
+        // $log.log('getItem@mappyCtrl ->', data);
+        $scope.data.getItem = data;
+    });
 
-  // $scope.test = {};
-  // $scope.test.cases = [];
-  // $scope.test.case_titles_json = complainables.ALL_CASE_TITLES;
+  /*Database.addNewItem({
+        id:'12435',
+        title:'Park',
+        type: 'Unsafe',
+        geo: '42,-71'
+    });*/
+
+  // Database.update('-KDpKJ8NIhM_BaxZBFmV', [{'path': 'type', 'value': 'snow'}, {'path': 'title', 'value': 'i will never change!!'}, {'path': 'pizza', 'value': 'pepperoni'}, {'path': 'description', 'value': 'encripstionsed!!!!'}]);
 
 
-  // ThreeOneOne.uniqueCases().then(function(data) {
-  //   $log.log(data.data.length);
-  //   // $scope.cases = data;
-  //   $log.log('data', data.data);
-
-  //   for (var i = 0; i < data.data.length; i ++) {
-  //     var thing = {
-  //       title: data.data[i].case_title,
-  //       count: parseInt(data.data[i].count_case_title)
-  //     };
-  //     $scope.test.cases.push(thing);
-  //     // $log.log(thing);
-  //     // $log.log('$scope.cases', $scope.test.cases);
-  //   };
-
-  //   // angular.forEach(data, function (obj) {
-  //   //   obj.count_int = parseInt(obj.count_case_title);
-  //   // });
-  //   // $scope.cases = data;
-  // })
-
-  // // bind data from services
-  // this.someData = Main.someData;
-  // this.ENV = Config.ENV;
-  // this.BUILD = Config.BUILD;
-
-  // // PASSWORD EXAMPLE
-  // this.password = {
-  //   input: '', // by user
-  //   strength: ''
-  // };
-  // this.grade = function () {
-  //   var size = this.password.input.length;
-  //   if (size > 8) {
-  //     this.password.strength = 'strong';
-  //   } else if (size > 3) {
-  //     this.password.strength = 'medium';
-  //   } else {
-  //     this.password.strength = 'weak';
-  //   }
-  // };
-  // this.grade();
 
 });

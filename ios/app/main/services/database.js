@@ -7,64 +7,85 @@ angular.module('main')
     // Master is the array with the keys to the other arrays
     function getObject(tables, callback){
         var refs = [];
-        // The only reason I keep this array is because I don't want these to fall out of scope
-        // wait for the promises to happen on the async database calls
-        var defs = [];
-        var proms = [];
-
-        var output = [];
+        var allPromises = [];
 
         var master = $firebaseArray(Ref.child('master'));
-
-        var re = {'name':'master', object: master};
-        var de = $q.defer();
+        var defer = $q.defer();
 
         master.$loaded().then(function(){
-            de.resolve();
+            defer.resolve();
         });
-        //refs.push(re);
-        //defs.push(de);
-        proms.push(de.promise);
+
+        // push master into allPromises
+        allPromises.push(defer.promise);
 
         for(var i in tables){
             var table = tables[i];
+            // var tableDefer = $q.defer();
 
             // I need to keep the name for later
-            var r = {'name':table, object: $firebaseArray(Ref.child(table))};
+             var r = {
+                'name': table
+                // 'object': $firebaseArray(Ref.child(table))
+              };
 
-            r['object'].$loaded().then(function(){
-                de.resolve();
-            });
 
-            refs.push(r);
-            //defs.push(d);
-            proms.push(de.promise);
+            $firebaseArray(Ref.child(table)).$loaded().then(function(sumShit){
+                // $log.log('is firebase array loaded callabck', sumShit);
+                //
+                // defer.resolve();
+                // $log.log('refs', refs);
+                r['object'] = sumShit;
+                $log.log('r', r);
+                refs.push(r);
+                return refs.push(refs);
+
+
+            }).then(function(refs) { defer.resolve(refs); });
+
+            // push promise for each table into allPromises[]
+            allPromises.push(defer.promise);
         }
-
-        $q.all(proms)
+        $log.log('allPromises', allPromises);
+        $q.all(allPromises)
             .then(function(){
+              $log.log('allPromises resolved.');
+              $log.log('refs[] ->', refs);
+                // refs[] Array(5) <one for each prop> -> [{name: 'type', object: [{$value: "Tree in Park", $id: "-KCSxk6n0DImMtOLx88K", $priority: null}, {$value: "Reques...}]}]
                 var output = [];
 
-                angular.forEach(master, function(v){
-                    var object = {};
+                // for each master id, ie each complaint
+                angular.forEach(master, function(value){
+                    //\\ $log.log('promises loaded. angular.forEach(master).value ->', value);
+                    // value --> {case_id: "101001732366", $id: "-KCSyV95JeFpem1mfDD-", $priority: null}
+                    var id = value.$id;
+                    var object = {
+                      'id': id
+                      // load data here
+                    };
 
-                    var id = v.$id;
-                    object['id'] = id;
-
-                    // Add each item from the tables quered to the output object
-                    for(var i in refs){
+                    // Add each item from the tables quered to the output object, ie assign properities
+                    for (var i in refs) {
+                        // name of property like 'type', 'status', 'geo'
                         var name = refs[i]['name'];
-
+                        //\\ $log.log('name', name);
                         // dis bad boy
-                        var o = refs[i]['object'].$getRecord(id);
+                        // $log.log('refs[i]', refs[i]); // ie {name: "type", object: []}
+                        // $log.log('refs[i]["object"]', refs[i]['object']);
+                        // var o = refs[i]['object'].$getRecord(id);
+                        var m = refs[i]['object'].$getRecord(id).$value;
+
+                        // this should be null because null
+                        // $log.log('o', o); // yep, it's null
+                        $log.log('m', m);
 
                         // To keep the object's format the same as the
                         // tables passed in I will set the value if it
                         // exists otherwise I set it to null
-                        if (o){
+                        if (o) {
                             object[name] = o.$value;
                         }
-                        else{
+                        else {
                             object[name] = null;
                         }
                     }
@@ -77,7 +98,9 @@ angular.module('main')
                 callback(output);
             });
     };
-    // Get full object
+
+    // Get full object with all available properties.
+    // Properties are made available through back-end/SnowrangerNode/database/db_firebase.js#generateSchema()
     function getObjectAll(callback){
         var master = $firebaseArray(Ref.child('master'));
         var type = $firebaseArray(Ref.child('type'));
@@ -114,7 +137,7 @@ angular.module('main')
 
     function addNewItem(item){
 
-        var url = 'http://codenamesnowranger.herokuapp.com//incident/addNew';
+        var url = 'http://codenamesnowranger.herokuapp.com/incident/addNew';
         var data = item;
 
         post(url, data);

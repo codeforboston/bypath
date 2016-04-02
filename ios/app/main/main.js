@@ -35,7 +35,7 @@ angular.module('main', [
         here: function (Geolocation) {
           return Geolocation.get().then(function(loc) {
             return Geolocation.getNearByCity(loc.coords.latitude, loc.coords.longitude).then(function (add) {
-              return {location: loc, address: add.data.results[0]['formatted_address']}
+              return {location: loc, address: add.data.results[0]['formatted_address']};
             });
           });
         },
