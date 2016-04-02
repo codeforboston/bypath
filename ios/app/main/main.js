@@ -55,8 +55,18 @@ angular.module('main', [
 
         // Should return **data** (not markers), because we'll mess around with which markers get
         // shown as per user-oriented filtering.
-        toos: function (Ref, $firebaseArray) {
-          return $firebaseArray(Ref.child('tooMaster'));
+        toos: function (Database) {
+          return Database.getObjectAll().then(function(data) {
+            return Database.assembleObjects(data);
+          });
+          // return 'asdf';
+          // return
+          // return [{name: "thing"}, {name: "moar thing"}];
+          // return $firebaseArray(Ref.child('tooMaster'));
+          // var dat = Database.getObjectAll(function (data) {
+          //   return data;
+          // });
+          // return dat;
         },
         // threeoneones: function (ThreeOneOne, BuildAQuery) {
         //   var query = BuildAQuery.boston311Query(50, 'Open', undefined, undefined);

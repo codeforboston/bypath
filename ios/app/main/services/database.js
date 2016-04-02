@@ -62,8 +62,7 @@ angular.module('main')
      * @tables: ['table name', 'other table name'], where table names are 1:1 -> available properties
      * @callback: function to call after all promises are resolved
      */
-    function getObject(tables, callback){
-        $log.log('tables -> ', tables);
+    function getObject(tables){
 
         var resolvedTables = [];
 
@@ -73,24 +72,19 @@ angular.module('main')
         for (var i in tables) {
           resolvedTables.push(getTable(tables[i]));
         }
-        
+
         // once all tables have been resolved
-        $q.all(resolvedTables).then(function(resolvedTablesData) {
-          callback(assembleObjects(resolvedTablesData));
-        });
+        // $q.all(resolvedTables).then(function(resolvedTablesData) {
+        //   callback(assembleObjects(resolvedTablesData));
+        // });
+        return $q.all(resolvedTables);
     };
 
+    // Quick and dirty little alias method for Database.getObject(<all the properties array>);
     // Get full object with all available properties.
     // Properties are made available through back-end/SnowrangerNode/database/db_firebase.js#generateSchema()
-    function getObjectAll(callback){
-        var master = $firebaseArray(Ref.child('master'));
-        var type = $firebaseArray(Ref.child('type'));
-        var title = $firebaseArray(Ref.child('title'));
-        var open = $firebaseArray(Ref.child('open'));
-        var status = $firebaseArray(Ref.child('status'));
-        var geo = $firebaseArray(Ref.child('geo'));
-
-        getObject(['type','title','open','status', 'geo'], callback);
+    function getObjectAll(){
+        return getObject(['type','title','open','status', 'geo']);
     };
 
     function getItem(path, callback){
@@ -136,12 +130,12 @@ angular.module('main')
     };
 
     return {
-
         getObject: getObject,
         getObjectAll: getObjectAll,
         getItem: getItem,
         addNewItem: addNewItem,
         update: update,
+        assembleObjects: assembleObjects
     };
 
 });
