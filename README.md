@@ -9,9 +9,11 @@ Originally begun as an initiative to help enable mobility for low-mobility folk 
 Existing 311 data references civil complaints of all kinds - from rodent issues to graffitti to potholes to snowplow requests - all of which can make an impact on the accessibility and living conditions in our fair city. 
 
 ## What we're running. 
-- iOS via Ionic
-- Web via Python
+- Ionic, for iOS and Web (Android coming soon.)
 - Firebase
+- AngularJS
+- NodeJS
+- Google Maps API
 
 ## Who is us? 
 - Alex: wants a real job
