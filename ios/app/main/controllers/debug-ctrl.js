@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('DebugCtrl', function ($scope, Database) {
+.controller('DebugCtrl', function ($scope, $log,  Database) {
 
   $scope.data = {};
 
@@ -14,6 +14,7 @@ angular.module('main')
   //     $scope.data.getObject = data;
   // });
   Database.getObjectAll(function (data) {
+      // $log.log(data);
       $scope.data.getObjectAll = data;
   });
 

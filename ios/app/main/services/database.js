@@ -5,95 +5,72 @@ angular.module('main')
     // Tables will be in the format of a list of string
     // each string will be the name of a table you want
     // Master is the array with the keys to the other arrays
+    function getTable(table) {
+      var defer = $q.defer();
+      $firebaseArray(Ref.child(table)).$loaded().then(function(tableData) {
+        defer.resolve({name: table, data: tableData});
+      });
+      return defer.promise;
+    };
 
+    /**
+     * @resolvedTables: promise-resolved tables including master
+     * Returns array of assembed Objects each based on master id dictionary
+     */
+    function assembleObjects(resolvedTables) { // master should be resolvedTables[0]
+      $log.log('assembling objects for these tables', resolvedTables);
+      $log.log('and I think master is ', resolvedTables[0] );
+      // var defer = $q.defer();
+
+      var output = []; // array of assembled objects
+
+      // for all master dictionary ids
+      angular.forEach(resolvedTables[0]['data'], function(value) {
+        var fbId = value.$id;
+        //\\ $log.log('fbId', fbId);
+
+        var obj = {
+          id: fbId
+          // tableName: tableData.$getRecord by id
+        };
+
+        // for all resolved tables except master
+        for (var i = 1; i < resolvedTables.length; i++) {
+          var tableName = resolvedTables[i]['name'];
+
+          // try to get data from each table
+          var data = resolvedTables[i]['data'].$getRecord(fbId);
+
+          //
+          if (data) {
+            obj[tableName] = data.$value;
+          } else {
+            obj[tableName] = null;
+          }
+          $log.log('obj', obj);
+          this.push(obj); // push obj to output[]
+        }
+      }, output); // output == this
+
+      return output;
+      // defer.resolve(output);
+      // return defer.promise;
+    };
+//
     function getObject(tables, callback){
         $log.log('tables -> ', tables);
-        var refs = [];
-        var allPromises = [];
 
-        var master = $firebaseArray(Ref.child('master'));
-        var defer = $q.defer();
-
-        master.$loaded().then(function(){
-            defer.resolve();
-        });
-        // push master into allPromises
-        allPromises.push(defer.promise);
-
-        for(var i in tables){
-          var table = tables[i];
-          $log.log('table', table);
-
-          var r = {
-            'name': table,
-            'object': $firebaseArray(Ref.child(table))
-          };
-          $log.log('r', r);
-
-          r['object'].$loaded().then(function arrayLoaded(data) {
-            $log.log('r["object"].$loaded()', data);
-            refs.push(r);
-            $log.log('refs', refs);
-            defer.resolve(r);
-          });
-          // push promise for each table into allPromises[]
-          allPromises.push(defer.promise);
+        var resolvedTables = [];
+        // get master
+        resolvedTables.push(getTable('master'));
+        // get the rest
+        for (var i in tables) {
+          resolvedTables.push(getTable(tables[i]));
         }
-
-        // $log.log('allPromises', allPromises);
-
-        $q.all(allPromises)
-            .then(function(allPromisesData){
-
-              $log.log('allPromises resolved.');
-              $log.log('allPromisesData -> ', allPromisesData);
-              $log.log('refs[] ->', refs);
-                // refs[] Array(5) <one for each prop> -> [{name: 'type', object: [{$value: "Tree in Park", $id: "-KCSxk6n0DImMtOLx88K", $priority: null}, {$value: "Reques...}]}]
-                var output = [];
-
-                // for each master id, ie each complaint
-                angular.forEach(master, function(value){
-                    //\\ $log.log('promises loaded. angular.forEach(master).value ->', value);
-                    // value --> {case_id: "101001732366", $id: "-KCSyV95JeFpem1mfDD-", $priority: null}
-                    var id = value.$id;
-                    var object = {
-                      'id': id
-                      // load data here
-                    };
-
-                    // Add each item from the tables quered to the output object, ie assign properities
-                    for (var i in refs) {
-                        // name of property like 'type', 'status', 'geo'
-                        var name = refs[i]['name'];
-                        //\\ $log.log('name', name);
-                        // dis bad boy
-                        // $log.log('refs[i]', refs[i]); // ie {name: "type", object: []}
-                        // $log.log('refs[i]["object"]', refs[i]['object']);
-                        var o = refs[i]['object'].$getRecord(id);
-                        // var m = refs[i]['object'].$getRecord(id);
-
-                        // this should be null because null
-                        // $log.log('o', o); // yep, it's null
-                        // $log.log('m', m);
-
-                        // To keep the object's format the same as the
-                        // tables passed in I will set the value if it
-                        // exists otherwise I set it to null
-                        if (o) {
-                            object[name] = o.$value;
-                        }
-                        else {
-                            object[name] = 'asdf'; // null
-                        }
-                    }
-
-                    output.push(object);
-                })
-
-                //console.log(output);
-
-                callback(output);
-            });
+        // once all tables have been resolved
+        $q.all(resolvedTables).then(function(resolvedTablesData) {
+          callback(assembleObjects(resolvedTablesData));
+        });
     };
 
     // Get full object with all available properties.
