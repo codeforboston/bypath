@@ -10,18 +10,15 @@ angular.module('main')
   // including all available properties.
   // Factory method Database.getObjectAll must be manually defined to sync with properites
   // made available through the back-end API 311 getter.
-  Database.getObject(['type', 'title'], function (data) {
-      // $log.log('getObject@mappyCtrl ->', data);
-      $scope.data.getObject = data;
-  });
+  // Database.getObject(['type', 'title'], function (data) {
+  //     $scope.data.getObject = data;
+  // });
   Database.getObjectAll(function (data) {
-      // $log.log('getObjectAll@mappyCtrl ->', data);
       $scope.data.getObjectAll = data;
   });
 
   Database.getItem('geo/311/101001731106', function(data){
-        // $log.log('getItem@mappyCtrl ->', data);
-        $scope.data.getItem = data;
+      $scope.data.getItem = data;
     });
 
   /*Database.addNewItem({

@@ -5,7 +5,9 @@ angular.module('main')
     // Tables will be in the format of a list of string
     // each string will be the name of a table you want
     // Master is the array with the keys to the other arrays
+
     function getObject(tables, callback){
+        $log.log('tables -> ', tables);
         var refs = [];
         var allPromises = [];
 
@@ -15,45 +17,36 @@ angular.module('main')
         master.$loaded().then(function(){
             defer.resolve();
         });
-
         // push master into allPromises
         allPromises.push(defer.promise);
-        var def = {};
-        for (var i in tables) {
-          def[i] = $q.defer();
-          allPromises.push(def[i].promise);
-        }
 
         for(var i in tables){
-            var table = tables[i];
-            // var tableDefer = $q.defer();
+          var table = tables[i];
+          $log.log('table', table);
 
-            // I need to keep the name for later
-             var r = {
-                'name': table
-                // 'object': $firebaseArray(Ref.child(table))
-              };
+          var r = {
+            'name': table,
+            'object': $firebaseArray(Ref.child(table))
+          };
+          $log.log('r', r);
 
-
-            $firebaseArray(Ref.child(table)).$loaded().then(function(sumShit){
-                // $log.log('is firebase array loaded callabck', sumShit);
-                //
-                // defer.resolve();
-                // $log.log('refs', refs);
-                r['object'] = sumShit;
-                $log.log('r', r);
-                refs.push(r);
-                return def[i].resolve(r);
-
-            });
-
-            // push promise for each table into allPromises[]
-            // allPromises.push(defer.promise);
+          r['object'].$loaded().then(function arrayLoaded(data) {
+            $log.log('r["object"].$loaded()', data);
+            refs.push(r);
+            $log.log('refs', refs);
+            defer.resolve(r);
+          });
+          // push promise for each table into allPromises[]
+          allPromises.push(defer.promise);
         }
-        $log.log('allPromises', allPromises);
+
+        // $log.log('allPromises', allPromises);
+
         $q.all(allPromises)
-            .then(function(){
+            .then(function(allPromisesData){
+
               $log.log('allPromises resolved.');
+              $log.log('allPromisesData -> ', allPromisesData);
               $log.log('refs[] ->', refs);
                 // refs[] Array(5) <one for each prop> -> [{name: 'type', object: [{$value: "Tree in Park", $id: "-KCSxk6n0DImMtOLx88K", $priority: null}, {$value: "Reques...}]}]
                 var output = [];
@@ -76,12 +69,12 @@ angular.module('main')
                         // dis bad boy
                         // $log.log('refs[i]', refs[i]); // ie {name: "type", object: []}
                         // $log.log('refs[i]["object"]', refs[i]['object']);
-                        // var o = refs[i]['object'].$getRecord(id);
-                        var m = refs[i]['object'].$getRecord(id).$value;
+                        var o = refs[i]['object'].$getRecord(id);
+                        // var m = refs[i]['object'].$getRecord(id);
 
                         // this should be null because null
                         // $log.log('o', o); // yep, it's null
-                        $log.log('m', m);
+                        // $log.log('m', m);
 
                         // To keep the object's format the same as the
                         // tables passed in I will set the value if it
@@ -90,7 +83,7 @@ angular.module('main')
                             object[name] = o.$value;
                         }
                         else {
-                            object[name] = null;
+                            object[name] = 'asdf'; // null
                         }
                     }
 
