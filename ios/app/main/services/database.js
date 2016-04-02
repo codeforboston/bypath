@@ -18,6 +18,11 @@ angular.module('main')
 
         // push master into allPromises
         allPromises.push(defer.promise);
+        var def = {};
+        for (var i in tables) {
+          def[i] = $q.defer();
+          allPromises.push(def[i].promise);
+        }
 
         for(var i in tables){
             var table = tables[i];
@@ -38,13 +43,12 @@ angular.module('main')
                 r['object'] = sumShit;
                 $log.log('r', r);
                 refs.push(r);
-                return refs.push(refs);
+                return def[i].resolve(r);
 
-
-            }).then(function(refs) { defer.resolve(refs); });
+            });
 
             // push promise for each table into allPromises[]
-            allPromises.push(defer.promise);
+            // allPromises.push(defer.promise);
         }
         $log.log('allPromises', allPromises);
         $q.all(allPromises)
