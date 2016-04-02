@@ -14,13 +14,13 @@ angular.module('main')
   //     $scope.data.getObject = data;
   // });
   Database.getObjectAll(function (data) {
-      // $log.log(data);
-      $scope.data.getObjectAll = data;
+    // $log.log(data);
+    $scope.data.getObjectAll = data;
   });
 
   Database.getItem('geo/311/101001731106', function(data){
-      $scope.data.getItem = data;
-    });
+    $scope.data.getItem = data;
+  });
 
   /*Database.addNewItem({
         id:'12435',
