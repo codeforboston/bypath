@@ -16,16 +16,19 @@ angular.module('main')
 
   // Getting the threeoneones resolved in the main abstract controller.
 
+  /**
+   * This is that good shit from Alex.
+   */
   Database.getObject(['type', 'title'], function (data) {
-      console.log(data);
+      $log.log(data);
     });
 
   Database.getObjectAll(function (data) {
-        console.log(data);
+        $log.log(data);
     });
 
   Database.getItem('geo/311/101001731106', function(data){
-        console.log(data);
+        $log.log(data);
     });
 
   /*Database.addNewItem({
