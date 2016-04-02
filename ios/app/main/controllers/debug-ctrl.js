@@ -18,9 +18,10 @@ angular.module('main')
   //   // $log.log(data);
   //   $scope.data.getObjectAll = data;
   // });
-  Database.getObject(['type','title','open','status', 'geo']).then(function(data) {
-    $scope.data.getObjectAll = Database.assembleObjects(data);
-  });
+  Database.getObject(['type','title','open','status', 'geo'])
+    .then(function(data) {
+      $scope.data.getObjectAll = Database.assembleObjects(data);
+    });
 
   Database.getItem('geo/311/101001731106', function(data){
     $scope.data.getItem = data;

@@ -32,6 +32,22 @@ angular.module('main', [
       // Resolve sets these vars as a dependency for the view and controller load, allowing
       // the vars to be injected into the controller just like a factory.
       resolve: {
+        /**
+         * @GeoLocation: GeoLocation factory
+         * Returns -->
+         *   // here: {
+             //   location: {
+             //     coords: {
+               // altitude: null
+               // altitudeAccuracy: null
+               // heading: null
+               // latitude: 42.40128642893472
+               // longitude: -71.12408442000427
+               // speed: null
+             //   },
+             //   address: '47 paulina st stomervilel'
+             // }
+         */
         here: function (Geolocation) {
           return Geolocation.get().then(function(loc) {
             return Geolocation.getNearByCity(loc.coords.latitude, loc.coords.longitude).then(function (add) {
@@ -39,39 +55,15 @@ angular.module('main', [
             });
           });
         },
-            // returns as -->
-            // here: {
-            //   location: {
-            //     coords: {
-                  // altitude: null
-                  // altitudeAccuracy: null
-                  // heading: null
-                  // latitude: 42.40128642893472
-                  // longitude: -71.12408442000427
-                  // speed: null
-            //   },
-            //   address: '47 paulina st stomervilel'
-            // }
-
-        // Should return **data** (not markers), because we'll mess around with which markers get
-        // shown as per user-oriented filtering.
+        /**
+         * @Database: Database factory
+         * return factory assembled objects based on getObjectAll() helper method
+         */
         toos: function (Database) {
           return Database.getObjectAll().then(function(data) {
             return Database.assembleObjects(data);
           });
-          // return 'asdf';
-          // return
-          // return [{name: "thing"}, {name: "moar thing"}];
-          // return $firebaseArray(Ref.child('tooMaster'));
-          // var dat = Database.getObjectAll(function (data) {
-          //   return data;
-          // });
-          // return dat;
         },
-        // threeoneones: function (ThreeOneOne, BuildAQuery) {
-        //   var query = BuildAQuery.boston311Query(50, 'Open', undefined, undefined);
-        //   return ThreeOneOne.getBoston311Data(query);
-        // },
         opinions: function (Opinions) {
           return Opinions.index();
         }

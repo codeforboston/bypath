@@ -9,10 +9,33 @@
       {{ listyCtrl.currentLocation | json }}
     </p>
 
-    <label for="">boston 311 api via our own api</label>
+    <!-- <label for="">boston 311 api via our own api</label>
     <p>
       {{ listyCtrl.data.complaints | json }}
-    </p>
+    </p> -->
+    <div class="item item-input">
+
+      <input type="text" ng-model="searchy" placeholder="search em">
+    </div>
+    <b>311 complains api via Alex's api</b>
+    <table>
+
+        <th>id</th>
+        <th>type</th>
+        <th>title</th>
+        <th>open_dt</th>
+        <th>status</th>
+        <th>geo</th>
+
+      <tr ng-repeat="d in listyCtrl.data.complaints | filter:searchy track by $index ">
+        <td>{{ d.id }}</td>
+        <td>{{ d.type }}</td>
+        <td>{{ d.title }}</td>
+        <td>{{ d.open }}</td>
+        <td>{{ d.status }}</td>
+        <td>{{ d.geo }}</td>
+      </tr>
+    </table>
 
     <!-- <label for="">opinions</label>
     <p>
