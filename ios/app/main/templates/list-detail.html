@@ -2,6 +2,17 @@
   <!-- do you want padding -->
   <ion-content class="padding">
 
+    <div class="test">
+      <p>
+        <b>ObjectId:</b>
+        {{ ctrl.data.objectId | json }}
+      </p>
+      <p>
+        <b>Object:</b>
+        {{ ctrl.data.obj | json }}
+      </p>
+    </div>
+
     <!-- content goes here -->
     <img ng-src="main/assets/images/yo@2x.png" style="width: 64px; height: 64px">
     <p>

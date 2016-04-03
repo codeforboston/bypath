@@ -78,6 +78,21 @@ angular.module('main', [
           }
         }
       })
+
+      .state('main.list-detail', {
+        url: 'list/:objectId',
+        views: {
+          'tab-list': {
+            templateUrl: 'main/templates/list-detail.html',
+            controller: 'TestShowCtrl as ctrl',
+            resolve: {
+              objectId: function($stateParams) {
+                return $stateParams.objectId;
+              }
+            }
+          }
+        }
+      })
       // This is kind of an ugly way to handle navigation that is redunandant for clicking on a
       // marker on the map -> resource show page && clicking on an item in the list view -> resource show page.
       // Sorry.
