@@ -30,7 +30,7 @@
         <th>status</th>
         <th>geo</th>
 
-      <tr ng-repeat="d in listyCtrl.data.complaints | filter:searchy track by $index "
+      <tr ng-repeat="d in listyCtrl.data.complaints | filter:searchy"
         ui-sref="main.list-detail({objectId: d.id})">
         <td>{{ d.id }}</td>
         <td>{{ d.type }}</td>
