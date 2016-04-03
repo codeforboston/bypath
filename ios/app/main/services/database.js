@@ -51,8 +51,9 @@ angular.module('main')
             obj[tableName] = null;
           }
           $log.log('obj', obj);
-          this.push(obj); // push obj to output[]
+
         }
+        this.push(obj); // push obj to output[]
       }, output); // output == this
 
       return output;
