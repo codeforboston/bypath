@@ -88,12 +88,21 @@ function generateSchema(data) {
     // in the form of <path>: <values>
     var values = [];
 
-    values.push(createSchemaItem('/open', data['open']));
+    // values.push(createSchemaItem('/open', data['open']));
     values.push(createSchemaItem('/type', data['type']));
     values.push(createSchemaItem('/title', data['title']));
     values.push(createSchemaItem('/location', data['loc'] || null));
     values.push(createSchemaItem('/geo', data['geo']));
     
+    // moar values
+    values.push(createSchemaItem('/open_dt', data['open_dt']));
+    values.push(createSchemaItem('/closed_dt', data['closed_dt']));
+    values.push(createSchemaItem('/case_status', data['case_status']));
+    values.push(createSchemaItem('/ontime_status', data['ontime_status']));
+    values.push(createSchemaItem('/address', data['location']));
+    values.push(createSchemaItem('/short_address', data['location_street_name']));
+    values.push(createSchemaItem('/neighborhood', data['neighborhood']));
+
     var output = {
         MASTER: createSchemaItem('/master', { 'id': data['id'] }),
         VALUE : values
