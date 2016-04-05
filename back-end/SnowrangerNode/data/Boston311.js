@@ -30,8 +30,6 @@ module.exports = {
         // Create the cron job and start it
         retieve311Data();
         //cJob = new cronJob('00 05 * * * *', retieve311Data, null, true, 'UTC');
-
-        
     }
 }
 
@@ -52,7 +50,7 @@ function retieve311Data() {
             
             // Might want to do some checks to make sure there were no errors when
             // sending the data to the db before setting the last upated time
-            console.log('setting time');
+            console.log('Got latest boston 311 data');
             db.setItem(UPDATE_PATH, new Date().toISOString().replace('Z', ''));
         });
     });
