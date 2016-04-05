@@ -28,8 +28,8 @@ module.exports = {
         queryPath = resourceMgr.getResource('boston_311_url');
 
         // Create the cron job and start it
-        retieve311Data();
-        //cJob = new cronJob('00 05 * * * *', retieve311Data, null, true, 'UTC');
+        //retieve311Data();
+        cJob = new cronJob('00 05 * * * *', retieve311Data, null, true, 'UTC');
     }
 }
 
