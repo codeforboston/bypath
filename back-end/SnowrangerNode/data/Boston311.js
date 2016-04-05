@@ -9,6 +9,7 @@ var request = require('request');
 
 var UPDATE_PATH = '/updates/311';
 
+// This should fix heroku
 var serviceKey;
 var queryPath;
 
