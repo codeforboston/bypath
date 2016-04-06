@@ -23,8 +23,8 @@ angular.module('main')
   function parseLocationStringToNamedObject(locString) {
     var arr = locString.split(',');
     return {
-      lat: parseFloat(arr[0]),
-      lon: parseFloat(arr[1])
+      latitude: parseFloat(arr[0]),
+      longitude: parseFloat(arr[1])
     };
   }
 

@@ -93,89 +93,6 @@ angular.module('main', [
           }
         }
       })
-      // This is kind of an ugly way to handle navigation that is redunandant for clicking on a
-      // marker on the map -> resource show page && clicking on an item in the list view -> resource show page.
-      // Sorry.
-      .state('main.opinionDetailMappy', {
-        url: 'map/opinion/:opinionId',
-        views: {
-          'tab-mappy': {
-            templateUrl: 'main/templates/show.html',
-            controller: 'ShowCtrl as showCtrl',
-            resolve: {
-              showResource: function () {
-                return 'opinion';
-              },
-              resourceId: function ($stateParams) {
-                return $stateParams.opinionId;
-              }
-            }
-          },
-        }
-      })
-      .state('main.opinionDetailListy', {
-        url: 'list/opinion/:opinionId',
-        views: {
-          'tab-list': {
-            templateUrl: 'main/templates/show.html',
-            controller: 'ShowCtrl as showCtrl',
-            resolve: {
-              showResource: function () {
-                return 'opinion';
-              },
-              resourceId: function ($stateParams) {
-                return $stateParams.opinionId;
-              }
-            }
-          },
-        }
-      })
-      .state('main.complaintDetailMappy', {
-        url: 'map/complaint/:complaintId',
-        views: {
-          'tab-mappy': {
-            templateUrl: 'main/templates/show.html',
-            controller: 'ShowCtrl as showCtrl',
-            resolve: {
-              showResource: function () {
-                return 'complaint';
-              },
-              resourceId: function ($stateParams) {
-                // var base = 'https://data.cityofboston.gov/resource/awu8-dc52.json';
-                // var q = '?case_enquiry_id=' + $stateParams.complaintId;
-
-                // return ThreeOneOne.getBoston311Data(base + q).then(function (data) {
-                //   return MarkerFactory.parseDataToMarkers(data)[0];
-                // });
-                return $stateParams.complaintId;
-              }
-            }
-          },
-        }
-      })
-      .state('main.complaintDetailListy', {
-        url: 'list/complaint/:complaintId',
-        views: {
-          'tab-list': {
-            templateUrl: 'main/templates/show.html',
-            controller: 'ShowCtrl as showCtrl',
-            resolve: {
-              showResource: function () {
-                return 'complaint';
-              },
-              resourceId: function ($stateParams) {
-                // var base = 'https://data.cityofboston.gov/resource/awu8-dc52.json';
-                // var q = '?case_enquiry_id=' + $stateParams.complaintId;
-
-                // return ThreeOneOne.getBoston311Data(base + q).then(function (data) {
-                //   return MarkerFactory.parseDataToMarkers(data)[0];
-                // });
-                return $stateParams.complaintId;
-              }
-            }
-          },
-        }
-      })
       .state('main.debug', {
         url: '/debug',
         views: {
@@ -190,10 +107,6 @@ angular.module('main', [
         views: {
           'tab-mappy': {
             templateUrl: 'main/templates/mappy.html',
-            controller: 'MappyCtrl as mappyCtrl'
-          },
-          'filterer': {
-            templateUrl: 'main/templates/filterer.html',
             controller: 'MappyCtrl as mappyCtrl'
           }
         }

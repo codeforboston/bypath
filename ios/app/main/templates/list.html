@@ -1,21 +1,10 @@
 <ion-view view-title="{{ listyCtrl.viewTitle }}" >
   <ion-content>
 
-    <b>resolutions</b>
-    <br>
-
     <label for="">user current location</label>
     <p>
       {{ listyCtrl.currentLocation | json }}
     </p>
-
-
-
-    <!-- inputs -->
-    <!-- <input type="checkbox" ng-model="listyCtrl.data.caseTypeFilter['Unsafe Dangerous Conditions']"/> UDC -->
-    <!-- <input type="checkbox" ng-model="listyCtrl.data.caseTypeFilter['Ground Maintenance']"> GM -->
-
-
 
     <p ng-repeat="incident in listyCtrl.data.complaints | unique:'type'">
     <label for="">
@@ -24,51 +13,17 @@
     </label>
     </p>
 
-
-
     <div class="item item-input">
       <input type="text" ng-model="searchy" placeholder="search em">
     </div>
-
-    <!-- http://stackoverflow.com/questions/15914658/how-to-make-ng-repeat-filter-out-duplicate-results -->
-    <!-- <select ng-options="incident.type for incident in listyCtrl.data.complaints | unique:'type'" ng-model="selected">
-    </select> -->
-
- <!--    <p ng-repeat="incident in listyCtrl.data.complaints | unique:'type' as uniqueTypes">
-      {{incident.type | json }}
-    </p> -->
-
-
-
 
     <!-- input dashboard feedback -->
     <p><b>listyCtrl.data.caseTypeFilter(json): </b>{{ listyCtrl.data.caseTypeFilter | json }} </p>
     <p><b>searchy(json):</b>{{ searchy | json }}</p>
     <span class="type type-positive" ng-if="filteredList">Showing {{ filteredList.length }} of</span>
     <span class="type type-balanced">{{ listyCtrl.data.complaints.length }} total results</span>
-<!--
-    <table>
 
-        <th>id</th>
-        <th>type</th>
-        <th>title</th>
-        <th>open_dt</th>
-
-        <th>geo</th>
-
-      <tr ng-repeat="d in listyCtrl.data.complaints | filter:searchy | whereCaseType:listyCtrl.data.caseTypeFilter as filteredList"
-        ui-sref="main.list-detail({objectId: d.id})">
-        <td>{{ d.id }}</td>
-        <td>{{ d.type }}</td>
-        <td>{{ d.title }}</td>
-        <td>{{ d.open }}</td>
-
-        <td>{{ listyCtrl.testGeoMakingNamedObject(d.geo) }} / {{ listyCtrl.testGeoMakingArray(d.geo) }}</td>
-      </tr>
-    </table> -->
-
-
-    <ion-list ng-repeat="complaint in listyCtrl.data.complaints | filter:searchy | whereCaseType:listyCtrl.data.caseTypeFilter as filteredList">
+    <ion-list ng-repeat="complaint in listyCtrl.data.complaints | filter:searchy | whereCaseType:listyCtrl.data.caseTypeFilter | orderBy:'-open' as filteredList">
       <div class="card padding" style="margin-bottom: 0px;" ui-sref="main.list-detail({objectId: complaint.id})">
         <div class="item item-text-wrap item-icon-right">
 
@@ -80,10 +35,7 @@
           </p> -->
 
           <span class="type type-balanced type-small">Opened: </span>
-            <span class="type type-muted type-small">{{complaint.open}}</span>
-
-          <span ng-if="complaint.closed_dt">
-          <br>
+            <span class="type type-muted type-small">{{complaint.open | date:'dd MMM'}}</span>
 
           <!-- <span class="type type-assertive type-small">Closed: </span>
             <span class="type type-muted type-small">{{complaint.closed_dt}}</span>
