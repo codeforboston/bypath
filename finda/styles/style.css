@@ -1,0 +1,218 @@
+@import url("../lib/bootstrap.min.css");
+@import url("../lib/leaflet/leaflet.css");
+@import url("../lib/leaflet/L.Control.Locate.css");
+@import url("../lib/leaflet.markercluster/MarkerCluster.css");
+@import url("../lib/leaflet.markercluster/MarkerCluster.Default.css");
+
+html { height: 100%;}
+body { height: 100%;
+       margin: 0;
+       font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+       font-weight: 300; }
+
+body > div.container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 50px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  background: #e5e5e5; /*This should be the brand primary color*/
+  border-bottom: 2px solid #69579c; /*This should be the brand accent color*/
+}
+
+.navbar .navbar-header {
+  margin-top: 8px;
+  margin-left: 0;
+}
+
+.navbar .navbar-header .navbar-toggle {
+  /* cancel out above margin */
+  margin-top: 0;
+}
+
+.navbar img {
+  display: inline-block;
+  margin-right: 15px;
+  vertical-align: middle;
+}
+
+.navbar .navbar-brand{
+  float:none;
+  vertical-align: middle;
+  font-weight: 300;
+  font-size: 27px;
+  color: #69579c;
+}
+
+.navbar-form .btn {
+  border:none;
+  outline:none;
+  background-color: #69579c; /*This should be the brand accent color*/
+  color: #fff;
+  font-weight: 400;
+  vertical-align: middle;
+}
+.navbar-form .btn:hover{
+  box-shadow: none;
+  outline:none;
+  border:none;
+  background-color: #4F4175; /*This should be a 25% darken of the brand accent color*/
+}
+.navbar-form .btn:active{
+  box-shadow: none;
+  outline:none;
+  border:none;
+  background-color: #342B4E; /*This should be a 50% darken of the brand accent color*/
+}
+
+#search-results {
+  left: 142px;
+}
+
+#search-results .help {
+  padding: 3px 20px;
+}
+
+#search-results .suggested {
+  border-top: 1px solid #eee;
+  color: #ccc;
+  padding: 6px 20px 3px;
+  margin-bottom: 0;
+}
+
+#search-results ul {
+  padding: 0;
+}
+
+#search-results li {
+  padding: 3px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+#map {
+  position:fixed;
+  left: 0px;
+  top: 50px;
+  bottom: 0;
+  right:0;
+  z-index: 1;
+}
+
+.control {
+    z-index: 2;
+    font: 14px/16px;
+    background: #f3f3f3;
+    display: none;
+}
+
+.leaflet-control-locate {
+  border:1px solid rgba(0,0,0,0.4);
+}
+.leaflet-control-locate a {
+  background-color:#fff;
+  background-position:-3px, -2px;
+}
+.leaflet-control-locate.active a {
+  background-position:-33px -2px;
+}
+
+.control h4 {
+    margin: 10px 0 5px 0;
+    color: #777;
+}
+
+.search-result-marker {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  background-color: #69579c; /*This should be the brand accent color*/
+}
+
+/* only center the search in the big view */
+@media (min-width: 768px) {
+  #search {
+    /*text-align: center;*/
+    float: none !important;
+  }
+
+  #search .form-group {
+    display: inline;
+  }
+
+  #search input {
+    width: 30%;
+  }
+  #search input:focus{
+    box-shadow: inset 0px 1px 2px rgba(0,0,0,.15);
+    border: 1px solid #69579c; /*This should be the brand accent color*/
+    color: #333;
+  }
+}
+
+#info {
+    position: absolute;
+    border: 1px solid #AFAFAF;
+    padding: 10px 14px;
+    height: auto;
+    width:275px;
+    top: 15px;
+    right: 15px;
+    overflow-y: auto;
+    box-shadow: 0 3px 5px rgba(0,0,0,.25);
+    border-radius: 5px;
+}
+
+
+.control.control-sidebar {
+  float: left;
+  box-sizing: border-box;
+  padding: 10px 14px 50px;
+  width: 300px;
+  height: 100%;
+  border-right: 1px solid #AFAFAF;
+  margin-bottom:30px;
+  overflow-y: auto;
+}
+
+#facets .checkbox.selected label {
+  font-weight: bold;
+}
+
+#facets .clear-facets {
+  font-style: italic;
+  float: right;
+  margin: -23px 0 0;
+}
+#facets .clear-facets:hover {
+  color: red; /* TODO: red is probably a horrible color. suggestions? */;
+  cursor:pointer;
+}
+
+#list ul {
+  margin: -14px -14px 20px;
+  padding-bottom: 20px;
+  padding-left: 0;
+}
+
+#list li {
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #dedede;
+  padding: 1em;
+  cursor: pointer;
+  border-left: 5px solid #fcfcfc;
+  list-style: none;
+}
+
+#about .modal-footer img {
+  height: 2.5em;
+  float: left;
+}
+
+#loading h4 {
+  text-align: center;
+}
