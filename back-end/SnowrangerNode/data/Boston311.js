@@ -18,7 +18,7 @@ var cJob;
 
 module.exports = {
     init: function (){
-
+        
     },
 
     start: function (){
@@ -31,7 +31,6 @@ module.exports = {
         retieve311Data();
         //cJob = new cronJob('00 05 * * * *', retieve311Data, null, true, 'UTC');
 
-        
     }
 }
 

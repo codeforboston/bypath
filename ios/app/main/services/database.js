@@ -7,8 +7,11 @@ angular.module('main')
     // Master is the array with the keys to the other arrays
 
     /**
-     * @table: <table name>: string
-     * Returns promise for loaded firebaseArray
+     * @param {String} table Table name.
+     * @return {Promise:Array} Resolved firebase array.
+     *
+     * nb. Whatever the name of table is is what the property will be on the object.
+     * also nb. 1 node deep.
      */
     function getTable(table) {
       var defer = $q.defer();
@@ -19,8 +22,11 @@ angular.module('main')
     };
 
     /**
-     * @resolvedTables: promise-resolved tables including master
-     * Returns array of assembed Objects each based on master id dictionary
+     * @param {Array.<array>} resolvedTables Promise-resolved tables including master.
+     * @return {Array} output Assembed objects based on master list ids.
+     *
+     * Matches ids from Master index with corresponding data in resolvedTables to assemble a list of
+     * objects.
      */
     function assembleObjects(resolvedTables) { // master should be resolvedTables[0]
       //\\ $log.log('assembling objects for these tables', resolvedTables);
@@ -50,7 +56,7 @@ angular.module('main')
           } else {
             obj[tableName] = null;
           }
-          $log.log('obj', obj);
+          // $log.log('obj', obj);
         }
 
         this.push(obj); // push obj to output[]
@@ -60,8 +66,10 @@ angular.module('main')
     };
 
     /**
-     * @tables: ['table name', 'other table name'], where table names are 1:1 -> available properties
-     * @callback: function to call after all promises are resolved
+     * @param  {Array.<string>} tables Where table names::available properties on objects.
+     * @return {promised Array.<object>} resolvedTables Where array.<object> contains promise-resolved data for all specified tables.
+     *
+     * Since this returns standalone property lists indexed by id, in order to make useful objects we have to #assembleObjects.
      */
     function getObject(tables){
 

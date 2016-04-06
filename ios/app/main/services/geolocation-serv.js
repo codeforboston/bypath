@@ -5,6 +5,59 @@ angular.module('main')
   return new GeoFire(Ref.child('geo'));
 }])
 
+
+/**
+ * @return {3 function}
+ *
+ * Our firebase stores geo data coordinates for complaints as a string like 72.112,-23.3992.
+ * This factory returns two functions;
+ *  1. String -> Obj, ie '42.32323,7123.123432' --> {lat: 42.32323, lon: 7123.123432}
+ *  2. String -> Array
+ *  3. Array to string. For storing.
+ */
+.factory('GeoFormatFactory', [function() {
+  /**
+   * @param  {String}
+   * @return {Array}
+   */
+  function parseLocationStringToNamedObject(locString) {
+    var arr = locString.split(',');
+    return {
+      lat: parseFloat(arr[0]),
+      lon: parseFloat(arr[1])
+    };
+  }
+
+  /**
+   * @param  {String}
+   * @return {Array}
+   */
+  function parseLocationStringToArray(locString) {
+    var arr = locString.split(',');
+    return [parseFloat(arr[0]),parseFloat(arr[1])];
+  }
+
+  /**
+   * @param  {Array}
+   * @return {String}
+   */
+  function parseLocationArrayToString(locArray) {
+    if (locArray.length !== 2 || typeof locArray !== 'Array') {
+      return 'Neeee!';
+    } else {
+      return locArray[0] + ',' + locArray[1]; // typeof == 'string'
+    }
+  }
+
+  return {
+    parseLocationStringToNamedObject: parseLocationStringToNamedObject,
+    parseLocationStringToArray: parseLocationStringToArray,
+    parseLocationArrayToString: parseLocationArrayToString
+  };
+
+}])
+
+
 // Promise to get current user's geolocation and ( and we could set it in a userGeo ref)
 .factory('Geolocation', function ($cordovaGeolocation, $log, $q, $http) {
   console.log('GeoLocate Factory reporting for duty.');

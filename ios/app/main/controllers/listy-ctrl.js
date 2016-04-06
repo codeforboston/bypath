@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('ListyCtrl', function ($scope, $log, toos, opinions, here, Database) {
+.controller('ListyCtrl', function ($scope, $log, toos, opinions, here, Database, GeoFormatFactory) {
 
   var listyCtrl = this;
 
@@ -44,6 +44,14 @@ angular.module('main')
     return GeoFire.distance(locArr, listyCtrl.currentLocation.locArr);
   };
 
+  listyCtrl.testGeoMakingNamedObject = function (string) {
+    return GeoFormatFactory.parseLocationStringToNamedObject(string);
+  };
+
+  listyCtrl.testGeoMakingArray = function (string) {
+    return GeoFormatFactory.parseLocationStringToArray(string);
+  };
+
   // out with the old without breaking thing in the ui
   listyCtrl.getComplaintUpvotes = function (id) {
     return 1; // deprecated
@@ -59,5 +67,7 @@ angular.module('main')
   listyCtrl.downvote = function (id) {
     // deprecated
   };
+
+
 
 });
