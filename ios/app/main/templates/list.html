@@ -12,12 +12,33 @@
 
 
     <!-- inputs -->
-    <input type="checkbox" ng-model="listyCtrl.data.caseTypeFilter['Unsafe Dangerous Conditions']"/> UDC
-    <input type="checkbox" ng-model="listyCtrl.data.caseTypeFilter['Ground Maintenance']"> GM
+    <!-- <input type="checkbox" ng-model="listyCtrl.data.caseTypeFilter['Unsafe Dangerous Conditions']"/> UDC -->
+    <!-- <input type="checkbox" ng-model="listyCtrl.data.caseTypeFilter['Ground Maintenance']"> GM -->
+
+
+
+    <p ng-repeat="incident in listyCtrl.data.complaints | unique:'type'">
+    <label for="">
+      <input type="checkbox" ng-model="listyCtrl.data.caseTypeFilter[incident.type]" />
+      {{ incident.type }}
+    </label>
+    </p>
+
+
 
     <div class="item item-input">
       <input type="text" ng-model="searchy" placeholder="search em">
     </div>
+
+    <!-- http://stackoverflow.com/questions/15914658/how-to-make-ng-repeat-filter-out-duplicate-results -->
+    <!-- <select ng-options="incident.type for incident in listyCtrl.data.complaints | unique:'type'" ng-model="selected">
+    </select> -->
+
+ <!--    <p ng-repeat="incident in listyCtrl.data.complaints | unique:'type' as uniqueTypes">
+      {{incident.type | json }}
+    </p> -->
+
+
 
 
     <!-- input dashboard feedback -->
