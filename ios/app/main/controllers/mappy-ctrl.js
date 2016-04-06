@@ -44,6 +44,14 @@ angular.module('main')
   }, true);
 
 
+  mappyCtrl.toggleCaseTypeInFilter = function (caseType) {
+    var typeFilter = mappyCtrl.filters.caseTypes[caseType];
+    if (typeFilter !== null) {
+      mappyCtrl.filters.caseTypes[caseType] = !typeFilter;
+    } else { // else implement
+      mappyCtrl.filters.caseTypes[caseType] = true;
+    }
+  };
 
 
   // Defaults.

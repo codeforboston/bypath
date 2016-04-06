@@ -12,12 +12,19 @@
       <input type="text" ng-model="mappyCtrl.filters.search" placeholder="What are you looking for?">
     </div>
 
-    <button class="button button-block button-small button-positive icon ion-ios-flask-outline" ng-click="mappyCtrl.showFilters = !mappyCtrl.showFilters">
+    <button style="margin: 5px;" class="button button-small" ng-repeat="incident in mappyCtrl.data.complaints | unique:'type'" ng-click="mappyCtrl.toggleCaseTypeInFilter(incident.type)" ng-class="{ 'button-outline button-default' : !mappyCtrl.filters.caseTypes[incident.type], 'button-balanced ' : mappyCtrl.filters.caseTypes[incident.type]}">
+      {{ incident.type }}
+    </button>
+    <button style="margin: 5px;" class="button button-small button-clear button-positive" ui-sref="main.list">
+      {{ mappyCtrl.data.filteredComplaints.length }} results
+    </button>
+
+    <!-- <button class="button button-block button-small button-positive icon ion-ios-flask-outline" ng-click="mappyCtrl.showFilters = !mappyCtrl.showFilters">
     </button>
 
     <ion-list ng-show="mappyCtrl.showFilters" class="slidey">
        <ion-checkbox ng-repeat="incident in mappyCtrl.data.complaints | unique:'type'" ng-model="mappyCtrl.filters.caseTypes[incident.type]">{{incident.type}}</ion-checkbox>
-    </ion-list>
+    </ion-list> -->
 
     <!-- required scss in _mappy.scss -->
     <ui-gmap-google-map
