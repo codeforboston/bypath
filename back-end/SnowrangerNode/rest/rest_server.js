@@ -11,6 +11,7 @@ var incident = require('./routes/incident.js');
 
 // private memeber vars
 var app;
+var port;
 
 // public methods
 module.exports = {
@@ -22,8 +23,10 @@ module.exports = {
     },
 
     start: function (){
+        port = process.env.PORT || 8080;
         console.log('rest server module started');
-        var server = app.listen(8080, function () {
+        var server = app.listen(port, function(){
+            console.log('Server started on port: ' + port);
         });
     }
 }
