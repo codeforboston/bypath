@@ -1,16 +1,21 @@
 'use strict';
 angular.module('main')
-.controller('MappyCtrl', function ($state, $log, toos, here, Database, GeoFormatFactory) {
+.controller('MappyCtrl', function ($scope, $state, $log, $filter, toos, here, Database, GeoFormatFactory) {
 
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
 
+  // testes
+  mappyCtrl.name = 'asdf';
+
   // Holsters.
   mappyCtrl.data = {};
-  mappyCtrl.data.complaints = []; // all of the complaints
+  mappyCtrl.data.complaints = toos; // all of the complaints
+  mappyCtrl.data.filteredComplaints = [];
+  mappyCtrl.filters = {};
 
   /**
-   * Assign a markable position to each complaint.
+   * Assign a markable position to each filterable complaint.
    * @param  {Array} value                     Complaint object.
    * @param  {Property} key
    * @return  {Array} mappyCtrl.data.complaints Fill with appended markably appended compalaints.
@@ -19,10 +24,33 @@ angular.module('main')
     var markablePosition = GeoFormatFactory.parseLocationStringToNamedObject(value.geo);
     var extendedObj = angular.extend(value, {'markablePosition': markablePosition});
     this.push(extendedObj);
-  }, mappyCtrl.data.complaints);
+  }, mappyCtrl.data.filteredComplaints);
+
+  // if (mappyCtrl.data.complaints) {
+  //   $filter('whereCaseType')(mappyCtrl.data.complaints, mappyCtrl.data.filters.caseTypes);
+  // }
+  //
+
+  // http://stackoverflow.com/questions/19455501/angularjs-watch-an-object
+  $scope.$watch(angular.bind(mappyCtrl, function () {
+    return mappyCtrl.filters;
+  }), function (newVal) {
+    //\\
+    $log.log('Case types changed from to ',newVal);
+    var filtered;
+    filtered = $filter('whereCaseType')(mappyCtrl.data.complaints, mappyCtrl.filters.caseTypes);
+    filtered = $filter('filter')(filtered, mappyCtrl.filters.search);
+    mappyCtrl.data.filteredComplaints = filtered;
+  }, true);
+
+
 
 
   // Defaults.
+  // ui
+  mappyCtrl.showFilters = false;
+  mappyCtrl
+  // map
   mappyCtrl.zoom = 12;
   mappyCtrl.boston = {
     coords: {
@@ -30,6 +58,12 @@ angular.module('main')
       longitude: -71.1
     }
   };
+  // data filters
+  mappyCtrl.filters.caseTypes = {
+    'Unsafe Dangerous Conditions': true,
+    'Ground Maintenance': true
+  };
+
 
   /**
    * Click on a marker to show complaint detail card in map view.

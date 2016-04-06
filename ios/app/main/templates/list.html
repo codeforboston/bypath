@@ -6,6 +6,7 @@
       {{ listyCtrl.currentLocation | json }}
     </p>
 
+
     <p ng-repeat="incident in listyCtrl.data.complaints | unique:'type'">
     <label for="">
       <input type="checkbox" ng-model="listyCtrl.data.caseTypeFilter[incident.type]" />
