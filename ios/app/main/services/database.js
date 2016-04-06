@@ -93,7 +93,8 @@ angular.module('main')
     // Get full object with all available properties.
     // Properties are made available through back-end/SnowrangerNode/database/db_firebase.js#generateSchema()
     function getObjectAll(){
-        return getObject(['type','title','open','status', 'geo']);
+        return getObject(['type','title','open','status', 'geo', 'location']);
+        // , 'open_dt', 'short_address', 'address', 'neighborhood'
     };
 
     function getItem(path, callback){

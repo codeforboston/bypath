@@ -4,6 +4,10 @@
 
     <!-- content goes here -->
 
+    <div class="test">
+      {{ showCtrl.resorce.data | json }}
+    </div>
+
     <!-- icon & description -->
     <h2>
       <img ng-src="{{ showCtrl.resource.data.icon_path }}" ng-if="showCtrl.resource.data.icon_path !== null">

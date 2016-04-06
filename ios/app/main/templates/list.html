@@ -9,34 +9,39 @@
       {{ listyCtrl.currentLocation | json }}
     </p>
 
-    <!-- <label for="">boston 311 api via our own api</label>
-    <p>
-      {{ listyCtrl.data.complaints | json }}
-    </p> -->
-    <div class="item item-input">
 
+
+    <!-- inputs -->
+    <input type="checkbox" ng-model="listyCtrl.data.caseTypeFilter['Unsafe Dangerous Conditions']"/> UDC
+    <input type="checkbox" ng-model="listyCtrl.data.caseTypeFilter['Ground Maintenance']"> GM
+
+    <div class="item item-input">
       <input type="text" ng-model="searchy" placeholder="search em">
     </div>
-    <b>311 complains api via Alex's api</b>
-    <span class="type type-balanced">
-      {{ listyCtrl.data.complaints.length }} total results
-    </span>
+
+
+    <!-- input dashboard feedback -->
+    <p><b>listyCtrl.data.caseTypeFilter(json): </b>{{ listyCtrl.data.caseTypeFilter | json }} </p>
+    <p><b>searchy(json):</b>{{ searchy | json }}</p>
+    <span class="type type-positive" ng-if="filteredList">Showing {{ filteredList.length }} of</span>
+    <span class="type type-balanced">{{ listyCtrl.data.complaints.length }} total results</span>
+
     <table>
 
         <th>id</th>
         <th>type</th>
         <th>title</th>
         <th>open_dt</th>
-        <th>status</th>
+
         <th>geo</th>
 
-      <tr ng-repeat="d in listyCtrl.data.complaints | filter:searchy"
+      <tr ng-repeat="d in listyCtrl.data.complaints | filter:searchy | whereCaseType:listyCtrl.data.caseTypeFilter as filteredList"
         ui-sref="main.list-detail({objectId: d.id})">
         <td>{{ d.id }}</td>
         <td>{{ d.type }}</td>
         <td>{{ d.title }}</td>
         <td>{{ d.open }}</td>
-        <td>{{ d.status }}</td>
+
         <td>{{ listyCtrl.testGeoMakingNamedObject(d.geo) }} / {{ listyCtrl.testGeoMakingArray(d.geo) }}</td>
       </tr>
     </table>

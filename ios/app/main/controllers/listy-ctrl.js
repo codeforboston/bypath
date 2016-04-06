@@ -18,6 +18,11 @@ angular.module('main')
   // })
   listyCtrl.data.complaints = toos;
   // $log.log('toos', toos);
+  //
+  listyCtrl.data.caseTypeFilter = {
+    'Unsafe Dangerous Conditions': true,
+    'Ground Maintenance': true
+  };
 
   // listyCtrl.data.opinions = opinions;
 
