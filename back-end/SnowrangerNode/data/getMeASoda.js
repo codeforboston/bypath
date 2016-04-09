@@ -1,8 +1,3 @@
-var util = require('util'); // case need of inpsection can use util.inspect(thing). helpful for checking objects out inthe cli
-
-var justPlainCoke = require('./justPlainCoke.js');
-
-
 /**
  * Should return a nice SoQL query string for to use in your SalesForce SQL queries.
  * Note: will not handle any other SODA specific input queryables like $limit, $order...
@@ -57,6 +52,11 @@ exports.query = function(options) {
 	return s;
 };
 
+
+// Test it. 
+// 
+// var util = require('util'); // .inspect
+// var justPlainCoke = require('./justPlainCoke.js');
 // console.log(query(justPlainCoke));
 // => SELECT * WHERE CASE_STATUS = 'Open' AND open_dt > '$date' AND (STARTS_WITH(case_title, 'Unsafe/Dangerous Conditions') OR STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Request for Snow Plowing') OR STARTS_WITH(case_title, 'Park Maintenance'))
 
