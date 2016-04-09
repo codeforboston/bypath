@@ -6,6 +6,9 @@
 var modules = require('./../util/modules.js');
 var sql = require('./SQLData.js');
 
+var getMeASoda = require('./getMeASoda.js');
+var justPlainCoke = require('./justPlainCoke.js');
+
 var UPDATE_PATH = '/updates/311';
 
 var sqlScheduleQuery;
@@ -21,6 +24,7 @@ module.exports = {
         serviceKey = resourceMgr.getKey('soda_key');
         queryPath = resourceMgr.getResource('boston_311_url');
 
+        // var query = getMeASoda.query(justPlainCoke);
         var query = "SELECT * WHERE open_dt > '$date' AND CASE_STATUS = 'Open' AND (STARTS_WITH(case_title, 'Unsafe/Dangerous Conditions') OR STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Request for Snow Plowing') OR STARTS_WITH(case_title, 'Park Maintenance'))";
         
         sqlScheduleQuery.init(queryPath, query, serviceKey, UPDATE_PATH);
