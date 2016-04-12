@@ -55,6 +55,7 @@ function SqlScheduleQuery(){
         });
     }
     
+    // TODO: maybe the getMeASoda module injection belongs somewhere closer to here?
     function sqlQuery(date, url, query, key, callback){    
         // Need to add based on case types
         query = query.replace('$date', date);
