@@ -1,3 +1,4 @@
 boston_311_url=https://data.cityofboston.gov/resource/wc8w-nujj.json?$query=
 sf_311_url=https://data.sfgov.org/resource/vw6y-z8j6.json?$query=
+nyc_311_url=https://data.cityofnewyork.us/resource/erm2-nwe9.json?$query=
 firebase_url=https://snowranger.firebaseio.com/
