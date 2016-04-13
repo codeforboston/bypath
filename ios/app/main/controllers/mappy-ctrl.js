@@ -53,7 +53,6 @@ angular.module('main')
     }
   };
 
-
   // Defaults.
   // ui
   mappyCtrl.showFilters = false;

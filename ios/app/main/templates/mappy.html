@@ -7,18 +7,26 @@
     transition: 1s all linear;
   }*/
   </style>
-
+    <!-- Search bar -->
+    <h5>Search</h5>
     <div class="item item-input">
       <input type="text" ng-model="mappyCtrl.filters.search" placeholder="What are you looking for?">
     </div>
-
-    <button style="margin: 5px;" class="button button-small" ng-repeat="incident in mappyCtrl.data.complaints | unique:'type'" ng-click="mappyCtrl.toggleCaseTypeInFilter(incident.type)" ng-class="{ 'button-outline button-default' : !mappyCtrl.filters.caseTypes[incident.type], 'button-balanced ' : mappyCtrl.filters.caseTypes[incident.type]}">
-      {{ incident.type }}
-    </button>
-    <button style="margin: 5px;" class="button button-small button-clear button-positive" ui-sref="main.list">
-      {{ mappyCtrl.data.filteredComplaints.length }} results
-    </button>
-
+    <!-- Filter dropdown -->
+    <h5>Filter by Incidents</h5>
+    <div id="optionsContainer">
+        <div id="filterContainer">
+            <select id="incidentSelector" ng-model="selectedIncidentTypes" ng-options="incident.type for incident in mappyCtrl.data.complaints | unique:'type'"></select>
+        </div>
+        <div id="resultCountContainer">
+            <button style="margin: 5px;" class="button button-small button-clear button-positive" ui-sref="main.list">
+              {{ mappyCtrl.data.filteredComplaints.length }} results
+            </button>
+        </div>
+        <!-- <button style="margin: 5px;" class="button button-small" ng-repeat="incident in mappyCtrl.data.complaints | unique:'type'" ng-click="mappyCtrl.toggleCaseTypeInFilter(incident.type)" ng-class="{ 'button-outline button-default' : !mappyCtrl.filters.caseTypes[incident.type], 'button-balanced ' : mappyCtrl.filters.caseTypes[incident.type]}">
+          {{ incident.type }}
+        </button> -->
+    </div>
     <!-- <button class="button button-block button-small button-positive icon ion-ios-flask-outline" ng-click="mappyCtrl.showFilters = !mappyCtrl.showFilters">
     </button>
 
