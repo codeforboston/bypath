@@ -20,7 +20,7 @@ module.exports = {
         
         var serviceKey = resourceMgr.getKey('soda_key');
         var queryPath = resourceMgr.getResource('sf_311_url');
-        var query = "SELECT * WHERE opened > '$date' AND status = 'Open' AND STARTS_WITH(category, 'Sidewalk or Curb') LIMIT 100";
+        var query = "SELECT * WHERE opened > '$date' AND status = 'Open' AND STARTS_WITH(category, 'Sidewalk or Curb')";
         
         sqlScheduleQuery.init(queryPath, query, serviceKey, UPDATE_PATH);
         sqlScheduleQuery.run('00 * * * * *', addToDb);
@@ -54,9 +54,9 @@ function addToDb(body){
                 'source' : 'sf311',
             };
             
-            console.log(item);
+            //console.log(item);
             
-            //db.addNewItem(item);
+            db.addNewItem(item);
         }
         catch (e) {
             console.log('error in creating new item');

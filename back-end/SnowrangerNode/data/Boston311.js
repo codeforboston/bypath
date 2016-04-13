@@ -9,7 +9,7 @@ var sql = require('./SQLData.js');
 var getMeASoda = require('./getMeASoda.js');
 var justPlainCoke = require('./justPlainCoke.js');
 
-var UPDATE_PATH = '/updates/311';
+var UPDATE_PATH = '/updates/bos_311';
 
 var sqlScheduleQuery;
 
@@ -51,9 +51,9 @@ function addToDb(body){
                 'geo': r[i]['latitude'] + ',' + r[i]['longitude'],
                 'source': 'b311',
             };
-            console.log(item);
+            //console.log(item);
             
-            //db.addNewItem(item);
+            db.addNewItem(item);
         }
         catch (e) {
             console.log('error in creating new item');
