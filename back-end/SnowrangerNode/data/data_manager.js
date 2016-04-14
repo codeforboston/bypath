@@ -4,6 +4,7 @@
 
 var b311 = require('./Boston311.js');
 var sf311 = require('./SF311.js');
+var nyc311 = require('./NYC311.js');
 
 // These are the data sources
 var endpoints = [];
@@ -12,7 +13,8 @@ module.exports = {
     init: function (){
         endpoints.push(b311);
         endpoints.push(sf311);
-        
+        endpoints.push(nyc311);
+
         for (i in endpoints) {
             endpoints[i].init();
         }
@@ -20,7 +22,7 @@ module.exports = {
 
     start: function (){
         console.log('data manager module started');
-        
+
         for (i in endpoints) {
             endpoints[i].start();
         }
