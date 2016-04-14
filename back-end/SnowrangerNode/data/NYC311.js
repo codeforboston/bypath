@@ -45,6 +45,7 @@ function addToDb(body){
                 'geo': r[i]['latitude'] + ',' + r[i]['longitude'],
                 'source' : 'nyc311',
             };
+            console.log(item);
             db.addNewItem(item);
         }
         catch (e) {
