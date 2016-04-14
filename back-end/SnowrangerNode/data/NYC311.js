@@ -36,26 +36,15 @@ function addToDb(body){
     console.log('adding items to bd for nyc 311');
     for (i in r) {
         try {
-            var lat;
-            var lon;
-
-            var point = r[i]['point'];
-
-            lat = point['latitude'];
-            lon = point['longitude'];
-
             item = {
-                'id': r[i]['case_id'],
-                'title': r[i]['request_details'],
-                'type': r[i]['category'],
-                'loc': r[i]['address'] || null,
-                'open': r[i]['opened'] || null,
-                'geo': lat + ',' + lon,
-                'source' : 'sf311',
+                'id': r[i]['unique_key'],
+                'title': r[i]['descriptor'],
+                'type': r[i]['complaint_type'],
+                'loc': r[i]['incident_address'] || null,
+                'open': r[i]['created_date'] || null,
+                'geo': r[i]['latitude'] + ',' + r[i]['longitude'],
+                'source' : 'nyc311',
             };
-
-            //console.log(item);
-
             db.addNewItem(item);
         }
         catch (e) {
