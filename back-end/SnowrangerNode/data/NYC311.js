@@ -20,8 +20,7 @@ module.exports = {
 
         var serviceKey = resourceMgr.getKey('soda_key');
         var queryPath = resourceMgr.getResource('nyc_311_url');
-        var query = "SELECT * WHERE created_date > '$date' AND status = 'Open' AND (STARTS_WITH(complaint_type, 'Street Condition') OR STARTS_WITH(complaint_type, 'General Construction/Plumbing') OR STARTS_WITH(complaint_type, 'Street Light Condition') OR STARTS_WITH(complaint_type, 'Illegal Parking'))";
-
+        var query = "SELECT * WHERE created_date > '2016-04-01T00:00:00.000' AND status = 'Open' AND (STARTS_WITH(complaint_type, 'Street Condition') OR STARTS_WITH(complaint_type, 'General Construction/Plumbing') OR STARTS_WITH(complaint_type, 'Street Light Condition') OR STARTS_WITH(complaint_type, 'Illegal Parking'))";
         sqlScheduleQuery.init(queryPath, query, serviceKey, UPDATE_PATH);
         sqlScheduleQuery.run('00 * * * * *', addToDb);
     }
@@ -32,7 +31,6 @@ module.exports = {
 function addToDb(body){
     var db = modules.getModule('firebase');
     var r = JSON.parse(body);
-
     console.log('adding items to bd for nyc 311');
     for (i in r) {
         try {
@@ -45,7 +43,6 @@ function addToDb(body){
                 'geo': r[i]['latitude'] + ',' + r[i]['longitude'],
                 'source' : 'nyc311',
             };
-            console.log(item);
             db.addNewItem(item);
         }
         catch (e) {
