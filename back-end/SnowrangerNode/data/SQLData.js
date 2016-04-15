@@ -12,10 +12,10 @@ var request = require('request');
 module.exports = SqlScheduleQuery;
 
 function SqlScheduleQuery(){
-    SqlScheduleQuery.prototype.init = function(url, query, key, updatePath){
+    SqlScheduleQuery.prototype.init = function(url, key, query, updatePath){
         this.url = url;
-        this.query = query;
         this.key = key;
+        this.query = query;
         this.updatePath = updatePath;
     }
     
@@ -50,7 +50,7 @@ function SqlScheduleQuery(){
                 // sending the data to the db before setting the last upated time
                 console.log('Query completed');
                 db.setItem(updatePath, new Date().toISOString().replace('Z', ''));
-                console.log('Update Date set');
+                console.log('Update ' + updatePath + ' date set');
             });
         });
     }
