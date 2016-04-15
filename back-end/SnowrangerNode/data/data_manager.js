@@ -2,9 +2,10 @@
  * this module will get and manage the data that is stored in the database
 */
 
-
 var builder = require('./endpointBuilder.js');
 var modules = require('./../util/modules.js');
+
+var nyc311 = require('./NYC311.js');
 
 // These are the data sources
 var endpoints = [];
@@ -13,6 +14,7 @@ module.exports = {
     init: function (){
         //endpoints.push(b311);
         //endpoints.push(sf311);
+        //endpoints.push(nyc311);
         
         var resourceMgr = modules.getModule('resource_manager');
         eps = resourceMgr.getResource('endpoints');
@@ -34,7 +36,7 @@ module.exports = {
         // post their data on the hour so I want to wait until
         // after that before cheking for new stuff
         var nextSchedule = 5;
-        
+
         for (i in endpoints) {
             
             // Normal Scheduling.
