@@ -1,3 +1,2 @@
-nyc_311_url=https://data.cityofnewyork.us/resource/fhrw-4uyv.json?$query=
 firebase_url=https://snowranger.firebaseio.com/
 endpoints=load(endpoints.json)
