@@ -58,10 +58,40 @@ function load(data){
         if (idx > -1) {
             // Split the string into id and key
             var id = line.substring(0, idx);
-            var key = line.substring(idx + 1);
+            var value = line.substring(idx + 1).trim();
+            
+            if(value.lastIndexOf('load', 0) === 0){
+                // we need to get the file and load it into the key
+                var st = value.indexOf('(');
+                var end = value.indexOf(')');
+                
+                var filePath = value.substring(st + 1, end);
+                
+                var file = fs.readFileSync(filePath).toString();
+                
+                var delim = filePath.indexOf('.');
+                
+                var ext = filePath.substring(delim+1).toUpperCase();
+                console.log(filePath);
+                console.log(ext);
+                
+                if (ext === 'JSON'){
+                    console.log('We have a json file')
+                    value = JSON.parse(file);
+                    
+                    for (i in value){
+                        console.log("key: " + i);
+                        console.log("value: " + value[i]);
+                    }
+                }
+                else{
+                    value = file;
+                }
+                
+            }
             
             // Set the id, key pair
-            output[id] = key;
+            output[id] = value;
         }
     }
     
