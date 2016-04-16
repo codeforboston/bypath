@@ -3,8 +3,11 @@
 var fridge = require('./data/stockTheFridge.js');
 var fs = require('fs-extra-promise');
 
-// fridge.topShelf('new_york_city_311', function(r) {
-// 	fs.writeFileAsync('./top-shelf-example-nyc311.json', JSON.stringify(r));
-// });
+exports.topShelf = function() {
+	fridge.topShelf('new_york_city_311', function(r) {
+		fs.writeFileAsync('./top-shelf-example-nyc311.json', JSON.stringify(r));
+	});
+}
 
-fridge.fridayNight();
+// TODO: not really a test...
+// exports.fridge = fridge.fridayNight();
