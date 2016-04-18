@@ -1,0 +1,17 @@
+{
+  "name": "tools",
+  "version": "0.0.0",
+  "main": "index.html",
+  "window": {
+    "title": "Tools",
+    "toolbar": false,
+    "width": 1280,
+    "height": 720,
+    "resizable": false
+  },
+  "dependencies": {
+    "cron": "^1.1.0",
+    "firebase": "^2.4.2",
+    "request": "^2.72.0"
+  }
+}
