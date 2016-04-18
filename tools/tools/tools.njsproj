@@ -74,7 +74,7 @@
     <Folder Include="js\api\util\" />
     <Folder Include="js\" />
     <Folder Include="css\" />
-    <Folder Include="js\lib\" />
+    <Folder Include="js\libs\" />
     <Folder Include="js\controller\" />
     <Folder Include="views\" />
   </ItemGroup>
