@@ -16,7 +16,7 @@
     <h5>Filter by Incidents</h5>
     <div id="optionsContainer">
         <div id="filterContainer">
-            <select id="incidentSelector" ng-model="selectedIncidentTypes" ng-options="incident.type for incident in mappyCtrl.data.complaints | unique:'type'"></select>
+            <select id="incidentSelector" ng-model="mappyCtrl.filtersSelected" ng-options="key for (key, value) in mappyCtrl.filters" multiple></select>
         </div>
         <div id="resultCountContainer">
             <button style="margin: 5px;" class="button button-small button-clear button-positive" ui-sref="main.list">
