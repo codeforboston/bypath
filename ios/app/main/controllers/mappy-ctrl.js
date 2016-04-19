@@ -53,7 +53,6 @@ angular.module('main')
   // Defaults.
   // ui
   mappyCtrl.showFilters = false;
-  mappyCtrl
   // map
   mappyCtrl.zoom = 12;
   mappyCtrl.boston = {
