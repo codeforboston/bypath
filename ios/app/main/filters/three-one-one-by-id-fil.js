@@ -61,18 +61,36 @@ angular.module('main')
 // http://stackoverflow.com/questions/15868248/how-to-filter-multiple-values-or-operation-in-angularjs
 // http://jsfiddle.net/Xesued/Bw77D/7/
 .filter('whereCaseType', function () {
-  return function (complaints, caseTypesToMatch) {
-    var items = {
-      types: caseTypesToMatch,
-      out: []
+    return function (complaints, caseTypesToMatch) {
+      var items = {
+        types: caseTypesToMatch,
+        out: []
+      };
+
+      angular.forEach(complaints, function (value, key) {
+        if (this.types[value.type]) {
+          this.out.push(value);
+        }
+      }, items);
+
+      return items.out;
     };
+})
 
-    angular.forEach(complaints, function (value, key) {
-      if (this.types[value.type]) {
-        this.out.push(value);
-      }
-    }, items);
+.filter('incidentType', function() {
+    return function (complaints, filters) {
+        var filteredItems = {
+            filters: filters,
+            items: []
+        };
+        angular.forEach(complaints, function (value, key) {
+            filters.forEach(function(filter) {
+                if (value.type == filter) {
+                  filteredItems.items.push(value);
+                }
+            });
+        }, filteredItems);
 
-    return items.out;
-  };
+        return filteredItems.items;
+    };
 });
