@@ -59,9 +59,7 @@
     }
 
     function start(){
-        var os = require('os');
-        
-        $scope.datas = [1, 2, 3, 4, 10, os.cpus()];
+        // List of tools available
         $scope.tools = [
             {
                 'name': 'Home',
@@ -70,6 +68,10 @@
             {
                 'name': 'Database Refresh',
                 'url': 'dbRefresh'
+            },
+            {
+                'name': 'Add New Data Source',
+                'url': 'addNewSource'
             }
         ];
         

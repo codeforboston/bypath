@@ -44,6 +44,7 @@
     <Compile Include="js\api\data\stockTheFridge.js" />
     <Compile Include="js\api\util\ext_resource_manager.js" />
     <Compile Include="js\api\util\modules.js" />
+    <Compile Include="js\controller\addNewDataSource.js" />
     <Compile Include="js\controller\databaseRefresh.js" />
     <Compile Include="js\controller\mainPage.js" />
     <Compile Include="js\lib\angular-resource.min.js" />
@@ -59,6 +60,7 @@
     <Content Include="js\api\resources\endpoints.json" />
     <Content Include="js\api\resources\keys.txt" />
     <Content Include="js\api\resources\resources.txt" />
+    <Content Include="views\addNewDataSource.html" />
     <Content Include="views\dbRefresh.html" />
     <Content Include="views\header.html" />
     <Content Include="index.html" />
@@ -76,6 +78,7 @@
     <Folder Include="css\" />
     <Folder Include="js\libs\" />
     <Folder Include="js\controller\" />
+    <Folder Include="js\lib\" />
     <Folder Include="views\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
