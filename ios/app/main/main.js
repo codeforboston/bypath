@@ -91,12 +91,25 @@ angular.module('main', [
         url: '/list',
         views: {
           'tab-list': {
-            templateUrl: 'main/templates/list.html',
+            templateUrl: 'main/templates/list2.html',
             controller: 'ListyCtrl as listyCtrl'
           }
         }
       })
+      // .state('main.mappy', {
+      //   url: '/mappy',
+      //   controller: 'MappyCtrl as mappyCtrl',
+      //   views: {
+      //     'tab-mappy': {
+      //       templateUrl: 'main/templates/mappy.html'
 
+      //     },
+      //     'tab-list': {
+      //       templateUrl: 'main/templates/list2.html'
+      //       // controller: 'MappyCtrl as mappyCtrl'
+      //     }
+      //   }
+      // })
       .state('main.list-detail', {
         url: 'list/:objectId',
         views: {

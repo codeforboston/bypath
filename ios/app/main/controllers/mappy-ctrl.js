@@ -5,15 +5,12 @@ angular.module('main')
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
 
-  // testes
-  mappyCtrl.name = 'asdf';
-
   // Holsters.
   mappyCtrl.data = {};
   mappyCtrl.data.complaints = toos; // all of the complaints
   mappyCtrl.data.filteredComplaints = [];
-  mappyCtrl.filters = {};
-  mappyCtrl.filtersSelected = []; // NOTE: is now filled as an init() from first 3 elements in _.keys(mappyCtrl.filters)
+  mappyCtrl.data.filters = {};
+  mappyCtrl.data.filtersSelected = []; // NOTE: is now filled as an init() from first 3 elements in _.keys(mappyCtrl.data.filters)
   // This way some markers are loaded onto the map by default, instead of blank.
 
   /**
@@ -25,7 +22,7 @@ angular.module('main')
   angular.forEach(mappyCtrl.data.complaints, function (value, key) {
 
     // Generate general list of filters.
-    mappyCtrl.filters[value.type] = value.type;
+    mappyCtrl.data.filters[value.type] = value.type;
 
     // Generate markable position.
     var markablePosition = GeoFormatFactory.parseLocationStringToNamedObject(value.geo);
@@ -42,21 +39,21 @@ angular.module('main')
   // corresponding mappyCtrl.data.filteredComplaints
   // http://stackoverflow.com/questions/19455501/angularjs-watch-an-object
   $scope.$watch(angular.bind(mappyCtrl, function () {
-    return mappyCtrl.filtersSelected;
+    return mappyCtrl.data.filtersSelected;
   }), function (newVal) {
     // $log.log('Case types changed from to ',newVal);
     var filtered;
-    filtered = $filter('incidentType')(mappyCtrl.data.complaints, mappyCtrl.filtersSelected);
-    // filtered = $filter('filter')(filtered, mappyCtrl.filtersSelected.search);
+    filtered = $filter('incidentType')(mappyCtrl.data.complaints, mappyCtrl.data.filtersSelected);
+    // filtered = $filter('filter')(filtered, mappyCtrl.data.filtersSelected.search);
     mappyCtrl.data.filteredComplaints = filtered;
   }, true);
 
   // mappyCtrl.toggleCaseTypeInFilter = function (caseType) {
-  //   var typeFilter = mappyCtrl.filters.caseTypes[caseType];
+  //   var typeFilter = mappyCtrl.data.filters.caseTypes[caseType];
   //   if (typeFilter !== null) {
-  //     mappyCtrl.filters.caseTypes[caseType] = !typeFilter;
+  //     mappyCtrl.data.filters.caseTypes[caseType] = !typeFilter;
   //   } else { // else implement
-  //     mappyCtrl.filters.caseTypes[caseType] = true;
+  //     mappyCtrl.data.filters.caseTypes[caseType] = true;
   //   }
   // };
 
@@ -107,11 +104,11 @@ angular.module('main')
   };
 
   // Init filtersSelected (so that *something*) shows up on the map when you load.
-  // Currently defaults to show first 3 elements from mappyCtrl.filters.
+  // Currently defaults to show first 3 elements from mappyCtrl.data.filters.
   function initFiltersSelected() {
-    var distinctTypes = _.keys(mappyCtrl.filters);
+    var distinctTypes = _.keys(mappyCtrl.data.filters);
     for (var i = 0; i < 3; i++) {
-      mappyCtrl.filtersSelected.push(distinctTypes[i]);
+      mappyCtrl.data.filtersSelected.push(distinctTypes[i]);
     }
   }
   initFiltersSelected();
