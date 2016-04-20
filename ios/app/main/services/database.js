@@ -15,7 +15,7 @@ angular.module('main')
      */
     function getTable(table) {
       var defer = $q.defer();
-      $firebaseArray(Ref.child(table)).$loaded().then(function(tableData) {
+      $firebaseArray(Ref.child(table).limitToLast(100)).$loaded().then(function(tableData) {
         defer.resolve({name: table, data: tableData});
       });
       return defer.promise;
