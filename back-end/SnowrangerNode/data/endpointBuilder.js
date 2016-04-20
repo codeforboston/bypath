@@ -33,9 +33,15 @@ function Endpoint(name, url, key, query, map){
     }
     
     // timerSchedule: string in a cron job schedule format eg: "* * * * * *"
-    Endpoint.prototype.start = function(timerSchedule){
+    Endpoint.prototype.start = function (timerSchedule){
+        console.log(timerSchedule);
         this.scheduler.init(this.url, this.key, this.query, UPDATE_ROOT + this.name);
         this.scheduler.run(timerSchedule, this.addItems.bind(this));
+    }
+    
+    Endpoint.prototype.forceUpdate = function () {
+        this.scheduler.init(this.url, this.key, this.query, UPDATE_ROOT + this.name);
+        this.scheduler.forceUpdate(this.addItems.bind(this));
     }
     
     // obj: json object
@@ -46,6 +52,7 @@ function Endpoint(name, url, key, query, map){
     function findProp(obj, prop){
         var defval = null;
         var props = prop.split('.');
+        
         for (var i = 0; i < props.length; i++) {
             if(typeof obj[props[i]] == 'undefined'){
                 console.log('could not find property ' + prop);
@@ -65,6 +72,7 @@ function Endpoint(name, url, key, query, map){
         
         for (i in r) {
             try {
+                console.log(map);
                 // I pull the values out of the json object first
                 // so if I am missing any it will throw an error
                 // and not add the object
@@ -94,28 +102,48 @@ function Endpoint(name, url, key, query, map){
             }
         }    
     }
+    
+    // This needs to be worked so if we don't have a vaild
+    // endpoint we can delete it
+    Endpoint.prototype.isVaild = function() {
+        return true;
+    }
 }
 
 module.exports = {
     // j - json: list of json objects
-    createEndpoints: function(j){
-        var endpoints = [];
-        var resourceMgr = modules.getModule('resource_manager');
+    createEndpoints: function(endpointsJson){
+        var output = [];
         
-        for(i in j){
-            var name = i;
-            
-            var url = j[i]['url'];
-            var keyName = j[i]['key']; // Key needs to be loaded from the keys.txt file
-            var key = resourceMgr.getKey(keyName);
-            var query = j[i]['query'];
-            var map = j[i]['map'];
-            
-            var e = new Endpoint(name, url, key, query, map);
-            
-            endpoints.push(e);
+        for (i in endpointsJson) {
+            var endpoint = this.createEndpoint(i, endpointsJson[i]);
+            output.push(endpoint);
         }
         
-        return endpoints;
-    }
+        return output;
+    },
+
+    createEndpoint: function (name, data) {
+        // In the future we might want to cache this
+        var resourceMgr = modules.getModule('resource_manager');
+        
+        var output;
+        
+        var url = data['url'];
+        var keyName = data['key']; // Key needs to be loaded from the keys.txt file
+        var key = resourceMgr.getKey(keyName);
+        var query = data['query'];
+        var map = data['map'];
+        
+        //console.log(url);
+        //console.log(key);
+        //console.log(query);
+        //console.log(map);
+        
+        output = new Endpoint(name, url, key, query, map);
+        
+        console.log(output);
+        
+        return output;
+    },
 }

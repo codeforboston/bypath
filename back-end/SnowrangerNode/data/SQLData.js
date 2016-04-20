@@ -27,13 +27,17 @@ function SqlScheduleQuery(){
         }.bind(this), null, true, 'UTC');
     }
     
+    SqlScheduleQuery.prototype.forceUpdate = function (callback) {
+        retieveData(this.updatePath, this.url, this.query, this.key, callback);
+    }
+    
     SqlScheduleQuery.prototype.test = function(){
         console.log(this.url + " " + this.query + " " + this.key);
     }
     
     function retieveData(updatePath, url, query, key, callback) {
         var db = modules.getModule('firebase');
-        console.log(this.updatePath);
+        console.log("Update path: " + this.updatePath);
         db.getItem(updatePath, function (data) {
             var date = data;
             if (data === null) {

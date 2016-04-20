@@ -9,7 +9,7 @@ var path = require('path');
 var modules = require('./../../util/modules.js');
 
 var router = express.Router();
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 
 router.get('/', function (req, res) {

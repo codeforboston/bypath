@@ -6,6 +6,7 @@
 var fs = require('fs');
 var path = require('path');
 
+var RESOURCE_PATH = '../resources/';
 var KEY_FILE = 'keys.txt';
 
 // list<id, key>
@@ -36,7 +37,7 @@ function loadResourcesFromFile(file){
 }
 
 function getLinesFromFile(file){
-    var fp = path.join(__dirname, '../' + file);
+    var fp = path.join(__dirname, RESOURCE_PATH + file);
     var f = fs.readFileSync(fp).toString();
     var values = f.split('\n');
     
@@ -67,7 +68,7 @@ function load(data){
                 
                 var filePath = value.substring(st + 1, end);
                 
-                var file = fs.readFileSync(filePath).toString();
+                var file = fs.readFileSync(path.join(__dirname, RESOURCE_PATH + filePath)).toString();
                 
                 var delim = filePath.indexOf('.');
                 
