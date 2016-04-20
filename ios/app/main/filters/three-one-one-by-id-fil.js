@@ -66,9 +66,11 @@ angular.module('main')
         types: caseTypesToMatch,
         out: []
       };
+      console.log('types --> ' + items.types);
 
       angular.forEach(complaints, function (value, key) {
-        if (this.types[value.type]) {
+        if (typeof value['type'] === 'undefined') { return console.log('undefined value.type --> ', value); }
+        if (this.types[value['type']]) {
           this.out.push(value);
         }
       }, items);
