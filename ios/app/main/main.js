@@ -69,6 +69,24 @@ angular.module('main', [
         }
       }
     })
+      // .state('main.debug', {
+      //   url: '/debug',
+      //   views: {
+      //     'tab-debug': {
+      //       templateUrl: 'main/templates/debug.html',
+      //       controller: 'DebugCtrl'
+      //     }
+      //   }
+      // })
+      .state('main.mappy', {
+        url: '/mappy',
+        views: {
+          'tab-mappy': {
+            templateUrl: 'main/templates/mappy.html',
+            controller: 'MappyCtrl as mappyCtrl'
+          }
+        }
+      })
       .state('main.list', {
         url: '/list',
         views: {
@@ -93,32 +111,14 @@ angular.module('main', [
           }
         }
       })
-      .state('main.debug', {
-        url: '/debug',
-        views: {
-          'tab-debug': {
-            templateUrl: 'main/templates/debug.html',
-            controller: 'DebugCtrl'
-          }
-        }
-      })
-      .state('main.mappy', {
-        url: '/mappy',
-        views: {
-          'tab-mappy': {
-            templateUrl: 'main/templates/mappy.html',
-            controller: 'MappyCtrl as mappyCtrl'
-          }
-        }
-      })
-      .state('main.opinionate', {
-        url: '/opinionate',
-        views: {
-          'tab-opinionate': {
-            templateUrl: 'main/templates/opinionator.html',
-            controller: 'OpinionatorCtrl'
-          }
-        }
-      })
+      // .state('main.opinionate', {
+      //   url: '/opinionate',
+      //   views: {
+      //     'tab-opinionate': {
+      //       templateUrl: 'main/templates/opinionator.html',
+      //       controller: 'OpinionatorCtrl'
+      //     }
+      //   }
+      // })
       ;
 });
