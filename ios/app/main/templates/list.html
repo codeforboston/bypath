@@ -24,6 +24,21 @@
     <span class="type type-positive" ng-if="filteredList">Showing {{ filteredList.length }} of</span>
     <span class="type type-balanced">{{ listyCtrl.data.complaints.length }} total results</span>
 
+
+    <!-- Filter multiselect -->
+    <div id="optionsContainer">
+      <div id="filterContainer">
+        <select id="incidentSelector" ng-model="mappyCtrl.filtersSelected" ng-options="key for (key, value) in mappyCtrl.filters" multiple></select>
+      </div>
+      <div id="resultCountContainer">
+        <button style="margin: 5px;" class="button button-small button-clear button-positive" ui-sref="main.list">
+            {{ mappyCtrl.data.filteredComplaints.length }} results
+        </button>
+      </div>
+    </div>
+
+
+
     <ion-list ng-repeat="complaint in listyCtrl.data.complaints | filter:searchy | whereCaseType:listyCtrl.data.caseTypeFilter | orderBy:'-open' as filteredList">
       <div class="card padding" style="margin-bottom: 0px;" ui-sref="main.list-detail({objectId: complaint.id})">
         <div class="item item-text-wrap item-icon-right">
