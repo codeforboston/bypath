@@ -13,7 +13,8 @@ angular.module('main')
   mappyCtrl.data.complaints = toos; // all of the complaints
   mappyCtrl.data.filteredComplaints = [];
   mappyCtrl.filters = {};
-  mappyCtrl.filtersSelected = [];
+  mappyCtrl.filtersSelected = []; // NOTE: is now filled as an init() from first 3 elements in _.keys(mappyCtrl.filters)
+  // This way some markers are loaded onto the map by default, instead of blank.
 
   /**
    * Assign a markable position to each filterable complaint.
@@ -22,22 +23,31 @@ angular.module('main')
    * @return  {Array} mappyCtrl.data.complaints Fill with appended markably appended compalaints.
    */
   angular.forEach(mappyCtrl.data.complaints, function (value, key) {
+
     // Generate general list of filters.
     mappyCtrl.filters[value.type] = value.type;
+
     // Generate markable position.
     var markablePosition = GeoFormatFactory.parseLocationStringToNamedObject(value.geo);
+
+    // Extend original complaint to include markable position.
     var extendedObj = angular.extend(value, {'markablePosition': markablePosition});
+
+    // 'this' is mappyCtrl.data.filteredComplaints
     this.push(extendedObj);
   }, mappyCtrl.data.filteredComplaints);
 
+
+  // Watch filters; if they change, filter original complain list against filters to return
+  // corresponding mappyCtrl.data.filteredComplaints
   // http://stackoverflow.com/questions/19455501/angularjs-watch-an-object
   $scope.$watch(angular.bind(mappyCtrl, function () {
     return mappyCtrl.filtersSelected;
   }), function (newVal) {
-    $log.log('Case types changed from to ',newVal);
+    // $log.log('Case types changed from to ',newVal);
     var filtered;
     filtered = $filter('incidentType')(mappyCtrl.data.complaints, mappyCtrl.filtersSelected);
-    filtered = $filter('filter')(filtered, mappyCtrl.filtersSelected.search);
+    // filtered = $filter('filter')(filtered, mappyCtrl.filtersSelected.search);
     mappyCtrl.data.filteredComplaints = filtered;
   }, true);
 
@@ -95,6 +105,16 @@ angular.module('main')
       }
     };
   };
+
+  // Init filtersSelected (so that *something*) shows up on the map when you load.
+  // Currently defaults to show first 3 elements from mappyCtrl.filters.
+  function initFiltersSelected() {
+    var distinctTypes = _.keys(mappyCtrl.filters);
+    for (var i = 0; i < 3; i++) {
+      mappyCtrl.filtersSelected.push(distinctTypes[i]);
+    }
+  }
+  initFiltersSelected();
 
   // If user's geolocation is available, center the map there, else default to Boston.
   if (typeof here !== 'undefined') {
