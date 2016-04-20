@@ -5,15 +5,33 @@ angular.module('main')
   // Note that 'mappyCtrl' is also established in the routing in main.js.
   var mappyCtrl = this;
 
-  // testes
-  mappyCtrl.name = 'asdf';
-
   // Holsters.
   mappyCtrl.data = {};
   mappyCtrl.data.complaints = toos; // all of the complaints
   mappyCtrl.data.filteredComplaints = [];
   mappyCtrl.filters = {};
   mappyCtrl.filtersSelected = [];
+  mappyCtrl.showFilters = false;
+
+  // Leaflet variables on scope.
+  $scope.mapMarkers = {};
+  $scope.mapEvents = {
+      Marker : {
+          enable: ['mousedown'],
+          logic: 'emit'
+      }
+  };
+  $scope.mapCenter = {
+      lat: 42.4,
+      lng: -71.1,
+      zoom: 12
+  };
+
+  // Leaflet event handlers.
+  $scope.$on('leafletDirectiveMarker.mymap.mousedown', function(event, args) {
+        var markerModel = args.leafletEvent.target.options.model;
+        mappyCtrl.selectedComplaint = markerModel;
+  });
 
   /**
    * Assign a markable position to each filterable complaint.
@@ -30,78 +48,28 @@ angular.module('main')
     this.push(extendedObj);
   }, mappyCtrl.data.filteredComplaints);
 
-  // http://stackoverflow.com/questions/19455501/angularjs-watch-an-object
+  // Watch the filtersSelected variable.
   $scope.$watch(angular.bind(mappyCtrl, function () {
     return mappyCtrl.filtersSelected;
   }), function (newVal) {
-    $log.log('Case types changed from to ',newVal);
-    var filtered;
-    filtered = $filter('incidentType')(mappyCtrl.data.complaints, mappyCtrl.filtersSelected);
+    // Filter incidents.
+    var filtered = $filter('incidentType')(mappyCtrl.data.complaints, mappyCtrl.filtersSelected);
     filtered = $filter('filter')(filtered, mappyCtrl.filtersSelected.search);
     mappyCtrl.data.filteredComplaints = filtered;
+    // Create markers dictionary for Leaflet directive.
+    $scope.mapMarkers = {};
+    angular.forEach(mappyCtrl.data.filteredComplaints, function(value) {
+        var lat = value.markablePosition.latitude;
+        var lng = value.markablePosition.longitude;
+        if (lat && lng) {
+            this[value.id.replace(/-/g,'0')] = {
+                model: value,
+                lat: value.markablePosition.latitude,
+                lng: value.markablePosition.longitude,
+                focus: false,
+                draggable: false
+            };
+        }
+    }, $scope.mapMarkers);
   }, true);
-
-  // mappyCtrl.toggleCaseTypeInFilter = function (caseType) {
-  //   var typeFilter = mappyCtrl.filters.caseTypes[caseType];
-  //   if (typeFilter !== null) {
-  //     mappyCtrl.filters.caseTypes[caseType] = !typeFilter;
-  //   } else { // else implement
-  //     mappyCtrl.filters.caseTypes[caseType] = true;
-  //   }
-  // };
-
-  // Defaults.
-  // ui
-  mappyCtrl.showFilters = false;
-  mappyCtrl
-  // map
-  mappyCtrl.zoom = 12;
-  mappyCtrl.boston = {
-    coords: {
-      latitude: 42.4,
-      longitude: -71.1
-    }
-  };
-
-  /**
-   * Click on a marker to show complaint detail card in map view.
-   * @param  {google marker} marker
-   * @param  {click} eventName
-   * @param  {mappyCtrl.data.complaints.<object>} model     One of the extended complaints.
-   * @return {Object}           Creates or updates object on mappyCtrl.
-   */
-  function onMarkerClick (marker, eventName, model) {
-    //\\
-    $log.log('Click marker');
-    $log.log('model.id: ' + model.id);
-    mappyCtrl.data.selectedComplaint = model;
-  }
-
-  var initializeMap = function (position) {
-
-    // Create the Google Map
-    mappyCtrl.map = {
-      center: {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      },
-      zoom: mappyCtrl.zoom,
-      // control: {},
-      // styles: mappyStyle,
-      // markers: get311Markers(),
-      options: {scrollwheel: false},
-      disableDefaultUI: false,
-      markerEvents: {
-        click: onMarkerClick
-      }
-    };
-  };
-
-  // If user's geolocation is available, center the map there, else default to Boston.
-  if (typeof here !== 'undefined') {
-    initializeMap(here.location);
-  } else {
-    initializeMap(mappyCtrl.boston);
-  }
-
 });

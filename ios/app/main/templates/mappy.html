@@ -1,17 +1,12 @@
 <ion-view view-title="Map" hide-nav-bar="true">
-  <!-- do you want padding? -->
   <ion-content class="padding" scroll="false" >
 
-  <style>
-/*  .slidey {
-    transition: 1s all linear;
-  }*/
-  </style>
     <!-- Search bar -->
     <h5>Search</h5>
     <div class="item item-input">
       <input type="text" ng-model="mappyCtrl.filters.search" placeholder="What are you looking for?">
     </div>
+
     <!-- Filter dropdown -->
     <h5>Filter by Incidents</h5>
     <div id="optionsContainer">
@@ -23,53 +18,19 @@
               {{ mappyCtrl.data.filteredComplaints.length }} results
             </button>
         </div>
-        <!-- <button style="margin: 5px;" class="button button-small" ng-repeat="incident in mappyCtrl.data.complaints | unique:'type'" ng-click="mappyCtrl.toggleCaseTypeInFilter(incident.type)" ng-class="{ 'button-outline button-default' : !mappyCtrl.filters.caseTypes[incident.type], 'button-balanced ' : mappyCtrl.filters.caseTypes[incident.type]}">
-          {{ incident.type }}
-        </button> -->
-    </div>
-    <!-- <button class="button button-block button-small button-positive icon ion-ios-flask-outline" ng-click="mappyCtrl.showFilters = !mappyCtrl.showFilters">
-    </button>
-
-    <ion-list ng-show="mappyCtrl.showFilters" class="slidey">
-       <ion-checkbox ng-repeat="incident in mappyCtrl.data.complaints | unique:'type'" ng-model="mappyCtrl.filters.caseTypes[incident.type]">{{incident.type}}</ion-checkbox>
-    </ion-list> -->
-
-    <!-- required scss in _mappy.scss -->
-    <ui-gmap-google-map
-    center='mappyCtrl.map.center'
-    zoom='mappyCtrl.map.zoom'
-    draggable='false'
-    disableDefaultUI="mappyCtrl.map.disableDefaultUI"
-    options="mappyCtrl.map.options"
-    data-tap-disabled="true"
-    >
-
-      <!-- 311 markers -->
-      <ui-gmap-markers
-        doCluster="true"
-        models="mappyCtrl.data.filteredComplaints"
-        coords="'markablePosition'"
-        events="mappyCtrl.map.markerEvents"
-        options="'options'">
-      </ui-gmap-markers>
-
-    </ui-gmap-google-map>
-
-
-
-     <div class="card padding" style="margin-bottom: 0px;" ui-sref="main.list-detail({objectId: mappyCtrl.data.selectedComplaint.id})" ng-if="mappyCtrl.data.selectedComplaint">
-      <div class="item item-text-wrap item-icon-right">
-        <h2>{{mappyCtrl.data.selectedComplaint.title}}</h2>
-        <p>{{mappyCtrl.data.selectedComplaint.location}}</p>
-        <span class="type type-balanced type-small">Opened: </span>
-          <span class="type type-muted type-small">{{mappyCtrl.data.selectedComplaint.open | date:'dd MMM'}}</span>
-      </div>
     </div>
 
+    <!-- Leaflet Map -->
+    <leaflet id="map" lf-center="mapCenter" markers="mapMarkers"></leaflet>
 
-
-
-
-
+    <!-- Selected Complaint Card -->
+    <div class="card padding" style="margin-bottom: 0px;" ui-sref="main.list-detail({objectId: mappyCtrl.data.selectedComplaint.id})" ng-if="mappyCtrl.data.selectedComplaint">
+        <div class="item item-text-wrap item-icon-right">
+            <h2>{{mappyCtrl.data.selectedComplaint.title}}</h2>
+            <p>{{mappyCtrl.data.selectedComplaint.location}}</p>
+            <span class="type type-balanced type-small">Opened: </span>
+            <span class="type type-muted type-small">{{mappyCtrl.data.selectedComplaint.open | date:'dd MMM'}}</span>
+        </div>
+    </div>
   </ion-content>
 </ion-view>
