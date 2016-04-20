@@ -30,9 +30,14 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="data\endpointBuilder.js" />
+    <Compile Include="data\getMeASoda.js" />
+    <Compile Include="data\justPlainCoke.js" />
+    <Compile Include="data\SQLData.js" />
+    <Compile Include="data\stockTheFridge.js" />
+    <Compile Include="rest\routes\data.js" />
     <Compile Include="util\ext_resource_manager.js" />
     <Compile Include="database\db_firebase.js" />
-    <Compile Include="data\boston311.js" />
     <Compile Include="data\data_manager.js" />
     <Compile Include="rest\rest_server.js" />
     <Compile Include="rest\routes\incident.js" />
@@ -41,12 +46,16 @@
     <Compile Include="util\modules.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="resources\endpoints.json" />
+    <Content Include="resources\keys.txt" />
+    <Content Include="resources\resources.txt" />
     <Content Include="rest\views\addIncident.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="database\" />
     <Folder Include="auth\" />
     <Folder Include="data\" />
+    <Folder Include="resources\" />
     <Folder Include="util\" />
     <Folder Include="rest\" />
     <Folder Include="rest\routes\" />

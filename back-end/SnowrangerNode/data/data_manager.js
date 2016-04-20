@@ -5,14 +5,18 @@
 var builder = require('./endpointBuilder.js');
 var modules = require('./../util/modules.js');
 
+var scheduleTile = 0;
+var scheduleAdvance = 5;
 // These are the data sources
 var endpoints = [];
 
+function getNextSchedule(){
+    scheduleTile += scheduleAdvance;
+    return "00 " + ("0" + scheduleTile).slice(-2) + " * * * *";
+}
+
 module.exports = {
     init: function (){
-        //endpoints.push(b311);
-        //endpoints.push(sf311);
-        //endpoints.push(nyc311);
 
         var resourceMgr = modules.getModule('resource_manager');
         eps = resourceMgr.getResource('endpoints');
@@ -47,7 +51,35 @@ module.exports = {
             //nextSchedule += 30;
             //console.log(timer);
 
-            endpoints[i].start(timer);
+            endpoints[i].start(getNextSchedule());
+        }
+    },
+    
+    // Create an object from json
+    // endpointJson is a json object of the data to be added
+    // The format this is in is { "<source name>" : { data } }
+    // data has the query info and the mapping info
+    // Refer to endpointBuilder.js addIems function for more info on the strucutre
+    addEndpoint: function (endpointJson){
+
+        for (i in endpointJson) {
+            var endpoint = builder.createEndpoint(i, endpointJson[i]);
+
+            endpoint.init();
+
+            if (endpoint.isVaild()) {
+                endpoint.forceUpdate();
+                endpoint.start(getNextSchedule());
+                
+                endpoints.push(endpoint);
+            }
+        }
+
+    },
+
+    forceUpdate: function () {
+        for (i in endpoints) {
+            endpoints[i].forceUpdate();
         }
     },
 }

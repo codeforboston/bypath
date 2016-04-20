@@ -7,6 +7,7 @@ var express = require('express');
 
 var index = require('./routes/index.js');
 var incident = require('./routes/incident.js');
+var data = require('./routes/data.js');
 //var keymanager = require('./auth/keymanager.js');
 
 // private memeber vars
@@ -20,6 +21,7 @@ module.exports = {
         
         app.use('/', index);
         app.use('/incident', incident);
+        app.use('/data', data);
     },
 
     start: function (){
