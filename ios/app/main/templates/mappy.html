@@ -52,31 +52,17 @@
     </ui-gmap-google-map>
 
 
-
-
-
-    <!-- Filter dropdown -->
-    <!-- <h5>Filter by Incidents</h5> -->
+    <!-- Filter multiselect -->
     <div id="optionsContainer">
-        <div id="filterContainer">
-            <select id="incidentSelector" ng-model="mappyCtrl.filtersSelected" ng-options="key for (key, value) in mappyCtrl.filters" multiple></select>
-        </div>
-        <div id="resultCountContainer">
-            <button style="margin: 5px;" class="button button-small button-clear button-positive" ui-sref="main.list">
-              {{ mappyCtrl.data.filteredComplaints.length }} results
-            </button>
-        </div>
-        <!-- <button style="margin: 5px;" class="button button-small" ng-repeat="incident in mappyCtrl.data.complaints | unique:'type'" ng-click="mappyCtrl.toggleCaseTypeInFilter(incident.type)" ng-class="{ 'button-outline button-default' : !mappyCtrl.filters.caseTypes[incident.type], 'button-balanced ' : mappyCtrl.filters.caseTypes[incident.type]}">
-          {{ incident.type }}
-        </button> -->
+      <div id="filterContainer">
+        <select id="incidentSelector" ng-model="mappyCtrl.filtersSelected" ng-options="key for (key, value) in mappyCtrl.filters" multiple></select>
+      </div>
+      <div id="resultCountContainer">
+        <button style="margin: 5px;" class="button button-small button-clear button-positive" ui-sref="main.list">
+            {{ mappyCtrl.data.filteredComplaints.length }} results
+        </button>
+      </div>
     </div>
-
-
-
-
-
-
-
 
   </ion-content>
 </ion-view>

@@ -13,18 +13,12 @@ angular.module('main')
 
   // resources resolved in main.js
   listyCtrl.data = {};
-  // Database.getObjectAll(function(data) {
-  //   listyCtrl.data.complaints = data;
-  // })
   listyCtrl.data.complaints = toos;
-  // $log.log('toos', toos);
-  //
-  listyCtrl.data.caseTypeFilter = {
-    'Unsafe Dangerous Conditions': true,
-    'Ground Maintenance': true
-  };
 
-  // listyCtrl.data.opinions = opinions;
+  // listyCtrl.data.caseTypeFilter = {
+  //   'Unsafe Dangerous Conditions': true,
+  //   'Ground Maintenance': true
+  // };
 
   // ui helpers
   listyCtrl.slideIndex = 0;
@@ -49,29 +43,7 @@ angular.module('main')
     return GeoFire.distance(locArr, listyCtrl.currentLocation.locArr);
   };
 
-  listyCtrl.testGeoMakingNamedObject = function (string) {
-    return GeoFormatFactory.parseLocationStringToNamedObject(string);
-  };
 
-  listyCtrl.testGeoMakingArray = function (string) {
-    return GeoFormatFactory.parseLocationStringToArray(string);
-  };
-
-  // out with the old without breaking thing in the ui
-  listyCtrl.getComplaintUpvotes = function (id) {
-    return 1; // deprecated
-  };
-  listyCtrl.getComplaintDownvotes = function (id) {
-    return 1; // deprecated
-  };
-
-  listyCtrl.upvote = function (id) {
-    // deprecated
-  };
-
-  listyCtrl.downvote = function (id) {
-    // deprecated
-  };
 
 
 
