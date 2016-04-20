@@ -20,21 +20,6 @@ angular.module('main')
   //   'Ground Maintenance': true
   // };
 
-  // ui helpers
-  listyCtrl.slideIndex = 0;
-  listyCtrl.slideChanged = function(index) { // Called each time the slide changes.
-    listyCtrl.slideIndex = index;
-    setViewTitle(listyCtrl.slideIndex);
-  };
-  function setViewTitle (index) {
-    if (index === 0) {
-      listyCtrl.viewTitle = '311 Notices';
-    } else {
-      listyCtrl.viewTitle = 'Public Advisories';
-    }
-  }
-  setViewTitle(0);
-
   // geoable
   listyCtrl.distanceToHere = function (locObj) {
     var a = parseFloat(locObj.coords.latitude);
