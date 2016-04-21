@@ -37,7 +37,7 @@ function SqlScheduleQuery(){
     
     function retieveData(updatePath, url, query, key, callback) {
         var db = modules.getModule('firebase');
-        console.log("Update path: " + this.updatePath);
+        console.log("Update path: " + updatePath);
         db.getItem(updatePath, function (data) {
             var date = data;
             if (data === null) {
@@ -75,7 +75,6 @@ function SqlScheduleQuery(){
         };
 
         var req = request(options, function (error, response, body) {
-            console.log('response: ' + response.statusCode);
             if (error) {
                 console.log(error);
             }

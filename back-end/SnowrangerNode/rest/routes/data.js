@@ -29,15 +29,14 @@ router.post('/addEndpoint', urlencodedParser, function (req, res) {
         }
     };
 
-    dm.addEndpoint(newEndpoint);
-
-    //for (i in req.body) {
-    //    var newEndpoint = JSON.parse(i);
-
-    //    dm.addEndpoint(newEndpoint);
-    //}
-
-    res.end('endpoint added');
+    var endpointAdded = dm.addEndpoint(newEndpoint);
+    
+    if (endpointAdded) {
+        res.end('endpoint added');
+    }
+    else {
+        res.end('invalid endpoint data');
+    }    
 });
 
 module.exports = router;
