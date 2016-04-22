@@ -111,9 +111,9 @@ angular.module('main', [
       //   }
       // })
       .state('main.list-detail', {
-        url: 'list/:objectId',
+        url: 'mappydetail/:objectId',
         views: {
-          'tab-list': {
+          'tab-mappy': {
             templateUrl: 'main/templates/list-detail.html',
             controller: 'TestShowCtrl as ctrl',
             resolve: {

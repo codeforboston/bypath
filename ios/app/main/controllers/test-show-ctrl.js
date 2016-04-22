@@ -11,5 +11,4 @@ angular.module('main')
   // filter all toos for parameterized objectId
   this.data.obj = $filter('filter')(toos, {id: this.data.objectId})[0];
 
-
 });

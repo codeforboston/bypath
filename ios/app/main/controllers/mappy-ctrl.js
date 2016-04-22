@@ -80,7 +80,8 @@ angular.module('main')
     //\\
     $log.log('Click marker');
     $log.log('model.id: ' + model.id);
-    mappyCtrl.data.selectedComplaint = model;
+    // mappyCtrl.data.selectedComplaint = model;
+    $state.go('main.list-detail', {objectId: model.id});
   }
 
   var initializeMap = function (position) {

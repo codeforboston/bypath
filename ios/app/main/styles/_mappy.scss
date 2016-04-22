@@ -1,11 +1,9 @@
 // You've got to force the map to take up space.
 .angular-google-map {
-  // height: 300px;
-  height: 53%;
+  height: 80%;
   width: 100%;
 }
 .angular-google-map-container {
-  // height: 300px;
   height: 100%;
   width: 100%;
 }
@@ -17,6 +15,10 @@
 
 .incidentSelector {
     margin-bottom: 10px;
+}
+
+.optionsContainer {
+  height: 20%;
 }
 
 .filterContainer {
