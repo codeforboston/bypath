@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
-<widget id="com.rotblauer.snowranger" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Snowranger</name>
+<?xml version='1.1' encoding='utf-8'?>
+<widget id="com.rotblauer.snowranger" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>ByPath</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
