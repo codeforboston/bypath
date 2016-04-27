@@ -1,7 +1,6 @@
-ByPath
-=========
-An app to help make cities more accessible to those with low-mobility.
----------
+# ByPath
+
+### An app to help make cities more accessible to those with low-mobility.
 
 We're working to integrate existing 311 data and services with user-generated advisories in an effort to enable, and make transparent, systems for maintaining civilized life.
 
