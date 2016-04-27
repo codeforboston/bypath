@@ -1,6 +1,9 @@
-# Snowranger
+# ByPath (for mobile)
 
 ```
+# you must install gulp and bower globally first
+$ npm install -g gulp
+$ npm install -g bower
 # install npm and bower dpendencies
 $ npm install
 $ bower install
