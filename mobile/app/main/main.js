@@ -69,20 +69,51 @@ angular.module('main', [
         }
       }
     })
+      // .state('main.debug', {
+      //   url: '/debug',
+      //   views: {
+      //     'tab-debug': {
+      //       templateUrl: 'main/templates/debug.html',
+      //       controller: 'DebugCtrl'
+      //     }
+      //   }
+      // })
+      .state('main.mappy', {
+        url: '/mappy',
+        views: {
+          'tab-mappy': {
+            templateUrl: 'main/templates/mappy.html',
+            controller: 'MappyCtrl as mappyCtrl'
+          }
+        }
+      })
       .state('main.list', {
         url: '/list',
         views: {
           'tab-list': {
-            templateUrl: 'main/templates/list.html',
+            templateUrl: 'main/templates/list2.html',
             controller: 'ListyCtrl as listyCtrl'
           }
         }
       })
+      // .state('main.mappy', {
+      //   url: '/mappy',
+      //   controller: 'MappyCtrl as mappyCtrl',
+      //   views: {
+      //     'tab-mappy': {
+      //       templateUrl: 'main/templates/mappy.html'
 
+      //     },
+      //     'tab-list': {
+      //       templateUrl: 'main/templates/list2.html'
+      //       // controller: 'MappyCtrl as mappyCtrl'
+      //     }
+      //   }
+      // })
       .state('main.list-detail', {
-        url: 'list/:objectId',
+        url: 'mappydetail/:objectId',
         views: {
-          'tab-list': {
+          'tab-mappy': {
             templateUrl: 'main/templates/list-detail.html',
             controller: 'TestShowCtrl as ctrl',
             resolve: {
@@ -93,32 +124,14 @@ angular.module('main', [
           }
         }
       })
-      .state('main.debug', {
-        url: '/debug',
-        views: {
-          'tab-debug': {
-            templateUrl: 'main/templates/debug.html',
-            controller: 'DebugCtrl'
-          }
-        }
-      })
-      .state('main.mappy', {
-        url: '/mappy',
-        views: {
-          'tab-mappy': {
-            templateUrl: 'main/templates/mappy.html',
-            controller: 'MappyCtrl as mappyCtrl'
-          }
-        }
-      })
-      .state('main.opinionate', {
-        url: '/opinionate',
-        views: {
-          'tab-opinionate': {
-            templateUrl: 'main/templates/opinionator.html',
-            controller: 'OpinionatorCtrl'
-          }
-        }
-      })
+      // .state('main.opinionate', {
+      //   url: '/opinionate',
+      //   views: {
+      //     'tab-opinionate': {
+      //       templateUrl: 'main/templates/opinionator.html',
+      //       controller: 'OpinionatorCtrl'
+      //     }
+      //   }
+      // })
       ;
 });

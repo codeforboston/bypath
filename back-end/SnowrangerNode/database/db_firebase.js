@@ -100,8 +100,6 @@ function generateSchema(data) {
     values.push(createSchemaItem('/closed_dt', data['closed_dt']));
     values.push(createSchemaItem('/case_status', data['case_status']));
     values.push(createSchemaItem('/ontime_status', data['ontime_status']));
-    values.push(createSchemaItem('/address', data['location']));
-    values.push(createSchemaItem('/short_address', data['location_street_name']));
     values.push(createSchemaItem('/neighborhood', data['neighborhood']));
     */
     var output = {

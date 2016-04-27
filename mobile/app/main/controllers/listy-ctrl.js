@@ -1,78 +1,46 @@
 'use strict';
 angular.module('main')
-.controller('ListyCtrl', function ($scope, $log, toos, opinions, here, Database, GeoFormatFactory) {
+.controller('ListyCtrl', function ($scope, $log, $filter, toos, here, GeoFormatFactory) {
 
   var listyCtrl = this;
 
-  // location resolved in main.js
-  listyCtrl.currentLocation              = {};
-  listyCtrl.currentLocation.location     = here.location.coords;
-  listyCtrl.currentLocation.locArr       = [here.location.coords.latitude, here.location.coords.longitude];
-  listyCtrl.currentLocation.address      = here.address;
-  listyCtrl.currentLocation.test_img_src = 'main/assets/images/snowflake.png';
-
-  // resources resolved in main.js
+  // Holsters.
   listyCtrl.data = {};
-  // Database.getObjectAll(function(data) {
-  //   listyCtrl.data.complaints = data;
-  // })
-  listyCtrl.data.complaints = toos;
-  // $log.log('toos', toos);
-  //
-  listyCtrl.data.caseTypeFilter = {
-    'Unsafe Dangerous Conditions': true,
-    'Ground Maintenance': true
-  };
+  listyCtrl.data.complaints = toos; // all of the complaints
+  listyCtrl.data.filteredComplaints = [];
+  listyCtrl.data.filters = {};
+  listyCtrl.data.filtersSelected = []; // NOTE: is now filled as an init() from first 3 elements in _.keys(listyCtrl.data.filters)
+  // This way some markers are loaded onto the map by default, instead of blank.
 
-  // listyCtrl.data.opinions = opinions;
+  angular.forEach(listyCtrl.data.complaints, function (value, key) {
+    // Generate general list of filters.
+    listyCtrl.data.filters[value.type] = value.type;
+  });
 
-  // ui helpers
-  listyCtrl.slideIndex = 0;
-  listyCtrl.slideChanged = function(index) { // Called each time the slide changes.
-    listyCtrl.slideIndex = index;
-    setViewTitle(listyCtrl.slideIndex);
-  };
-  function setViewTitle (index) {
-    if (index === 0) {
-      listyCtrl.viewTitle = '311 Notices';
-    } else {
-      listyCtrl.viewTitle = 'Public Advisories';
+  // Watch filters; if they change, filter original complain list against filters to return
+  // corresponding listyCtrl.data.filteredComplaints
+  // http://stackoverflow.com/questions/19455501/angularjs-watch-an-object
+  $scope.$watch(angular.bind(listyCtrl, function () {
+    return listyCtrl.data.filtersSelected;
+  }), function (newVal) {
+    // $log.log('Case types changed from to ',newVal);
+    var filtered;
+    filtered = $filter('incidentType')(listyCtrl.data.complaints, listyCtrl.data.filtersSelected);
+    // filtered = $filter('filter')(filtered, listyCtrl.data.filtersSelected.search);
+    listyCtrl.data.filteredComplaints = filtered;
+  }, true);
+
+  // Init filtersSelected (so that *something*) shows up on the map when you load.
+  // Currently defaults to show first 3 elements from listyCtrl.data.filters.
+  function initFiltersSelected() {
+
+    var distinctTypes = _.keys(listyCtrl.data.filters);
+    $log.log('distinctTypes', distinctTypes);
+    for (var i = 0; i < 3; i++) {
+      listyCtrl.data.filtersSelected.push(distinctTypes[i]);
     }
   }
-  setViewTitle(0);
-
-  // geoable
-  listyCtrl.distanceToHere = function (locObj) {
-    var a = parseFloat(locObj.coords.latitude);
-    var b = parseFloat(locObj.coords.longitude);
-    var locArr = [a,b];
-    return GeoFire.distance(locArr, listyCtrl.currentLocation.locArr);
-  };
-
-  listyCtrl.testGeoMakingNamedObject = function (string) {
-    return GeoFormatFactory.parseLocationStringToNamedObject(string);
-  };
-
-  listyCtrl.testGeoMakingArray = function (string) {
-    return GeoFormatFactory.parseLocationStringToArray(string);
-  };
-
-  // out with the old without breaking thing in the ui
-  listyCtrl.getComplaintUpvotes = function (id) {
-    return 1; // deprecated
-  };
-  listyCtrl.getComplaintDownvotes = function (id) {
-    return 1; // deprecated
-  };
-
-  listyCtrl.upvote = function (id) {
-    // deprecated
-  };
-
-  listyCtrl.downvote = function (id) {
-    // deprecated
-  };
-
+  initFiltersSelected();
 
 
 });

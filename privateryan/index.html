@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title>Snowranger</title>
+  <style>
+  body, html {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+  }
+    body {
+      background-color: #FFF;
+      overflow: hidden;
+    }
+
+    .view-frame {
+      width: 375px;
+      height: 667px;
+      border-width: 0;
+      margin-left: 21px;
+      margin-right: 22px;
+      display: block;
+    }
+    .view-frame-container {
+      width: 418px;
+      min-height: 100%;
+      height: 100%;
+      max-height: 100%;
+      margin: 0 auto;
+      display: block;
+      background-image: url('./images/iphone-wrapper.png');
+      background-size: auto;
+      background-repeat: no-repeat;
+      background-position: 0px -92px;
+    }
+    @media (max-width: 418px) {
+      .view-frame {
+        min-width: 100%;
+        max-width: 100%;
+      }
+      .view-frame-container{
+        margin-left: -21px;
+      }
+
+    }
+    @media (max-height: 667px) {
+      .view-frame {
+        min-height: 100%;
+        max-height: 100%;
+      }
+
+    }
+    @media (min-height: 720px) {
+      .view-frame-container {
+        min-height: calc(100% - 24px);
+        max-height: calc(100% - 24px);
+        background-position: 0px -68px;
+        padding-top: 24px;
+      }
+
+    }
+    @media (min-height: 851px) {
+      .view-frame-container {
+        min-height: 100%;
+        max-height: auto;
+        background-position: center top;
+        padding-top: 92px;
+      }
+    }
+
+    @media (min-height: 880px) {
+      .view-frame-container {
+        min-height: 100%;
+        max-height: auto;
+        background-position: center top;
+        padding-top: 92px;
+        margin-top: 14px;
+      }
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <div class="view-frame-container">
+  <iframe class="view-frame" src="./www/index.html"></iframe>
+  </div>
+</body>
+
+</html>

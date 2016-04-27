@@ -50,7 +50,12 @@ function getCitiesData() {
 
 		// Set up the request.
 		var method = 'GET';
-		var daUrl = val['url'].replace('$query=','') + '$limit=' + limiter.toString() + '&$group=' + daType + '&$select=' + daType + ',count(' + daType + ')' + '&$order=' + 'count_' + daType + ' DESC';// + '&$order=';
+		var daUrl =  val['url'].replace('$query=','')
+						  + '$limit=' + limiter.toString() 
+						  + '&$group=' + daType 
+						  + '&$select=' + daType + ',count(' + daType + ')' 
+						  + '&$order=' + 'count_' + daType + ' DESC';
+
 		var daOpts = {
 			'headers': {
 	        'X-App-Token': 'zdkQROnSL8UlsDCjuiBcc3VHq' // key <- keys.txt one was throwing a permission denied error

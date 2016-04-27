@@ -1,0 +1,106 @@
+<ion-view view-title="Map">
+  <!-- do you want padding? -->
+  <ion-content class="padding" scroll="false">
+
+  <!-- test pictures assets -->
+  <!-- <div class="row">
+      <img ng-src="main/assets/images/boston311.png" style="width: 20px; height: 20px">
+  </div> -->
+
+<!--   <div class="row padding" style="position: relative; top: 50; width: 80%;">
+
+  <div class="padding" style="position: absolute; bottom: 0; left: 0; z-index: 10; background-color: white; border-bottom-left-radius: 20px;">
+    <p class="text-dark">
+      <span><img ng-src="{{ mappyCtrl.map.infoIcon}}" alt="" style="max-height: 14px;">
+    <strong>
+
+      {{ mappyCtrl.map.infoDescription }}
+      </strong></span><br>
+      <span style="color: gray;">
+      {{ mappyCtrl.map.infoAddress }}
+      </span>
+    </p>
+
+  </div>
+  </div> -->
+
+
+
+  <!-- required scss in _mappy.scss -->
+  <ui-gmap-google-map
+  center='mappyCtrl.map.center'
+  zoom='mappyCtrl.map.zoom'
+  draggable='false'
+  disableDefaultUI="mappyCtrl.map.disableDefaultUI"
+  options="mappyCtrl.map.options"
+  data-tap-disabled="true"
+  >
+ <!--    <ui-gmap-window
+      show="mappyCtrl.map.window.show"
+      coords="mappyCtrl.map.window.model"
+      options="mappyCtrl.map.window.options"
+      closeClick="mappyCtrl.map.window.closeClick()"
+      templateUrl="'main/templates/info-window.tpl.html'"
+      templateParameter="mappyCtrl.map.window">
+    </ui-gmap-window> -->
+
+    <!-- opinion markers -->
+    <ui-gmap-markers
+      models="mappyCtrl.opinionMarkers"
+      coords="'location.coords'"
+      icon=""
+      events="mappyCtrl.map.markersEventsOpinions"
+      options="'options'">
+    </ui-gmap-markers>
+
+    <!-- 311 markers -->
+    <ui-gmap-markers
+      models="mappyCtrl.space.threeOneOneMarkers"
+      coords="'location.coords'"
+      icon="'icon_path';"
+      events="mappyCtrl.map.markersEvents311"
+      options="'options'">
+    </ui-gmap-markers>
+
+  </ui-gmap-google-map>
+
+  <!-- <ui-view name="filterer" class="filterer-container"></ui-view> -->
+  <div class="filterer-container">
+<!--   <div class="row padding">
+    <label for="" class="item item-input">
+      <input type="text" ng-model="mappyCtrl.queryer.limit">
+    </label>
+  </div> -->
+  <div class="row text-center padding">
+    <div class="col-25" ng-repeat='case in mappyCtrl.filterables.withIcons'>
+      <button class="button button-positive " ng-class="{'button-outline' : mappyCtrl.queryer.complainies.indexOf(case.type) > -1, 'button-clear' : mappyCtrl.queryer.complainies.indexOf(case.type) === -1}" ng-click="mappyCtrl.addOrRemoveComplaintTitle(case.type)">
+        <img ng-src="{{case.icon}}" alt="">
+      </button>
+
+    </div>
+  </div>
+  <div class="row text-center" style="" >
+    <div class="col-50 padding">
+    <button class="button button-small button-assertive button-block" ng-class="{'button-outline' : mappyCtrl.queryer.openorclosed !== 'Closed'}"  ng-click="mappyCtrl.queryChangeOpenOrClosed('Closed')">
+      Closed
+    </button>
+    </div>
+    <div class="col-50 padding">
+    <button class="button button-small button-balanced button-block"  ng-class="{'button-outline' : mappyCtrl.queryer.openorclosed !== 'Open'}" ng-click="mappyCtrl.queryChangeOpenOrClosed('Open')">
+      Open
+    </button>
+    </div>
+  </div>
+
+<!--   <div class="row padding text-center ">
+    <button class="button button-small button-balanced button-block button-icon-left">
+      <i class="icon ion-aperture"></i>
+      Filter em!
+    </button>
+  </div> -->
+  </div>
+
+
+
+  </ion-content>
+</ion-view>
