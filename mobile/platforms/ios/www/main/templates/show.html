@@ -1,0 +1,69 @@
+<ion-view view-title="{{showCtrl.resource.data.title}}">
+  <!-- do you want padding? -->
+  <ion-content class="padding">
+
+    <!-- content goes here -->
+
+    <div class="test">
+      {{ showCtrl.resorce.data | json }}
+    </div>
+
+    <!-- icon & description -->
+    <h2>
+      <img ng-src="{{ showCtrl.resource.data.icon_path }}" ng-if="showCtrl.resource.data.icon_path !== null">
+      {{ showCtrl.resource.data.title }}
+    </h2>
+
+    <!-- address -->
+    <p class="type type-muted">
+      {{ showCtrl.resource.data.location.address }}
+    </p>
+
+    <!-- open & closed -->
+    <p>
+      <span class="type type-balanced">
+        Opened:
+      </span>
+      <span>{{ showCtrl.resource.data.open_dt }}</span>
+      <span ng-if="showCtrl.resource.data.closed_dt">
+        <br>
+        <span class="type type-assertive">
+          Closed:
+        </span>
+        <span>{{ showCtrl.resource.data.closed_dt }}</span>
+      </span>
+    </p>
+
+    <img data-ng-src="data:image/jpeg;base64,{{ showCtrl.resource.data.image}}" ng-if="showCtrl.resource.data.image !== 'none'" style="width: 100%; height: auto; margin-top: 10px;">
+
+    <a ui-sref="main.list">back to list</a>
+    <br>
+
+    <div class="padding">
+      <p class="type type-balanced">
+        What do you think about this?
+      </p>
+      <label for="" class="item item-input">
+        <textarea type="text" ng-model="showCtrl.peanuts.newComment" placeholder="Have your say."></textarea>
+      </label>
+      <button class="button button-block button-balanced button-icon-left" ng-click="showCtrl.addComment(showCtrl.peanuts.newComment)">
+        <i class="icon ion-plus-round"></i>
+        Submit comment
+      </button>
+    </div>
+
+    <div class="padding">
+      <p class="type type-positive">What your fellow man thinks about this one</p>
+
+      <div class="card padding" ng-repeat="comment in showCtrl.peanuts.comments | orderBy:'-time'">
+        <p>
+          {{ comment.message }}
+        </p>
+        <p class="type type-muted">
+          near {{ comment.address }} at {{ comment.time }}
+        </p>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>
