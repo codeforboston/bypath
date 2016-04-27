@@ -1,4 +1,2 @@
 firebase_url=https://snowranger.firebaseio.com/
 endpoints=load(endpoints.json)
-server_url=http://codenamesnowranger.herokuapp.com/
-addEndpoint_path=data/addEndpoint
