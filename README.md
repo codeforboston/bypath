@@ -1,5 +1,5 @@
-## ByPath
-### An app to help make cities more accessible to those with low-mobility.
+# ByPath
+## An app to help make cities more accessible to those with low-mobility.
 
 We're working to integrate existing 311 data and services with user-generated advisories in an effort to enable, and make transparent, systems for maintaining civilized life.
 
@@ -9,18 +9,17 @@ Existing 311 data references civil complaints of all kinds - from rodent issues 
 
 We've expanded our scope to include NYC and San Francisco.
 
-## What we're running.
+### What we're running.
 - Ionic, for iOS and Web (Android coming soon.)
 - Firebase
 - AngularJS
 - NodeJS
 - Google Maps API
 
-## Who is us?
+### Who is us?
 - Alex: wants a real job.
 - Andrew: weirdly good at math.
 - Isaac: has a bigger mustache than you.
-
 - Addu: likes wires and sparky things.
 - Edwin: went to a camp about shoes.
 - Pooja: is probably somewhere talking to people.
