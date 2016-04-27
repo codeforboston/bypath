@@ -1,4 +1,4 @@
-# ByPath
+# ByPath (for mobile)
 
 ```
 # you must install gulp and bower globally first
