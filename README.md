@@ -26,3 +26,7 @@ We've expanded our scope to include NYC and San Francisco.
 - Pooja: is probably somewhere talking to people.
 - Anatoli: is on a mountain in the Himalayas drinking tea.
 - Ryan: built our demo site!
+
+### Builds
+- iOS - https://itunes.apple.com/us/app/bypath/id1106925083?mt=8
+- web - http://bypath.bitballoon.com
