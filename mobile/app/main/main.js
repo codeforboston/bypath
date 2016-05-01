@@ -81,7 +81,7 @@ angular.module('main', [
       .state('main.mappy', {
         url: '/mappy',
         views: {
-          'tab-mappy': {
+          'tab-map': {
             templateUrl: 'main/templates/mappy.html',
             controller: 'MappyCtrl as mappyCtrl'
           }
