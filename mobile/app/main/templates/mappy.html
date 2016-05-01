@@ -1,35 +1,40 @@
 <ion-view view-title="Map" hide-nav-bar="true">
   <ion-content scroll="false" >
     <div class="everything-holder" style="height: 100%;">
-    <!-- required scss in _mappy.scss -->
-    <ui-gmap-google-map
-        center='mappyCtrl.map.center'
-        zoom='mappyCtrl.map.zoom'
-        draggable='false'
-        disableDefaultUI="mappyCtrl.map.disableDefaultUI"
-        options="mappyCtrl.map.options"
-        data-tap-disabled="true"
-    >
-      <!-- 311 Markers -->
-      <ui-gmap-markers
-        doCluster="true"
-        models="mappyCtrl.data.filteredComplaints"
-        coords="'markablePosition'"
-        events="mappyCtrl.map.markerEvents"
-        options="'options'">
-      </ui-gmap-markers>
-    </ui-gmap-google-map>
-    <!-- Filter Multi-select -->
-    <div class="optionsContainer">
-      <div class="resultCountContainer" style="float:right;">
-        <button style="margin: 5px;" class="button button-small button-clear button-positive" >
-            {{ mappyCtrl.data.filteredComplaints.length }} results
-        </button>
-      </div>
-      <div class="filterContainer">
-        <select class="incidentSelector" ng-model="mappyCtrl.data.filtersSelected" ng-options="key for (key, value) in mappyCtrl.data.filters" multiple></select>
-      </div>
-    </div>
+        <!-- required scss in _mappy.scss -->
+        <ui-gmap-google-map
+            center='mappyCtrl.map.center'
+            zoom='mappyCtrl.map.zoom'
+            draggable='false'
+            disableDefaultUI="mappyCtrl.map.disableDefaultUI"
+            options="mappyCtrl.map.options"
+            data-tap-disabled="true"
+        >
+          <!-- 311 Markers -->
+          <ui-gmap-markers
+            doCluster="true"
+            models="mappyCtrl.data.filteredComplaints"
+            coords="'markablePosition'"
+            events="mappyCtrl.map.markerEvents"
+            options="'options'">
+          </ui-gmap-markers>
+        </ui-gmap-google-map>
+        <!-- Filter Multi-select -->
+        <div class="optionsContainer">
+          <div class="filterContainer">
+            <div class="filterLabelContainer">
+                <h4>Filter Incidents</h4>
+            </div>
+            <div class="filterSelectContainer">
+                <select class="incidentSelector" ng-model="mappyCtrl.data.filtersSelected" ng-options="key for (key, value) in mappyCtrl.data.filters" multiple></select>
+            </div>
+            <div class="filterCountContainer">
+              <button class="button button-small button-positive">
+                  {{ mappyCtrl.data.filteredComplaints.length }} results
+              </button>
+            </div>
+          </div>
+        </div>
     </div>
   </ion-content>
 </ion-view>
