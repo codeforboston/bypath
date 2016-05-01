@@ -2,7 +2,7 @@
     "new_york_city_311": {
         "url": "https://data.cityofnewyork.us/resource/fhrw-4uyv.json?$query=",
         "key": "soda_key",
-        "query": "SELECT * WHERE created_date > '$date' AND status = 'Open' AND (STARTS_WITH(complaint_type, 'Street Condition') OR STARTS_WITH(complaint_type, 'General Construction/Plumbing') OR STARTS_WITH(complaint_type, 'Street Light Condition') OR STARTS_WITH(complaint_type, 'Illegal Parking'))",
+        "query": "SELECT * WHERE created_date > '$date' AND status = 'Open' AND (STARTS_WITH(complaint_type, 'Street Condition') OR STARTS_WITH(complaint_type, 'General Construction/Plumbing') OR STARTS_WITH(complaint_type, 'Street Light Condition') OR STARTS_WITH(complaint_type, 'Illegal Parking')) LIMIT 100",
         "map": {
             "id": "unique_key",
             "title": "descriptor",
