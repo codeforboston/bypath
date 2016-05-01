@@ -12,3 +12,8 @@ You can see a run.cmd(widnows) and run.sh(linux) for reference on how this is do
 
 Current tools
     Database Refresh -  This will force a refresh to the our firedatabase.
+
+----
+
+
+snowranger/tools/tools (master>) $ /Users/ia/Applications/nwjs.app/Contents/MacOS/nwjs .
