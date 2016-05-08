@@ -25,8 +25,8 @@ module.exports = {
     updateIssue: function (itemId, values){
     },
     
-    getIssuesWithinDist (point, dist, callback){
-        post_db.getIssuesWithinDist(point, dist, callback);
+    getIssuesWithinDist (latitude, longitude, dist, callback){
+        post_db.getIssuesWithinDist(latitude, longitude, dist, callback);
     },
     
     getLastUpdated: function (source, callback){

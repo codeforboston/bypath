@@ -16,6 +16,30 @@ router.get('/', function (req, res) {
     res.sendFile(path.resolve(__dirname + "/../views/addIncident.html"));
 });
 
+router.get('/get', function (req, res) {
+    db = modules.getModule('db');
+    
+    var latitude = req.query.x;
+    var longitude = req.query.y;
+    var dist = req.query.d;
+    
+    
+    console.log('Coords(' + latitude + ', ' + longitude + ') at Distance: ' + dist);
+    
+    db.getIssuesWithinDist(latitude, longitude, dist, function(data){
+        if (data[0] === undefined) {
+            res.end('null');
+        }
+        else {
+            console.log('data recieved from database');
+            console.log('Number of items: ' + data.length);
+            res.end(JSON.stringify(data));
+        }
+    });
+    
+    //res.end('recieved');
+});
+
 router.post('/addNew', urlencodedParser, function (req, res) {
     // Create the item for the db
     console.log('Adding new');

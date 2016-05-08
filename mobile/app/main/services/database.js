@@ -105,6 +105,14 @@ angular.module('main')
           callback(data);
         });
     };
+    
+    function getIncidents(latitude, longitude, dist, callback){
+        //var url = 'http://codenamesnowranger.herokuapp.com/incident/get?x='+ latitude + '&y=' + longitude + '&d=' + dist;
+        
+        var url = 'http://localhost:8080/incident/get?x='+ latitude + '&y=' + longitude + '&d=' + dist;
+        
+        get(url, callback);
+    }
 
     // All updates and adds will not be sent to the firebase
     // but rather our server to process the request
@@ -138,11 +146,23 @@ angular.module('main')
             headers: config
         });
     };
+    
+    function get(url, callback){
+        $http({
+            method: 'GET',
+            url: url
+        }).then(function success(response) {
+            callback(response);
+        }, function error(response){
+            console.log(response);
+        });
+    }
 
     return {
         getObject: getObject,
         getObjectAll: getObjectAll,
         getItem: getItem,
+        getIncidents: getIncidents,
         addNewItem: addNewItem,
         update: update,
         assembleObjects: assembleObjects

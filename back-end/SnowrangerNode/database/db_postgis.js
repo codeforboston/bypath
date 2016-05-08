@@ -41,8 +41,8 @@ module.exports = {
     addIssues: function (issues){
     },
     
-    getIssuesWithinDist: function(point, dist, callback){
-        var queryString = "SELECT id, opened, source, title, type, address, ST_X(geo_coords), ST_Y(geo_coords) FROM issues WHERE ST_DWithin(geo_coords, ST_GeomFromText('POINT(" + point.x + " " + point.y + ")',4326)," + dist + ")"
+    getIssuesWithinDist: function(latitude, longitude, dist, callback){
+        var queryString = "SELECT id, opened, source, title, type, address, ST_X(geo_coords), ST_Y(geo_coords) FROM issues WHERE ST_DWithin(geo_coords, ST_GeomFromText('POINT(" + latitude + " " + longitude + ")',4326)," + dist + ")"
         
         queryDbCallback(queryString, callback);
     },
@@ -73,7 +73,6 @@ module.exports = {
     addNewSourceUpdate: function (source){
         var date = new Date().toISOString();
         date = date.replace('Z', '');
-        console.log(date);
         
         var queryString = "INSERT INTO updates(source, date)\
         values('" + source + "', '" + date + "')";

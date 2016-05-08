@@ -33,6 +33,8 @@ angular.module('main')
     // 'this' is mappyCtrl.data.filteredComplaints
     this.push(extendedObj);
   }, mappyCtrl.data.filteredComplaints);
+  
+  Database.getIncidents(42, -71, 0.35, function(data){ console.log(data); });
 
 
   // Watch filters; if they change, filter original complain list against filters to return
