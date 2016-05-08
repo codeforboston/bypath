@@ -36,14 +36,36 @@ function SqlScheduleQuery(){
     }
     
     function retieveData(updatePath, url, query, key, callback) {
-        var db = modules.getModule('firebase');
+        var db = modules.getModule('db');
         console.log("Update path: " + updatePath);
-        db.getItem(updatePath, function (data) {
+        
+//         db.getLastUpdated(updateSource, function(data){
+//             if(data[0] === undefined)
+//                 console.log('this source does not exist');
+//                 db.addNewSourceUpdate(updateSource);
+//             }
+//             else
+//             {
+//                 console.log('data recieved for the db');
+//                 console.log(data);
+//                 
+//                 var date = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString();
+//                 date = date.replace('Z', '');
+//                 
+//                 db.setSourceUpdated(updateSource, date);
+//             }
+//         });
+        
+        
+        db.getLastUpdated(updatePath, function (data) {
             var date = data;
             if (data === null) {
+                console.log('Date for ' + updatePath + " does not exist yet");
                 // Create a formated date that we can use if one does not exist
                 var date = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString();
                 date = date.replace('Z', '');
+                
+                db.addNewSourceUpdate(updatePath);
             }
             
             sqlQuery(date, url, query, key, function (res) {
@@ -53,7 +75,7 @@ function SqlScheduleQuery(){
                 // Might want to do some checks to make sure there were no errors when
                 // sending the data to the db before setting the last upated time
                 console.log('Query completed');
-                db.setItem(updatePath, new Date().toISOString().replace('Z', ''));
+                db.setSourceUpdated(updatePath, new Date().toISOString().replace('Z', ''));
                 console.log('Update ' + updatePath + ' date set');
             });
         });

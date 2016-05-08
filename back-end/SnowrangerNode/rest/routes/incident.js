@@ -28,7 +28,7 @@ router.post('/addNew', urlencodedParser, function (req, res) {
     };
     
     // Get the database module and give it the item to push to the db
-    db = modules.getModule('firebase');
+    db = modules.getModule('db');
     db.addNewItem(item);
     
     // Just give them the json that was submitted to the db
@@ -39,7 +39,7 @@ router.post('/update', urlencodedParser, function(req, res){
     var id = req.body.id;
     var values = req.body.values;
     
-    db = modules.getModule('firebase');
+    db = modules.getModule('db');
     
     for(i in values){
         var value = JSON.parse(values[i]);
@@ -59,7 +59,7 @@ router.post('/add', urlencodedParser, function(req, res){
     console.log('Add recieved');
     console.log(req);
     
-    db = modules.getModule('firebase');
+    db = modules.getModule('db');
     //fb.addItem(path, value);
     
     res.end('thanks');
