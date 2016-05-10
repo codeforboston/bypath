@@ -66,46 +66,61 @@ function Endpoint(name, url, key, query, map){
     // Body: Array of json objects
     Endpoint.prototype.addItems = function(body){
         var db = modules.getModule('firebase');
-        var r = JSON.parse(body);
-
-        console.log('adding items from ' + this.name);
         
-        for (i in r) {
-            try {
-                console.log(map);
-                // I pull the values out of the json object first
-                // so if I am missing any it will throw an error
-                // and not add the object
-                var id = this.map['id'];
-                var title = this.map['title'];
-                var type = this.map['type'];
-                var location = this.map['location'];
-                var open = this.map['open'];
-                var lat = this.map['latitude'];
-                var lon = this.map['longitude'];
-                
-                item = {
-                    'id': findProp(r[i], id),
-                    'title': findProp(r[i], title),
-                    'type': findProp(r[i], type),
-                    'location': findProp(r[i], location),
-                    'open': findProp(r[i], open),
-                    'geo': findProp(r[i], lat) + ',' + findProp(r[i], lon),
-                    'source': this.name,
-                };
-                
-                db.addNewItem(item);
-            }
+        try {
+            var r = JSON.parse(body);
+            
+            console.log('adding items from ' + this.name);
+            
+            for (i in r) {
+                try {
+                    console.log(map);
+                    // I pull the values out of the json object first
+                    // so if I am missing any it will throw an error
+                    // and not add the object
+                    var id = this.map['id'];
+                    var title = this.map['title'];
+                    var type = this.map['type'];
+                    var location = this.map['location'];
+                    var open = this.map['open'];
+                    var lat = this.map['latitude'];
+                    var lon = this.map['longitude'];
+                    
+                    item = {
+                        'id': findProp(r[i], id),
+                        'title': findProp(r[i], title),
+                        'type': findProp(r[i], type),
+                        'location': findProp(r[i], location),
+                        'open': findProp(r[i], open),
+                        'geo': findProp(r[i], lat) + ',' + findProp(r[i], lon),
+                        'source': this.name,
+                    };
+                    
+                    db.addNewItem(item);
+                }
             catch (e) {
-                console.log('error in creating new item');
-                console.log(e);
+                    console.log('error in creating new item');
+                    console.log(e);
+                }
             }
+        }
+        catch (e) {
+            console.log('error parsing resuslt data to json');
+            console.log(e);
         }    
     }
     
     // This needs to be worked so if we don't have a vaild
     // endpoint we can delete it
-    Endpoint.prototype.isVaild = function() {
+    Endpoint.prototype.isVaild = function () {
+        if ((this.name === undefined ||this.name === "")||
+            (this.url === undefined ||this.url === "")||
+            (this.key === undefined ||this.key === "")||
+            (this.query === undefined ||this.query === "")||
+            (this.map === undefined ||this.map === "")) {
+            return false;
+        }
+
         return true;
     }
 }

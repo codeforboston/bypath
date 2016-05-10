@@ -1,0 +1,40 @@
+// You've got to force the map to take up space.
+.angular-google-map {
+  height: 75%;
+  width: 100%;
+
+}
+.angular-google-map-container {
+  height: 100%;
+  width: 100%;
+}
+
+.optionscontainer {
+  height: auto;
+  width: 100%;
+}
+
+.incidentSelector {
+    margin-bottom: 10px;
+}
+
+.optionsContainer {
+    padding: 10px;
+}
+
+.filterLabelContainer {
+    display: block;
+}
+
+.filterLabelContainer h4 {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.filterCountContainer {
+    display: block;
+}
+
+.filterSelectContainer {
+    display: block;
+}

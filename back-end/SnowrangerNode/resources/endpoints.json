@@ -1,8 +1,8 @@
- {
+{
     "boston_311": {
         "url": "https://data.cityofboston.gov/resource/wc8w-nujj.json?$query=",
         "key": "soda_key",
-        "query": "SELECT * WHERE open_dt > '$date' AND CASE_STATUS = 'Open' AND (STARTS_WITH(case_title, 'Unsafe/Dangerous Conditions') OR STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Request for Snow Plowing') OR STARTS_WITH(case_title, 'Park Maintenance'))",
+        "query": "SELECT * WHERE open_dt > '$date' AND CASE_STATUS = 'Open' AND (STARTS_WITH(case_title, 'Unsafe/Dangerous Conditions') OR STARTS_WITH(case_title, 'Ground Maintenance') OR STARTS_WITH(case_title, 'Request for Snow Plowing') OR STARTS_WITH(case_title, 'Park Maintenance')) LIMIT 100",
         "map": {
             "id": "case_enquiry_id",
             "title":"case_title",
@@ -17,7 +17,7 @@
     "san_francisco_311": {
         "url": "https://data.sfgov.org/resource/vw6y-z8j6.json?$query=",
         "key": "soda_key",
-        "query": "SELECT * WHERE opened > '$date' AND status = 'Open' AND STARTS_WITH(category, 'Sidewalk or Curb')",
+        "query": "SELECT * WHERE opened > '$date' AND status = 'Open' AND STARTS_WITH(category, 'Sidewalk or Curb') LIMIT 100",
         "map": {
             "id": "case_id",
             "title":"request_details",

@@ -14,11 +14,11 @@
 // 	@param [optional] {String} open_dt  in whatever weird iso format thingey
 // 	@param [optional] {String} case_status   ie 'Open' or 'Closed' or null
 // }
-exports.query = function(options) {
+exports.buildMeAQuery = function(options) {
 // function query(options) {
 
-	var matching_array = options['matchingArray'];
-	var match_attr = options['matchAttr'];
+	var match_attr = options['matchAttr']; 
+	var matching_array = options['matchingArray']; 
 	var open_dt = options['openDt'];
 	var case_status = ['caseStatus'];
 

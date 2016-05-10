@@ -17,21 +17,22 @@ function getNextSchedule(){
 
 module.exports = {
     init: function (){
+    },
 
+    start: function (){
+        
         var resourceMgr = modules.getModule('resource_manager');
         eps = resourceMgr.getResource('endpoints');
-
+        
         console.log(endpoints);
-
+        
         endpoints = builder.createEndpoints(eps);
-
+        
         for (i in endpoints) {
             endpoints[i].init();
             endpoints[i].print();
         }
-    },
 
-    start: function (){
         console.log('data manager module started');
 
         // Begin scheduler at 5 mins because most 311's
@@ -43,8 +44,8 @@ module.exports = {
 
             // Normal Scheduling.
             // Have every scheduled even run 5 mins after
-            var timer = "* " + ("0" + nextSchedule).slice(-2) + " * * * *";
-            nextSchedule += 5;
+            //var timer = "* " + ("0" + nextSchedule).slice(-2) + " * * * *";
+            //nextSchedule += 5;
 
             // Faster timer for testing
             //var timer = ("0" + nextSchedule).slice(-2) + " * * * * *";
@@ -72,9 +73,14 @@ module.exports = {
                 endpoint.start(getNextSchedule());
                 
                 endpoints.push(endpoint);
+                
+                return true;
             }
         }
+        
+        console.log('invalid data for endpoint');
 
+        return false;
     },
 
     forceUpdate: function () {
