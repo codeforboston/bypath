@@ -106,7 +106,7 @@ angular.module('main')
         });
     };
     
-    function getIncidents(latitude, longitude, dist, callback){
+    function getIssues(latitude, longitude, dist, callback){
         //var url = 'http://codenamesnowranger.herokuapp.com/incident/get?x='+ latitude + '&y=' + longitude + '&d=' + dist;
         
         var url = 'http://localhost:8080/incident/get?x='+ latitude + '&y=' + longitude + '&d=' + dist;
@@ -152,7 +152,7 @@ angular.module('main')
             method: 'GET',
             url: url
         }).then(function success(response) {
-            callback(response);
+            callback(response.data);
         }, function error(response){
             console.log(response);
         });
@@ -162,7 +162,7 @@ angular.module('main')
         getObject: getObject,
         getObjectAll: getObjectAll,
         getItem: getItem,
-        getIncidents: getIncidents,
+        getIssues: getIssues,
         addNewItem: addNewItem,
         update: update,
         assembleObjects: assembleObjects

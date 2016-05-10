@@ -34,7 +34,12 @@ angular.module('main')
     this.push(extendedObj);
   }, mappyCtrl.data.filteredComplaints);
   
-  Database.getIncidents(42, -71, 0.35, function(data){ console.log(data); });
+  Database.getIssues(42, -71, 0.35, function(data){ 
+      mappyCtrl.data.compalaints = data;
+      for (var i in data){
+          console.log(data[i]);
+          
+    } });
 
 
   // Watch filters; if they change, filter original complain list against filters to return
