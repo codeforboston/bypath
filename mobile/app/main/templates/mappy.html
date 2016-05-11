@@ -1,39 +1,29 @@
 <ion-view view-title="Map" hide-nav-bar="true">
-  <ion-content scroll="false" >
-    <div class="everything-holder" style="height: 100%;">
-        <!-- required scss in _mappy.scss -->
-        <ui-gmap-google-map
-            center='mappyCtrl.map.center'
-            zoom='mappyCtrl.map.zoom'
-            draggable='false'
-            disableDefaultUI="mappyCtrl.map.disableDefaultUI"
-            options="mappyCtrl.map.options"
-            data-tap-disabled="true"
-        >
-          <!-- 311 Markers -->
-          <ui-gmap-markers
-            doCluster="true"
-            models="mappyCtrl.data.filteredComplaints"
-            coords="'markablePosition'"
-            events="mappyCtrl.map.markerEvents"
-            options="'options'">
-          </ui-gmap-markers>
-        </ui-gmap-google-map>
-        <!-- Filter Multi-select -->
-        <div class="optionsContainer">
-          <div class="filterContainer">
-            <div class="filterLabelContainer">
-                <h4>Filter Incidents</h4>
-            </div>
-            <div class="filterSelectContainer">
-                <select class="incidentSelector" ng-model="mappyCtrl.data.filtersSelected" ng-options="key for (key, value) in mappyCtrl.data.filters" multiple></select>
-            </div>
-            <div class="filterCountContainer">
-              <button class="button button-small button-positive">
-                  {{ mappyCtrl.data.filteredComplaints.length }} results
-              </button>
-            </div>
-          </div>
+  <ion-content class="padding" scroll="false" >
+
+    <!-- Leaflet Map -->
+    <leaflet id="map" lf-center="mapCenter" markers="mapMarkers"></leaflet>
+
+    <!-- Filter dropdown -->
+    <h5>Filter by Incidents</h5>
+    <div id="optionsContainer">
+        <div id="filterContainer">
+            <select id="incidentSelector" ng-model="mappyCtrl.filtersSelected" ng-options="key for (key, value) in mappyCtrl.filters" multiple></select>
+        </div>
+        <div id="resultCountContainer">
+            <button style="margin: 5px;" class="button button-small button-clear button-positive" ui-sref="main.list">
+              {{ mappyCtrl.data.filteredComplaints.length }} results
+            </button>
+        </div>
+    </div>
+
+    <!-- Selected Complaint Card -->
+    <div class="card padding" style="margin-bottom: 0px;" ui-sref="main.list-detail({objectId: mappyCtrl.data.selectedComplaint.id})" ng-if="mappyCtrl.data.selectedComplaint">
+        <div class="item item-text-wrap item-icon-right">
+            <h2>{{mappyCtrl.data.selectedComplaint.title}}</h2>
+            <p>{{mappyCtrl.data.selectedComplaint.location}}</p>
+            <span class="type type-balanced type-small">Opened: </span>
+            <span class="type type-muted type-small">{{mappyCtrl.data.selectedComplaint.open | date:'dd MMM'}}</span>
         </div>
     </div>
   </ion-content>
