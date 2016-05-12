@@ -26,7 +26,10 @@ angular.module('main')
         
         generateMapMarkers();
         
-        
+//         Database.getIssues(42, -71, 0.35, function(data){ 
+//             //mappyCtrl.data.compalaints = data;
+//             console.log(data);
+//         });
     };
     
     // On the right track but needs a little bit more clean up
@@ -75,8 +78,14 @@ angular.module('main')
     // When the map is moved pased the cached map markers
     // we will need to do a new query and generate a new 
     // set of map markers.
-    function onMapMoveEnd(lat, lng, zoom){
-        console.log('Lat: ' + lat + ', Lng: ' + lng + ', Zoom: ' + zoom);
+    function onMapMoveEnd(){
+        var viewport = Map.getCurrentViewport();
+        
+        Database.getIssues(viewport.latitude, viewport.longitude, viewport.distance, function(data){
+            console.log('data recieved');
+            //mappyCtrl.data.compalaints = data;
+            console.log(data);
+        });
     }
     
     // When a map marker is clicked it the map object
