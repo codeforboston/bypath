@@ -5,22 +5,38 @@ angular.module('main')
 // Note that 'mappyCtrl' is also established in the routing in main.js.
 var mappyCtrl = this;
 
-// Holsters.
+// Variables.
 mappyCtrl.data = {};
 mappyCtrl.data.complaints = toos; // all of the complaints
 mappyCtrl.data.filteredComplaints = [];
 mappyCtrl.filters = {};
 mappyCtrl.filtersSelected = [];
 mappyCtrl.showFilters = false;
+mappyCtrl.tiles = {
+    mapbox_streets_basic:   {
+        name: "Streets Basic",
+        url: "https://api.mapbox.com/v4/{mapid}/{z}/{x}/{y}.{format}?access_token={apikey}",
+        type: "xyz",
+        options: {
+            mapid: "mapbox.streets-basic",
+            format: "png",
+            apikey: "pk.eyJ1IjoiYWVsYXdzb24iLCJhIjoiY2luMnBtdGMxMGJta3Y5a2tqd29sZWlzayJ9.wxiPp_RFGYXGB2SzXZvfaA"
+        }
+    }
+};
+
+$scope.tiles = mappyCtrl.tiles['mapbox_streets_basic'];
 
 // Leaflet variables on scope.
 $scope.mapMarkers = {};
+
 $scope.mapEvents = {
     Marker : {
         enable: ['mousedown'],
         logic: 'emit'
     }
 };
+
 $scope.mapCenter = {
     lat: 42.4,
     lng: -71.1,
@@ -63,6 +79,7 @@ $scope.$watch(angular.bind(mappyCtrl, function () {
           var lng = value.markablePosition.longitude;
           if (lat && lng) {
               this[value.id.replace(/-/g,'0')] = {
+                  group: 'all',
                   model: value,
                   lat: value.markablePosition.latitude,
                   lng: value.markablePosition.longitude,
