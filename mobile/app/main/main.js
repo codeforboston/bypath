@@ -9,8 +9,8 @@ angular.module('main', [
   'ui.router',
   'firebase',
   'firebase.config',
-  'uiGmapgoogle-maps'
-
+  'uiGmapgoogle-maps',
+  'leaflet-directive'
   // TODO: load other modules selected during generation
 ])
 // for the camera
