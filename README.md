@@ -2,6 +2,8 @@
 
 ### An app to help make cities more accessible to those with low-mobility.
 
+![Imgur](http://i.imgur.com/WSI4l7y.png)
+
 We're working to integrate existing 311 data and services with user-generated advisories in an effort to enable, and make transparent, systems for maintaining civilized life.
 
 Originally begun as an initiative to help enable mobility for low-mobility folk in times of inclement weather, our project has widened in scope to take into consideration the warmer months as well, along with an acknowledgement that mobility, more broadly considered, means __access__.
