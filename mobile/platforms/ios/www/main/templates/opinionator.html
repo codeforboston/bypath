@@ -1,24 +1,16 @@
 <ion-view view-title="Speak up!">
-  <!-- do you want padding? -->
   <ion-content class="padding" scroll='false'>
-
-
-  <!-- should be able to click image (if one already taken) to retake -->
   <!-- set image by taking a picture which is not saved to photo library -->
   <div class="padding picture-button-wrapper" ng-click="takePhoto()">
-
     <div class="picture-button" ng-if="where.image === 'none'">
         <p class="picture-icon">
           <i class="icon ion-camera"></i>
         </p>
     </div>
-
-    <!-- preview if there is an image (clicking image should also be retake) -->
     <div class="picture-image" ng-if="!(where.image === 'none')">
-      <img data-ng-src="{{where.image_src}}" >
+      <img data-ng-src="{{ where.image_src }}" >
     </div>
   </div>
-
   <div class="padding">
     <p>
       <span class="calm">
@@ -27,7 +19,6 @@
       Near {{ where.address }}.</span>
     </p>
   </div>
-
   <div class="list">
     <label class="item item-input">
       <textarea ng-model="msg.text" placeholder="A brief descripton of what's up."></textarea>
@@ -41,10 +32,8 @@
       Call 311
     </a>
   </div>
-
-
   <!-- https://www.airpair.com/ionic-framework/posts/ionic-firebase-camera-app -->
-<!--   <div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
+  <!-- <div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
               <div class="col col-25" ng-if="$index < images.length">
                   <img ng-src="data:image/jpeg;base64,{{images[$index].image}}" width="100%" />
               </div>
@@ -57,8 +46,6 @@
               <div class="col col-25" ng-if="$index + 3 < images.length">
                   <img ng-src="data:image/jpeg;base64,{{images[$index + 3].image}}" width="100%" />
               </div>
-          </div>
- -->
-
+       </div> -->
   </ion-content>
 </ion-view>
