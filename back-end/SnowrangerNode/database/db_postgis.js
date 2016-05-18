@@ -37,7 +37,7 @@ module.exports = {
     
     // This is an array of issues
     // Insead of one db call per issue
-    // we can add many in 1 call
+    // we can add many in 1 call 
     addIssues: function (issues){
     },
     
