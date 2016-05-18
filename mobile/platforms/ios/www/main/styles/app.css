@@ -9109,11 +9109,7 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-.angular-google-map {
-  height: 75%;
-  width: 100%; }
-
-.angular-google-map-container {
+#map {
   height: 100%;
   width: 100%; }
 
