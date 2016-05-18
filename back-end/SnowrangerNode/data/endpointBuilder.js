@@ -65,7 +65,7 @@ function Endpoint(name, url, key, query, map){
     
     // Body: Array of json objects
     Endpoint.prototype.addItems = function(body){
-        var db = modules.getModule('firebase');
+        var db = modules.getModule('db');
         
         try {
             var r = JSON.parse(body);
@@ -74,7 +74,6 @@ function Endpoint(name, url, key, query, map){
             
             for (i in r) {
                 try {
-                    console.log(map);
                     // I pull the values out of the json object first
                     // so if I am missing any it will throw an error
                     // and not add the object
@@ -86,17 +85,28 @@ function Endpoint(name, url, key, query, map){
                     var lat = this.map['latitude'];
                     var lon = this.map['longitude'];
                     
-                    item = {
-                        'id': findProp(r[i], id),
-                        'title': findProp(r[i], title),
-                        'type': findProp(r[i], type),
-                        'location': findProp(r[i], location),
-                        'open': findProp(r[i], open),
-                        'geo': findProp(r[i], lat) + ',' + findProp(r[i], lon),
-                        'source': this.name,
+//                     item = {
+//                         'id': findProp(r[i], id),
+//                         'title': findProp(r[i], title),
+//                         'type': findProp(r[i], type),
+//                         'location': findProp(r[i], location),
+//                         'open': findProp(r[i], open),
+//                         'geo': findProp(r[i], lat) + ',' + findProp(r[i], lon),
+//                         'source': this.name,
+//                     };
+                    
+                    issue = {
+                        source_id:findProp(r[i], id),
+                        title: findProp(r[i], title),
+                        type: findProp(r[i], type),
+                        opened: findProp(r[i], open),
+                        source: this.name,
+                        address: findProp(r[i], location),
+                        latitude: findProp(r[i], lat),
+                        longitude: findProp(r[i], lon)
                     };
                     
-                    db.addNewItem(item);
+                    db.addIssue(issue);
                 }
             catch (e) {
                     console.log('error in creating new item');

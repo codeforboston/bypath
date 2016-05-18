@@ -2,6 +2,12 @@
 angular.module('main')
 .factory('Map', function ($q, $rootScope, leafletData) {
     
+    function Viewport(){
+        Viewport.prototype.latitude;
+        Viewport.prototype.longitude;
+        Viewport.prototype.distance;
+    }
+    
     var map;
     
     // Get the map object
@@ -40,14 +46,9 @@ angular.module('main')
     
     function onMapMoveEnd(event){
         map.on('moveend', function(args){
-            var coords = map.getCenter();
             
-            var ne = map.getBounds().getNorthEast();
-            var sw = map.getBounds().getSouthWest();
             
-            var dist = Math.max(Math.abs(ne.lat - sw.lat), Math.abs(ne.lng - sw.lng))
-            
-            event(coords.lat, coords.lng, dist);
+            event();
         });
     };
     
@@ -60,12 +61,30 @@ angular.module('main')
             event();
         });
     };
+    
+    function getCurrentViewport(){
+        var v = new Viewport();
+        
+        var coords = map.getCenter();
+            
+        var ne = map.getBounds().getNorthEast();
+        var sw = map.getBounds().getSouthWest();
+        
+        var dist = Math.max(Math.abs(ne.lat - sw.lat), Math.abs(ne.lng - sw.lng));
+        
+        v.latitude = coords.lat;
+        v.longitude = coords.lng;
+        v.distance = dist;
+        
+        return v;
+    }
 
     return {
         initialize: initialize,
         addMarkers: addMarkers,
         onMapMoveEnd: onMapMoveEnd,
-        onMarkerSelected: onMarkerSelected
+        onMarkerSelected: onMarkerSelected,
+        getCurrentViewport: getCurrentViewport
     };
 
 });

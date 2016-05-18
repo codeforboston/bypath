@@ -16,6 +16,40 @@ router.get('/', function (req, res) {
     res.sendFile(path.resolve(__dirname + "/../views/addIncident.html"));
 });
 
+router.get('/get', function (req, res) {
+    db = modules.getModule('db');
+    
+    var latitude = req.query.x;
+    var longitude = req.query.y;
+    var dist = req.query.d;
+    
+    
+    console.log('Coords(' + latitude + ', ' + longitude + ') at Distance: ' + dist);
+    
+    db.getIssuesWithinDist(latitude, longitude, dist, function(data){
+        if (data[0] === undefined) {
+            res.end('null');
+        }
+        else {
+            console.log('data recieved from database');
+            console.log('Number of items: ' + data.length);
+            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+            // Request methods you wish to allow
+            res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+            // Request headers you wish to allow
+            res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+            // Set to true if you need the website to include cookies in the requests sent
+            // to the API (e.g. in case you use sessions)
+            res.setHeader('Access-Control-Allow-Credentials', true);
+            res.end(JSON.stringify(data));
+        }
+    });
+    
+    //res.end('recieved');
+});
+
 router.post('/addNew', urlencodedParser, function (req, res) {
     // Create the item for the db
     console.log('Adding new');
@@ -28,7 +62,7 @@ router.post('/addNew', urlencodedParser, function (req, res) {
     };
     
     // Get the database module and give it the item to push to the db
-    db = modules.getModule('firebase');
+    db = modules.getModule('db');
     db.addNewItem(item);
     
     // Just give them the json that was submitted to the db
@@ -39,7 +73,7 @@ router.post('/update', urlencodedParser, function(req, res){
     var id = req.body.id;
     var values = req.body.values;
     
-    db = modules.getModule('firebase');
+    db = modules.getModule('db');
     
     for(i in values){
         var value = JSON.parse(values[i]);
@@ -59,7 +93,7 @@ router.post('/add', urlencodedParser, function(req, res){
     console.log('Add recieved');
     console.log(req);
     
-    db = modules.getModule('firebase');
+    db = modules.getModule('db');
     //fb.addItem(path, value);
     
     res.end('thanks');

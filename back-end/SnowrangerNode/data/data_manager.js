@@ -41,17 +41,6 @@ module.exports = {
         var nextSchedule = 5;
 
         for (i in endpoints) {
-
-            // Normal Scheduling.
-            // Have every scheduled even run 5 mins after
-            //var timer = "* " + ("0" + nextSchedule).slice(-2) + " * * * *";
-            //nextSchedule += 5;
-
-            // Faster timer for testing
-            //var timer = ("0" + nextSchedule).slice(-2) + " * * * * *";
-            //nextSchedule += 30;
-            //console.log(timer);
-
             endpoints[i].start(getNextSchedule());
         }
     },
