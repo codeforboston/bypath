@@ -109,7 +109,7 @@ angular.module('main')
     function getIssues(latitude, longitude, dist, callback){
         //var url = 'http://codenamesnowranger.herokuapp.com/incident/get?x='+ latitude + '&y=' + longitude + '&d=' + dist;
         
-        var url = 'http://localhost:8080/incident/get?x='+ latitude + '&y=' + longitude + '&d=' + dist;
+        var url = 'http://bypath-api.herokuapp.com/incident/get?x='+ latitude + '&y=' + longitude + '&d=' + dist;
         
         get(url, callback);
     }
@@ -119,7 +119,7 @@ angular.module('main')
     // Values are an array of json objects that are in the format of
     // {'path': path, 'value': value}
     function update(id, values){
-        var url = 'http://codenamesnowranger.herokuapp.com/incident/update';
+        var url = 'http://bypath-api.herokuapp.com/incident/update';
         var data = {'id': id, 'values': values};
 
         post(url, data);
@@ -130,7 +130,7 @@ angular.module('main')
 
     function addNewItem(item){
 
-        var url = 'http://codenamesnowranger.herokuapp.com/incident/addNew';
+        var url = 'http://bypath-api.herokuapp.com/incident/addNew';
         var data = item;
 
         post(url, data);
