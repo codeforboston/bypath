@@ -6,7 +6,7 @@
 var pg = require('pg');
 var modules = require('./../util/modules.js');
 // Constants
-var dbConnectionString = "postgres://xjqpynnkbyvils:Lji13-Y3pwSLzWf1_cjvv1w79P@ec2-54-235-207-226.compute-1.amazonaws.com:5432/dbcl20daau1ttt?ssl=true";
+var dbConnectionString = "postgres://flhezcxjxcoznt:c_o6_BpAVqh1U-xugNLnth2pR3@ec2-54-243-249-159.compute-1.amazonaws.com:5432/ddq2ad2nchlqcs?ssl=true";
 
 
 // Public methods
@@ -42,7 +42,7 @@ module.exports = {
     },
     
     getIssuesWithinDist: function(latitude, longitude, dist, callback){
-        var queryString = "SELECT id, opened, source, title, type, address, ST_X(geo_coords), ST_Y(geo_coords) FROM issues WHERE ST_DWithin(geo_coords, ST_GeomFromText('POINT(" + latitude + " " + longitude + ")',4326)," + dist + ")"
+        var queryString = "SELECT id, opened, source, title, type, address, ST_X(geo_coords) as latitude, ST_Y(geo_coords) as longitude FROM issues WHERE ST_DWithin(geo_coords, ST_GeomFromText('POINT(" + latitude + " " + longitude + ")',4326)," + dist + ")"
         
         queryDbCallback(queryString, callback);
     },

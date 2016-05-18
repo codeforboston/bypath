@@ -39,4 +39,11 @@ router.post('/addEndpoint', urlencodedParser, function (req, res) {
     }    
 });
 
+router.get('/force', function(req, res){
+   var dm = modules.getModule('data_manager');
+   dm.forceUpdate();
+   
+   res.end('updated');
+});
+
 module.exports = router;

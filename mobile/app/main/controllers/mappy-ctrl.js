@@ -18,18 +18,16 @@ angular.module('main')
     function run(){
         // Variables.
         mappyCtrl.data = {};
-        mappyCtrl.data.complaints = toos; // all of the complaints
         mappyCtrl.data.filteredComplaints = [];
         mappyCtrl.filters = {};
         mappyCtrl.filtersSelected = [];
         mappyCtrl.showFilters = false;
         
-        generateMapMarkers();
-        
-//         Database.getIssues(42, -71, 0.35, function(data){ 
-//             //mappyCtrl.data.compalaints = data;
-//             console.log(data);
-//         });
+        console.log($scope.mapCenter);
+        Database.getIssues($scope.mapCenter.lat, $scope.mapCenter.lng, 0.35, function(data){
+            mappyCtrl.data.complaints = data;
+            generateMapMarkers();
+        });
     };
     
     // On the right track but needs a little bit more clean up
@@ -40,7 +38,7 @@ angular.module('main')
                 // Generate general list of filters.
                 mappyCtrl.filters[value.type] = value.type;
                 // Generate markable position.
-                var markablePosition = GeoFormatFactory.parseLocationStringToNamedObject(value.geo);
+                var markablePosition = {latitude: value.latitude, longitude: value.longitude};// GeoFormatFactory.parseLocationStringToNamedObject(value.geo);
                 var extendedObj = angular.extend(value, {'markablePosition': markablePosition});
                 this.push(extendedObj);
             },
@@ -59,7 +57,7 @@ angular.module('main')
                 var lat = value.markablePosition.latitude;
                 var lng = value.markablePosition.longitude;
                 if (lat && lng) {
-                    markers[value.id.replace(/-/g,'0')] = {
+                    markers[value.id] = {
                         group:     'all',
                         model:     value,
                         lat:       value.markablePosition.latitude,
@@ -81,10 +79,10 @@ angular.module('main')
     function onMapMoveEnd(){
         var viewport = Map.getCurrentViewport();
         
-        Database.getIssues(viewport.latitude, viewport.longitude, viewport.distance, function(data){
-            console.log('data recieved');
-            //mappyCtrl.data.compalaints = data;
-            console.log(data);
+        Database.getIssues(viewport.latitude, viewport.longitude, viewport.distance, function(data){          
+            mappyCtrl.data.complaints = data;
+            
+            generateMapMarkers();
         });
     }
     
