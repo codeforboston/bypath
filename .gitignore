@@ -88,3 +88,5 @@ bower_content
 web/bower_components
 node_modules
 web/www/*
+
+.directory

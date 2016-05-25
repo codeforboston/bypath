@@ -33,7 +33,8 @@ router.get('/get', function (req, res) {
         else {
             console.log('data recieved from database');
             console.log('Number of items: ' + data.length);
-            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+            
+            res.setHeader('Access-Control-Allow-Origin', 'http://bypath.herokuapp.com');// convert this to a resource
             // Request methods you wish to allow
             res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
