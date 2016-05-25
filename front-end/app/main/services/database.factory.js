@@ -30,19 +30,15 @@ angular.module('main')
      * objects.
      */
     function assembleObjects(resolvedTables) { // master should be resolvedTables[0]
-      //\\ $log.log('assembling objects for these tables', resolvedTables);
-      //\\ $log.log('and I think master is ', resolvedTables[0] );
 
       var output = []; // array of assembled objects
 
       // for all master dictionary ids
       angular.forEach(resolvedTables[0]['data'], function(value) {
         var fbId = value.$id;
-        //\\ $log.log('fbId', fbId);
 
         var obj = {
           id: fbId
-          // tableName: tableData.$getRecord by id
         };
 
         // for all resolved tables except master
@@ -57,7 +53,6 @@ angular.module('main')
           } else {
             obj[tableName] = null;
           }
-          // $log.log('obj', obj);
         }
 
         this.push(obj); // push obj to output[]
@@ -83,10 +78,6 @@ angular.module('main')
           resolvedTables.push(getTable(tables[i]));
         }
 
-        // once all tables have been resolved
-        // $q.all(resolvedTables).then(function(resolvedTablesData) {
-        //   callback(assembleObjects(resolvedTablesData));
-        // });
         return $q.all(resolvedTables);
     };
 
@@ -95,7 +86,6 @@ angular.module('main')
     // Properties are made available through back-end/SnowrangerNode/database/db_firebase.js#generateSchema()
     function getObjectAll(){
         return getObject(['type','title','open','status', 'geo', 'location']);
-        // , 'open_dt', 'short_address', 'address', 'neighborhood'
     };
 
     function getItem(path, callback){

@@ -14,7 +14,7 @@ angular.module('main')
     * Returns a promise for the device location.
     * No parameters.
     *
-    * @param  {}
+    * @param  {Function, Function}
     * @return {}
     */
     function getUserPosition(successCallback, failureCallback) {

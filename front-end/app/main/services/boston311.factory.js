@@ -1,18 +1,14 @@
 'use strict';
+
 angular.module('main')
+
 .factory('ThreeOneOne', function ($log, $http, $q, $rootScope, complainables, Utils, Geo, Ref, $firebaseArray) {
-  //\\
   $log.log('ThreeOneOne Factory in module main ready for action.');
-
-
-
-
 
   /*----------  Testing to see what most commom complaint types are  ----------*/
 
   var uniqueThreeOneOneGripes = function () {
     var defer = $q.defer();
-
     var bostonUrl = 'https://data.cityofboston.gov/resource/awu8-dc52.json';
     var stringer = '?$limit=10000&$select=case_title,COUNT(case_title)&$group=case_title';
     var queryable = bostonUrl + stringer;
@@ -30,15 +26,10 @@ angular.module('main')
         defer.reject({status: status, data: data});
       });
 
-
     return defer.promise;
   };
 
-
-
-
   /*----------  Async http method to return json data  ----------*/
-
   function getBoston311Data(queryable) {
     var defer = $q.defer();
 
@@ -54,9 +45,9 @@ angular.module('main')
       .error(function (data, status, headers, config) {
         defer.reject({status: status, data: data});
       });
+
     return defer.promise;
   };
-
 
   /*----------  Add key, loc[] to geofire (for Geofire distance helper)  ----------*/
   var geoLastUpdateRef = Ref.child('updates').child('geo311').child('last');
@@ -81,20 +72,15 @@ angular.module('main')
 
     if (checkLastUpdated()) {
       geoLastUpdateRef.set({time: Firebase.ServerValue.TIMESTAMP});
-
       Geo.set(key, locArray).then(function () {
         $log.log('added to geofire case id: ' + key + ' at ' + locArray);
       });
     }
-
   };
-
 
   return {
     getBoston311Data: getBoston311Data,
     addToGeofire: addToGeofire,
-    // buildQuery: buildQueryString,
     uniqueCases: uniqueThreeOneOneGripes
-    // , get311Fake: getFake311Data
   };
 });

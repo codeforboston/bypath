@@ -1,14 +1,11 @@
 'use strict';
 
 angular.module('main')
+
 .factory('MarkerFactory', function MarkerFactory ($log, $http, $q, complainables, ThreeOneOne, Utils, Geo) {
-
-  $log.log('MarkerFactory checking in.');
-
 
   /*----------  Parse 311 data into map markers static array ----------*/
 
-  // MarkerFactory.currentMarkers = [];
   // Expects {data: {data: [{object}, {object}...]}}
   var parseDataToMarkers = function (data) {
 
@@ -44,15 +41,11 @@ angular.module('main')
     }
 
     // Finally, set constructed array to also hold path urls for associated images and return.
-    // MarkerFactory.currentMarkers = Utils.setIcons(markers);
-    // return MarkerFactory.currentMarkers;
     return Utils.setIcons(markers);
   };
-
 
   return {
     // currentMarkers: MarkerFactory.currentMarkers,
     parseDataToMarkers: parseDataToMarkers
   };
-
 });

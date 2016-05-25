@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('main')
+
 .controller('MainCtrl', function ($rootScope, $log, $timeout, MarkerFactory, BuildAQuery, Geolocation) {
     $log.log("Main controller");
     // The 311-s are *resolved* in main.js, which means they load before anything else.
