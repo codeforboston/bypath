@@ -1,17 +1,12 @@
 'use strict';
+
 angular.module('main')
+
 .filter('threeOneOneById', function () {
   return function (input) {
     return 'threeOneOneById filter: ' + input;
   };
 })
-
-// .filter('unique', function() {
-//     return function (arr, field) {
-//         return _.uniq(arr, function(a) { return a[field]; });
-//     };
-// })
-//
 
 .filter('unique', function () {
 
