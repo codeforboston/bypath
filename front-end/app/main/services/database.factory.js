@@ -1,4 +1,5 @@
 'use strict';
+
 angular.module('main')
 .factory('Database', function ($log, $http, $httpParamSerializer, $q, $rootScope, complainables, Utils, Geo, Ref, $firebaseArray) {
 
@@ -105,12 +106,12 @@ angular.module('main')
           callback(data);
         });
     };
-    
+
     function getIssues(latitude, longitude, dist, callback){
         //var url = 'http://codenamesnowranger.herokuapp.com/incident/get?x='+ latitude + '&y=' + longitude + '&d=' + dist;
-        
+
         var url = 'http://bypath-api.herokuapp.com/incident/get?x='+ latitude + '&y=' + longitude + '&d=' + dist;
-        
+
         get(url, callback);
     }
 
@@ -146,7 +147,7 @@ angular.module('main')
             headers: config
         });
     };
-    
+
     function get(url, callback){
         $http({
             method: 'GET',
