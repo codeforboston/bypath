@@ -90,3 +90,5 @@ node_modules
 web/www/*
 
 .directory
+
+mobile/platforms/ios/
