@@ -1,0 +1,24 @@
+{
+  "name": "SnowrangerNode",
+  "version": "0.0.0",
+  "description": "SnowrangerNode",
+  "main": "server.js",
+  "author": {
+    "name": "Alex",
+    "email": ""
+  },
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "cron": "^1.1.0",
+    "express": "^4.13.4",
+    "firebase": "^2.4.1",
+    "fs-extra": "^0.27.0",
+    "fs-extra-promise": "^0.3.1",
+    "pg": "^4.5.5",
+    "request": "^2.71.0",
+    "request-promise": "^2.0.1",
+    "sync-request": "^3.0.0",
+    "underscore": "^1.8.3"
+  }
+}

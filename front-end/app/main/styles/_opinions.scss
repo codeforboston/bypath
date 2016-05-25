@@ -1,0 +1,37 @@
+/* Mixin */
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+// .element p {
+//   @include vertical-align();
+// }
+
+.picture-button-wrapper {
+  width: 100%;
+  text-align: center;
+
+  .picture-button {
+    border: 3px dashed lightgray;
+    height: 300px;
+    p.picture-icon {
+      @include vertical-align();
+      font-size: 8vw;
+      color: lightgray;
+    }
+  }
+
+  .picture-image {
+    img {
+      // @include vertical-align();
+      height: 300px;
+      width: auto;
+    }
+  }
+}
+
+

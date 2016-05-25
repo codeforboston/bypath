@@ -1,0 +1,6 @@
+#I need to include this file because it is required to download the images
+#but I don't want to add the downloaded images to the repo
+*
+
+
+!.gitignore

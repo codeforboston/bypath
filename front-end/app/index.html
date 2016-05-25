@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <!-- Ionic meta tags -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <!-- Custom meta tags -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>ByPath</title>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css main/styles/app.css -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="main/styles/main.css">
+    <!-- endinject -->
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/ionic/release/js/ionic.js"></script>
+    <script src="bower_components/ionic/release/js/ionic-angular.js"></script>
+    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+    <script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="bower_components/localforage/dist/localforage.js"></script>
+    <script src="bower_components/firebase/firebase.js"></script>
+    <script src="bower_components/angularfire/dist/angularfire.js"></script>
+    <script src="bower_components/geofire/dist/geofire.js"></script>
+    <script src="bower_components/leaflet/dist/leaflet-src.js"></script>
+    <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+    <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js scripts/app.js -->
+    <!-- inject:js -->
+    <script src="main/main.js"></script>
+    <script src="main/services/utils-serv.js"></script>
+    <script src="main/services/too-firebase.js"></script>
+    <script src="main/services/three-one-one-serv.js"></script>
+    <script src="main/services/opinions-serv.js"></script>
+    <script src="main/services/marker-factory.js"></script>
+    <script src="main/services/map.js"></script>
+    <script src="main/services/main-serv.js"></script>
+    <script src="main/services/geolocation-serv.js"></script>
+    <script src="main/services/firebase-array-listener.js"></script>
+    <script src="main/services/database.js"></script>
+    <script src="main/services/build-a-query.js"></script>
+    <script src="main/filters/three-one-one-by-id-fil.js"></script>
+    <script src="main/controllers/test-show-ctrl.js"></script>
+    <script src="main/controllers/show-ctrl.js"></script>
+    <script src="main/controllers/opinionator-ctrl.js"></script>
+    <script src="main/controllers/mappy-ctrl.js"></script>
+    <script src="main/controllers/main-ctrl.js"></script>
+    <script src="main/controllers/listy-ctrl.js"></script>
+    <script src="main/controllers/debug-ctrl.js"></script>
+    <script src="main/constants/config-const.js"></script>
+    <script src="main/constants/complainables-const.js"></script>
+    <script src="app.js"></script>
+    <!-- endinject -->
+    <!-- endbuild -->
+    <script src="cordova.js"></script>
+  </head>
+  <body ng-app="ByPath">
+    <ion-pane>
+        <!-- Title Bar -->
+        <ion-header-bar align-title="center" class="bar-dark">
+            <h1 class="title">ByPath</h1>
+        </ion-header-bar>
+        <!-- Nav View -->
+        <ion-nav-view>
+            <ion-nav-view name="tab-map"></ion-nav-view>
+        </ion-nav-view>
+    </ion-pane>
+  </body>
+</html>

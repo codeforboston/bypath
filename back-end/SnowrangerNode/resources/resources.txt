@@ -1,0 +1,2 @@
+firebase_url=https://snowranger.firebaseio.com/
+endpoints=load(endpoints.json)

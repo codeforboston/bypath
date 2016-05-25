@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+
+<html data-ng-app="toolsApp">
+<head>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+    <script type="text/javascript" src="js/libs/angular.min.js"></script>
+    <script type="text/javascript" src="js/libs/angular-resource.min.js"></script>
+    <script type="text/javascript" src="js/libs/angular-route.min.js"></script>
+    <script type="text/javascript" src="js/libs/jquery.min.js"></script>
+    <script type="text/javascript" src="js/libs/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/services.js"></script>
+
+    <script type="text/javascript" src="js/controller/mainPage.js"></script>
+    <script type="text/javascript" src="js/controller/databaseRefresh.js"></script>
+    <script type="text/javascript" src="js/controller/addNewDataSource.js"></script>
+
+    <script type="text/javascript" src="js/routes.js"></script>
+    
+</head>
+<body class="container" data-ng-controller="mainPageCtrl">
+    <div id="wrapper">
+        <div data-ng-include src="header"></div>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="page-content-wrapper">
+                            <div class="row" data-ng-view=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
