@@ -14,41 +14,25 @@ angular.module('main', [
 .config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/main/map');
     $stateProvider
-    // this state is placed in the <ion-nav-view> in the index.html
     .state('main', {
         url: '/main',
         abstract: true,
         templateUrl: 'main/templates/tabs.html',
         controller: 'MainCtrl as mainCtrl',
-        // Resolve sets these vars as a dependency for the view and controller load, allowing
-        // the vars to be injected into the controller just like a factory.
         resolve: {
-            /**
-             * @GeoLocation: GeoLocation factory
-             * Returns --> here()
-            */
-            here: function(Geolocation) {
-                return Geolocation.get()
-                .then(function(location) {
-                    // Retrieve lat / long pair from get() function.
-                    var latitude = location.coords.latitude;
-                    var longitude = location.coords.longitude;
-                    return Geolocation.getNearByCity(latitude, longitude)
-                    .then(function(address) {
-                        // Retrieve formatted address from getNearByCity() function.
-                        var formatted_address = address.data.results[0]['formatted_address']
-                        return {
-                            location: loc,
-                            address: formatted_address
-                        };
-                    });
-                });
-            },
+            // /**
+            //  * @GeoLocation: GeoLocation factory
+            //  * Returns --> userLocation()
+            // */
+            // userLocation: function(Geolocation) {
+            //     return Geolocation.get()
+            //     .then(getAddress);
+            // },
             /**
             * @Database: Database factory
             * Return factory assembled objects based on getObjectAll() helper method
             */
-            toos: function(Database) {
+            incidents: function(Database) {
                 return Database.getObjectAll()
                 .then(function(data) {
                     return Database.assembleObjects(data);
@@ -87,3 +71,23 @@ angular.module('main', [
         }
     });
 });
+
+// Get address from GeoLocation factory.
+function getAddress(location) {
+    $log.log(location);
+    var latitude = location.coords.latitude;
+    var longitude = location.coords.longitude;
+    return Geolocation.getNearByCity(latitude, longitude)
+    .then(getLocationAndAddress(location));
+}
+
+// Get location and address object from given address.
+function getLocationAndAddress(address, location) {
+    $log.log(address);
+    $log.log(location);
+    var formatted_address = address.data.results[0]['formatted_address'];
+    return {
+        location: location,
+        address: formatted_address
+    };
+}

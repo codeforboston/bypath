@@ -1,6 +1,7 @@
 'use strict';
+
 angular.module('main')
-.controller('MapCtrl', function ($scope, $state, $log, $filter, toos, here, Database, GeoFormatFactory, Map) {
+.controller('MapCtrl', function ($scope, $state, $log, $filter, Database, Map) {
 
     // Note that 'mapCtrl' is also established in the routing in main.js.
     var mapCtrl = this;
@@ -11,7 +12,6 @@ angular.module('main')
     Map.initialize(function(){
         Map.onMarkerSelected(onMarkerSelected);
         Map.onMapMoveEnd(onMapMoveEnd);
-
         run();
     });
 
@@ -22,7 +22,6 @@ angular.module('main')
         mapCtrl.filters = {};
         mapCtrl.filtersSelected = [];
         mapCtrl.showFilters = false;
-
         console.log($scope.mapCenter);
         Database.getIssues($scope.mapCenter.lat, $scope.mapCenter.lng, 0.35, function(data){
             mapCtrl.data.complaints = data;
@@ -38,7 +37,7 @@ angular.module('main')
                 // Generate general list of filters.
                 mapCtrl.filters[value.type] = value.type;
                 // Generate markable position.
-                var markablePosition = {latitude: value.latitude, longitude: value.longitude};// GeoFormatFactory.parseLocationStringToNamedObject(value.geo);
+                var markablePosition = {latitude: value.latitude, longitude: value.longitude};
                 var extendedObj = angular.extend(value, {'markablePosition': markablePosition});
                 this.push(extendedObj);
             },
