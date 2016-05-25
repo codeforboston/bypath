@@ -21,11 +21,11 @@
 
     <!-- build:css main/styles/app.css -->
     <!-- inject:css -->
+    <link rel="stylesheet" href="main/styles/main.css">
     <!-- endinject -->
     <!-- endbuild -->
   </head>
   <body ng-app="ByPath">
-
     <!-- 404 during development -->
     <script src="cordova.js"></script>
 
@@ -53,6 +53,22 @@
 
     <!-- build:js scripts/app.js -->
     <!-- inject:js -->
+    <script src="main/main.js"></script>
+    <script src="main/services/utils-serv.js"></script>
+    <script src="main/services/too-firebase.js"></script>
+    <script src="main/services/three-one-one-serv.js"></script>
+    <script src="main/services/opinions-serv.js"></script>
+    <script src="main/services/marker-factory.js"></script>
+    <script src="main/services/map.js"></script>
+    <script src="main/services/main-serv.js"></script>
+    <script src="main/services/geolocation-serv.js"></script>
+    <script src="main/services/database.js"></script>
+    <script src="main/services/build-a-query.js"></script>
+    <script src="main/filters/three-one-one-by-id-fil.js"></script>
+    <script src="main/controllers/map-ctrl.js"></script>
+    <script src="main/controllers/main-ctrl.js"></script>
+    <script src="main/constants/complainables-const.js"></script>
+    <script src="app.js"></script>
     <!-- endinject -->
     <!-- endbuild -->
 

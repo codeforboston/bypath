@@ -82,50 +82,16 @@ angular.module('main')
     * No parameters.
     *
     * @param  {}
-    * @return {Promise}
+    * @return {}
     */
-    function get() {
-        $log.log('Getting current location.');
-        var defer = $q.defer();
+    function getUserPosition(successCallback, failureCallback) {
         var options = {
             timeout: 10000,
             enableHighAccuracy: true
         };
-        var defaultPosition = {
-            coords: {
-                accuracy: 70,
-                altitude: null,
-                altitudeAccuracy: null,
-                heading: null,
-                latitude: 42.39137720000001,
-                longitude: -71.1473425,
-                speed: null
-            },
-            timestamp: 1463167968457
-        };
-        // $cordovaGeolocation.getCurrentPosition(options)
-        // .then(
-        //     function(position) {
-        //         defer.resolve(position);
-        //     },
-        //     function(error) {
-        //         $log.log('Failed. Using default location.');
-        //         defer.resolve(defaultPosition);
-        //     }
-        // );
-        //
-        // return defer.promise;
-
+        $log.log('Getting current location.');
         $cordovaGeolocation.getCurrentPosition(options)
-        .then(
-            function(position) {
-                return position;
-            },
-            function(error) {
-                $log.log('Failed. Using default location.');
-                return defaultPosition;
-            }
-        );
+        .then(successCallback, failureCallback);
     };
 
     /**
@@ -153,7 +119,7 @@ angular.module('main')
     }
 
     return {
-        get: get,
+        getUserPosition: getUserPosition,
         getNearByCity: getNearByCity
     };
 });

@@ -6,6 +6,10 @@ angular.module('main')
     // Note that 'mapCtrl' is also established in the routing in main.js.
     var mapCtrl = this;
 
+    $scope.getUserPosition = function() {
+        Geolocation.getUserPosition(getPositionSuccess, getPositionFailure)
+    };
+
     // Initialize the map object. When that is done
     // we can set up our event hooks and generate the
     // map markers
@@ -92,3 +96,25 @@ angular.module('main')
         //console.log('map clicked');
     }
 });
+
+function getPositionSuccess(position) {
+    $log.log("Success. Using obtained position.");
+    $rootScope.userPosition = position;
+}
+
+function getPositionFailure() {
+    $log.log("Failed. Using default position.");
+    var defaultPosition = {
+        coords: {
+            accuracy: 70,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            latitude: 42.39137720000001,
+            longitude: -71.1473425,
+            speed: null
+        },
+        timestamp: 1463167968457
+    };
+    $rootScope.userPosition = defaultPosition;
+}
