@@ -6,7 +6,6 @@ before_install:
     - npm install -g gulp
     - npm install -g bower
     - cd front-end
-    - npm install gulp
 install:
     - npm install
     - bower install
