@@ -2,6 +2,8 @@
 
 ### An app to help make cities more accessible to those with low-mobility.
 
+[![Build Status](https://travis-ci.org/aelawson/bypath.svg?branch=master)](https://travis-ci.org/aelawson/bypath)
+
 ![Imgur](http://i.imgur.com/WSI4l7y.png)
 
 We're working to integrate existing 311 data and services with user-generated advisories in an effort to enable, and make transparent, systems for maintaining civilized life.
