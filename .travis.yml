@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - 'stable'
+  - '0.12'
+before_install:
+    - npm install -g gulp
+    - npm install -g bower
+    - cd front-end
+install:
+    - npm install
+    - bower install
+    - gulp --cordova "prepare"
+script:
+    - gulp build

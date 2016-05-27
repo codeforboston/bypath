@@ -1,0 +1,5 @@
+{
+  "BYPATH_API" : "http://localhost:8080",
+  "MAPBOX_API" : "https://api.mapbox.com/v4/{mapid}/{z}/{x}/{y}.{format}?access_token={apikey}",
+  "GOOGLE_MAPS_API" : "https://maps.googleapis.com/maps/api"
+}
