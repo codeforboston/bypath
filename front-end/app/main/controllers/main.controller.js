@@ -2,8 +2,7 @@
 
 angular.module('main')
 
-.controller('MainCtrl', function ($rootScope, $log, $timeout, MarkerFactory, BuildAQuery, Geolocation) {
-    $log.log("Main controller");
+.controller('MainCtrl', function ($rootScope, $log, $timeout, MarkerFactory, Geolocation) {
     // The 311-s are *resolved* in main.js, which means they load before anything else.
 
     // Here, they've been passed in through the controller arg `threeoneones` and are

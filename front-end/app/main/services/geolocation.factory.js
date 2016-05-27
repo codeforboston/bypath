@@ -9,7 +9,7 @@ angular.module('main')
  *
  * @return {2 functions}
  */
-.factory('Geolocation', function($cordovaGeolocation, $log, $q, $http) {
+.factory('Geolocation', function($cordovaGeolocation, $log, $q, $http, Config) {
     /**
     * Returns a promise for the device location.
     * No parameters.
@@ -36,7 +36,7 @@ angular.module('main')
     */
     function getNearByCity(latitude, longitude) {
         var defer = $q.defer();
-        var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude +',' + longitude +'&sensor=true';
+        var url = Config.ENV.GOOGLE_MAPS_API + '/geocode/json?latlng=' + latitude +',' + longitude +'&sensor=true';
         $http({
             method: 'GET',
             url: url

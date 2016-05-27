@@ -2,8 +2,7 @@
 
 angular.module('main')
 
-.factory('ThreeOneOne', function ($log, $http, $q, $rootScope, complainables, Utils, Geo, Ref, $firebaseArray) {
-  $log.log('ThreeOneOne Factory in module main ready for action.');
+.factory('ThreeOneOne', function ($log, $http, $q, $rootScope, $firebaseArray, Utils, Geo, Ref) {
 
   /*----------  Testing to see what most commom complaint types are  ----------*/
 

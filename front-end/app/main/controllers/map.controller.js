@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('main')
+
 .controller('MapCtrl', function ($scope, $state, $log, $filter, Database, Map, Geolocation) {
 
     // Note that 'mapCtrl' is also established in the routing in main.js.
@@ -23,7 +24,7 @@ angular.module('main')
         mapCtrl.filters = {};
         mapCtrl.filtersSelected = [];
         mapCtrl.showFilters = false;
-        console.log($scope.mapCenter);
+        $log.log($scope.mapCenter);
         Database.getIssues($scope.mapCenter.lat, $scope.mapCenter.lng, 0.35, function(data){
             mapCtrl.data.complaints = data;
             generateMapMarkers();

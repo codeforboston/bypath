@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('main')
-.factory('Database', function ($log, $http, $httpParamSerializer, $q, $rootScope, complainables, Utils, Geo, Ref, $firebaseArray) {
+
+.factory('Database', function ($log, $http, $httpParamSerializer, $q, $firebaseArray, Config, Utils, Geo, Ref) {
 
     // Tables will be in the format of a list of string
     // each string will be the name of a table you want
@@ -68,16 +69,13 @@ angular.module('main')
      * Since this returns standalone property lists indexed by id, in order to make useful objects we have to #assembleObjects.
      */
     function getObject(tables){
-
         var resolvedTables = [];
-
         // get master -> [0]
         resolvedTables.push(getTable('master'));
         // get the rest
         for (var i in tables) {
           resolvedTables.push(getTable(tables[i]));
         }
-
         return $q.all(resolvedTables);
     };
 
@@ -85,51 +83,52 @@ angular.module('main')
     // Get full object with all available properties.
     // Properties are made available through back-end/SnowrangerNode/database/db_firebase.js#generateSchema()
     function getObjectAll(){
-        return getObject(['type','title','open','status', 'geo', 'location']);
+        return getObject([
+            'type',
+            'title',
+            'open',
+            'status',
+            'geo',
+            'location'
+        ]);
     };
 
     function getItem(path, callback){
         // Get from master, type, title,
         var item = $firebaseArray(Ref.child(path));
-
         item.$loaded().then(function (data){
           callback(data);
         });
     };
 
-    function getIssues(latitude, longitude, dist, callback){
-        //var url = 'http://codenamesnowranger.herokuapp.com/incident/get?x='+ latitude + '&y=' + longitude + '&d=' + dist;
-
-        var url = 'http://bypath-api.herokuapp.com/incident/get?x='+ latitude + '&y=' + longitude + '&d=' + dist;
-
+    function getIssues(latitude, longitude, dist, callback) {
+        var url = Config.ENV.BYPATH_API + '/incident/get?x=' + latitude + '&y=' + longitude + '&d=' + dist;
         get(url, callback);
-    }
+    };
 
     // All updates and adds will not be sent to the firebase
     // but rather our server to process the request
     // Values are an array of json objects that are in the format of
     // {'path': path, 'value': value}
-    function update(id, values){
-        var url = 'http://bypath-api.herokuapp.com/incident/update';
+    function update(id, values) {
+        var url = Config.ENV.BYPATH_API + '/incident/update';
         var data = {'id': id, 'values': values};
-
         post(url, data);
     };
 
     function add(path, item){
     };
 
-    function addNewItem(item){
-
-        var url = 'http://bypath-api.herokuapp.com/incident/addNew';
+    function addNewItem(item) {
+        var url = Config.ENV.BYPATH_API + '/incident/addNew';
         var data = item;
-
         post(url, data);
     };
 
-    function post(url, data){
-        var config = {'Content-Type': 'application/x-www-form-urlencoded'};
-
+    function post(url, data) {
+        var config = {
+            'Content-Type' : 'application/x-www-form-urlencoded'
+        };
         $http({
             method: 'POST',
             url: url,
@@ -138,14 +137,14 @@ angular.module('main')
         });
     };
 
-    function get(url, callback){
+    function get(url, callback) {
         $http({
             method: 'GET',
             url: url
         }).then(function success(response) {
             callback(response.data);
         }, function error(response){
-            console.log(response);
+            $log.log(response);
         });
     }
 
@@ -158,5 +157,4 @@ angular.module('main')
         update: update,
         assembleObjects: assembleObjects
     };
-
 });

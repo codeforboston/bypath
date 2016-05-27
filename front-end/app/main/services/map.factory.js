@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('main')
-.factory('Map', function ($q, $rootScope, leafletData) {
+
+.factory('Map', function ($q, $rootScope, Config, leafletData) {
 
     function Viewport(){
         Viewport.prototype.latitude;
@@ -24,7 +25,7 @@ angular.module('main')
 
         $rootScope.tiles = {
             name: "Streets Basic",
-            url: "https://api.mapbox.com/v4/{mapid}/{z}/{x}/{y}.{format}?access_token={apikey}",
+            url: Config.ENV.MAPBOX_API,
             type: "xyz",
             options: {
                 mapid: "mapbox.streets-basic",

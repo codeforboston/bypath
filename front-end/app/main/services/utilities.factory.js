@@ -4,8 +4,6 @@ angular.module('main')
 
 .factory('Utils', function ($log) {
 
-  $log.log('Hello from your Service: Utils in module main');
-
   function matchIcon (string) {
     var desc = string;
     var icon_path = '';

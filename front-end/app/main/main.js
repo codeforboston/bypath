@@ -33,7 +33,6 @@ angular.module('main', [
 
 // Get address from GeoLocation factory.
 function getAddress(location) {
-    console.log(location);
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
     return Geolocation.getNearByCity(latitude, longitude)
@@ -42,8 +41,6 @@ function getAddress(location) {
 
 // Get location and address object from given address.
 function getLocationAndAddress(address, location) {
-    console.log(address);
-    console.log(location);
     var formatted_address = address.data.results[0]['formatted_address'];
     return {
         location: location,

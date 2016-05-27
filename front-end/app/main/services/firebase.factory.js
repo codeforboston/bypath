@@ -6,8 +6,7 @@ angular.module('main')
   return new $window.Firebase(FBURL);
 }])
 
-.factory('tooFirebase', function ($log, $http, $q, $rootScope, complainables, Utils, Geo, Ref, $firebaseArray) {
-  $log.log('tooFirebase Factory in module main ready for action.');
+.factory('tooFirebase', function ($log, $http, $q, $rootScope, $firebaseArray, Utils, Geo, Ref) {
 
   /*----------  Firebase refs  ----------*/
   var updatedRef = Ref.child('updated').child('too');

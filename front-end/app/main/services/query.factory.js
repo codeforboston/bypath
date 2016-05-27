@@ -1,9 +1,8 @@
 'use strict';
 
 angular.module('main')
-.factory('BuildAQuery', function ($log, $http, $q, complainables, Utils, Geo) {
 
-  $log.log('BuildAQuery checking in.');
+.factory('BuildAQuery', function ($log, $http, $q, complainables, Utils, Geo) {
 
   /*----------  Build query for boston 311 socrata SODA API  ----------*/
   // Boston's 311 data is massed in aggregate; so there's one big ass 311 table with all

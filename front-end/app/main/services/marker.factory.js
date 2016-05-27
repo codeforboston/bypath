@@ -2,7 +2,7 @@
 
 angular.module('main')
 
-.factory('MarkerFactory', function MarkerFactory ($log, $http, $q, complainables, ThreeOneOne, Utils, Geo) {
+.factory('MarkerFactory', function MarkerFactory ($log, $http, $q, ThreeOneOne, Utils, Geo) {
 
   /*----------  Parse 311 data into map markers static array ----------*/
 
