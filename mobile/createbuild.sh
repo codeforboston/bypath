@@ -1,0 +1,1 @@
+rsync -av --progress www/ ../../BypathWebBuild/public --exclude .directory

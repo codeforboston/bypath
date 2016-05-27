@@ -1,0 +1,79 @@
+<ion-view view-title="main debug">
+  <!-- do you want padding? -->
+  <ion-content class="padding" >
+
+    <button class="button button-block button-assertive" ng-click=testFilter()>
+      testfilter
+    </button>
+    <button class="button button-block button-assertive" ng-click=testFilter2()>
+      testfilter2
+    </button>
+    <label for="" class="item item-input">
+      <input type="text" ng-model="searchText">
+    </label>
+    <p ng-repeat="case in test | filter:{title: searchText}">
+      {{ case.title }}
+    </p>
+
+    <!-- {{ bug.cases | json }} -->
+<!--     <p>
+      {{ test.cases | orderBy:'-count' | json }}
+    </p>
+ -->
+    <!-- <p ng-repeat="case in test.cases | orderBy:'-count'"> -->
+      <!-- <span class="type type-muted">case_title:</span>{{ case.title }}
+      <br>
+      <span class="type type-muted">count_case_title: </span>{{ case.count }} -->
+
+      <!-- <br>
+      <span class="type type-muted">count_int: </span>{{ case.count_int }} -->
+    <!-- </p> -->
+
+    <!-- content goes here -->
+    <!-- <ion-list>
+
+      <ion-item class="item item-divider">
+        Some basic checks
+      </ion-item>
+      <ion-item class="item item-icon">
+        icons working?
+        <i class="icon ion-checkmark-circled"></i>
+      </ion-item>
+      <ion-item class="item item-thumbnail">
+        images working?<br>
+        <img width="75" src="main/assets/images/yo@2x.png">
+      </ion-item>
+      <ion-item class="item">{{ctrl.someData.binding}}</ion-item>
+      <ion-item class="item item-divider">Environment variables:</ion-item>
+      <ion-item class="item item-text-wrap">
+        <pre>{{ctrl.ENV | json}}</pre>
+      </ion-item>
+      <ion-item class="item item-divider">Build variables:</ion-item>
+      <ion-item class="item item-text-wrap">
+        <pre>{{ctrl.BUILD | json}}</pre>
+      </ion-item>
+
+      <ion-item class="item item-divider">Password Test:</ion-item>
+      <ion-item class="item item-text-wrap">
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password"
+            ng-model="ctrl.password.input"
+            ng-change="ctrl.grade()">
+        </label>
+      </ion-item>
+      <ion-item class="item item-text-wrap">
+        Strength
+        <span class="badge"
+          ng-class="{
+            'badge-assertive': ctrl.password.strength === 'weak',
+            'badge-balanced': ctrl.password.strength === 'strong',
+            'badge-energized': ctrl.password.strength === 'medium'
+          }"
+          ng-bind="ctrl.password.strength"></span>
+      </ion-item>
+
+    </ion-list> -->
+
+  </ion-content>
+</ion-view>
