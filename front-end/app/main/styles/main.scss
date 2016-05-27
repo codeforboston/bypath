@@ -23,9 +23,7 @@ $ionicons-font-path: "../assets/fonts" !default;
 
 /// Note that the convention uses _partialname and looks in relative path.
 // Import page styles.
-@import './mappy';
-@import './listy';
-@import './opinions';
+@import './map';
 @import './customType';
 
 .text-muted {

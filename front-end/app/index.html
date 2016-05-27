@@ -10,6 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>ByPath</title>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
@@ -17,11 +18,17 @@
     <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" />
     <!-- endbower -->
     <!-- endbuild -->
+
     <!-- build:css main/styles/app.css -->
     <!-- inject:css -->
     <link rel="stylesheet" href="main/styles/main.css">
     <!-- endinject -->
     <!-- endbuild -->
+  </head>
+  <body ng-app="ByPath">
+    <!-- 404 during development -->
+    <script src="cordova.js"></script>
+
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/angular/angular.js"></script>
@@ -43,36 +50,32 @@
     <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+
     <!-- build:js scripts/app.js -->
     <!-- inject:js -->
     <script src="main/main.js"></script>
-    <script src="main/services/utils-serv.js"></script>
-    <script src="main/services/too-firebase.js"></script>
-    <script src="main/services/three-one-one-serv.js"></script>
-    <script src="main/services/opinions-serv.js"></script>
-    <script src="main/services/marker-factory.js"></script>
-    <script src="main/services/map.js"></script>
-    <script src="main/services/main-serv.js"></script>
-    <script src="main/services/geolocation-serv.js"></script>
-    <script src="main/services/firebase-array-listener.js"></script>
-    <script src="main/services/database.js"></script>
-    <script src="main/services/build-a-query.js"></script>
-    <script src="main/filters/three-one-one-by-id-fil.js"></script>
-    <script src="main/controllers/test-show-ctrl.js"></script>
-    <script src="main/controllers/show-ctrl.js"></script>
-    <script src="main/controllers/opinionator-ctrl.js"></script>
-    <script src="main/controllers/mappy-ctrl.js"></script>
-    <script src="main/controllers/main-ctrl.js"></script>
-    <script src="main/controllers/listy-ctrl.js"></script>
-    <script src="main/controllers/debug-ctrl.js"></script>
+    <script src="main/services/utilities.factory.js"></script>
+    <script src="main/services/query.factory.js"></script>
+    <script src="main/services/marker.factory.js"></script>
+    <script src="main/services/map.factory.js"></script>
+    <script src="main/services/geolocation.factory.js"></script>
+    <script src="main/services/geoformat.factory.js"></script>
+    <script src="main/services/geofire.factory.js"></script>
+    <script src="main/services/firebase.factory.js"></script>
+    <script src="main/services/database.factory.js"></script>
+    <script src="main/services/boston311.factory.js"></script>
+    <script src="main/filters/unique.filter.js"></script>
+    <script src="main/filters/type.filter.js"></script>
+    <script src="main/filters/incidenttype.filter.js"></script>
+    <script src="main/filters/id.filter.js"></script>
+    <script src="main/filters/casetype.filter.js"></script>
+    <script src="main/controllers/map.controller.js"></script>
+    <script src="main/controllers/main.controller.js"></script>
     <script src="main/constants/config-const.js"></script>
-    <script src="main/constants/complainables-const.js"></script>
     <script src="app.js"></script>
     <!-- endinject -->
     <!-- endbuild -->
-    <script src="cordova.js"></script>
-  </head>
-  <body ng-app="ByPath">
+
     <ion-pane>
         <!-- Title Bar -->
         <ion-header-bar align-title="center" class="bar-dark">
@@ -83,5 +86,6 @@
             <ion-nav-view name="tab-map"></ion-nav-view>
         </ion-nav-view>
     </ion-pane>
+
   </body>
 </html>
