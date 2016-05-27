@@ -1,6 +1,0 @@
-language: node_js
-node_js:
-  - 'stable'
-  - '0.12'
-install: bower install && gulp --cordova "prepare"
-script: gulp build
