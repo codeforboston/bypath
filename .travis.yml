@@ -8,6 +8,7 @@ before_install:
     - cd front-end
     - npm install gulp
 install:
+    - npm install
     - bower install
     - gulp --cordova "prepare"
 before_script:
