@@ -21,9 +21,12 @@ We've expanded our scope to include NYC and San Francisco.
 - NodeJS
 - Google Maps API
 
-### Who is us?
+### Devs
 - Alex: wants a real job.
 - Andrew: weirdly good at math.
+
+### Alumni and Friends
+
 - Isaac: has a bigger mustache than you.
 - Addu: likes wires and sparky things.
 - Edwin: went to a camp about shoes.
