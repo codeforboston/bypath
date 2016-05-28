@@ -1,3 +1,4 @@
 .vs
 .ntvs*
 .tmp
+node_modules
