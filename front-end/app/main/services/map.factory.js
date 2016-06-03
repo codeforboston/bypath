@@ -2,7 +2,21 @@
 
 angular.module('main')
 
-.factory('Map', function ($q, $rootScope, Config, leafletData) {
+.factory('Map', function($q, $scope, Config, Geolocation, leafletData) {
+
+    var map;
+    var mapMarkers = {};
+    var mapCenter = {};
+    var tiles = {
+        name: "Streets Basic",
+        url: Config.ENV.MAPBOX_API,
+        type: "xyz",
+        options: {
+            mapid: "mapbox.streets-basic",
+            format: "png",
+            apikey: "pk.eyJ1IjoiYWVsYXdzb24iLCJhIjoiY2luMnBtdGMxMGJta3Y5a2tqd29sZWlzayJ9.wxiPp_RFGYXGB2SzXZvfaA"
+        }
+    };
 
     function Viewport(){
         Viewport.prototype.latitude;
@@ -10,40 +24,39 @@ angular.module('main')
         Viewport.prototype.distance;
     }
 
-    var map;
+    function initializeMapPosition = Geolocation.getUserPosition(
+        function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            mapCenter = {
+                lat: latitude,
+                lng: longitude,
+                zoom: 12
+            };
+        },
+        function(error) {
+            var latitude = 42.39137720000001;
+            var longitude = -71.1473425;
+            mapCenter = {
+                lat: latitude,
+                lng: longitude,
+                zoom: 12
+            };
+        }
+    };
 
     // Get the map object
     function initialize(onMapLoaded){
         leafletData.getMap("map").then(
-            function (m) {
-                map = m;
+            function(map) {
+                map = map;
                 onMapLoaded();
             }
         );
-
-        $rootScope.mapMarkers = {};
-
-        $rootScope.tiles = {
-            name: "Streets Basic",
-            url: Config.ENV.MAPBOX_API,
-            type: "xyz",
-            options: {
-                mapid: "mapbox.streets-basic",
-                format: "png",
-                apikey: "pk.eyJ1IjoiYWVsYXdzb24iLCJhIjoiY2luMnBtdGMxMGJta3Y5a2tqd29sZWlzayJ9.wxiPp_RFGYXGB2SzXZvfaA"
-            }
-        };
-
-        // This should be getting the lat and lng from the users position
-        $rootScope.mapCenter = {
-            lat: 42.4,
-            lng: -71.1,
-            zoom: 12
-        };
     };
 
     function addMarkers(markers) {
-        $rootScope.mapMarkers = markers;
+        $scope.mapMarkers = markers;
     };
 
     function onMapMoveEnd(event){

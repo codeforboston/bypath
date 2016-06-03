@@ -9,9 +9,10 @@ function main(){
     server.init();
 }
 
+var envs = require('envs');
+
 // Includes
 var modules = require('./util/modules.js');
-
 var rest_server = require('./rest/rest_server.js');
 var db = require('./database/database.js');
 var resource_manager = require('./util/ext_resource_manager.js');

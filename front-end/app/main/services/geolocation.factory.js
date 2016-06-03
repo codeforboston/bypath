@@ -10,21 +10,36 @@ angular.module('main')
  * @return {2 functions}
  */
 .factory('Geolocation', function($cordovaGeolocation, $log, $q, $http, Config) {
+
+    var options = {
+        timeout: 10000,
+        enableHighAccuracy: true
+    };
+
     /**
-    * Returns a promise for the device location.
-    * No parameters.
+    * Sets the user position from the device.
+    * Takes success and failure callbacks.
     *
     * @param  {Function, Function}
     * @return {}
     */
     function getUserPosition(successCallback, failureCallback) {
-        var options = {
-            timeout: 10000,
-            enableHighAccuracy: true
-        };
-        $log.log('Getting current location.');
+        $log.debug('Getting current location.');
         $cordovaGeolocation.getCurrentPosition(options)
         .then(successCallback, failureCallback);
+    };
+
+    /**
+    * Sets the user position from the device.
+    * Takes success and failure callbacks.
+    *
+    * @param  {Function, Function}
+    * @return {}
+    */
+    function watchUserPosition(successCallback, failureCallback) {
+        $log.debug('Watch user location.');
+        $cordovaGeolocation.watchPosition(options)
+        .then(null, failureCallback, successCallback);
     };
 
     /**
