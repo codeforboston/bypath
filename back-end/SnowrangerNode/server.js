@@ -3,19 +3,22 @@
  * this will launch all of the processes and maanged the modules
 */
 
+// Includes
+var modules = require('./util/modules.js');
+var rest_server = require('./rest/rest_server.js');
+var db = require('./database/database.js');
+var fs = require('fs');
+var resource_manager = require('./util/ext_resource_manager.js');
+var data_manager = require('./data/data_manager.js');
+var env = require('./constants/environment.js');
+
+var ENV = env.getEnvironment();
+
 // Application entry point
 function main(){
     var server = new Server();
     server.init();
 }
-
-// Includes
-var modules = require('./util/modules.js');
-
-var rest_server = require('./rest/rest_server.js');
-var db = require('./database/database.js');
-var resource_manager = require('./util/ext_resource_manager.js');
-var data_manager = require('./data/data_manager.js');
 
 function Server(){
     // Private vars

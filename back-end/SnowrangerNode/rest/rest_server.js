@@ -8,7 +8,9 @@ var express = require('express');
 var index = require('./routes/index.js');
 var incident = require('./routes/incident.js');
 var data = require('./routes/data.js');
-//var keymanager = require('./auth/keymanager.js');
+var env = require('../constants/environment.js');
+
+var ENV = env.getEnvironment();
 
 // private memeber vars
 var app;
