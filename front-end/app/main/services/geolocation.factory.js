@@ -2,13 +2,6 @@
 
 angular.module('main')
 
-/**
- * Returns two functions that obtain the device location and nearby city:
- *  1. {} -> Promise
- *  2. Float, Float -> Promise
- *
- * @return {2 functions}
- */
 .factory('Geolocation', function($cordovaGeolocation, $log, $q, $http, Config) {
 
     var options = {
@@ -18,56 +11,47 @@ angular.module('main')
 
     /**
     * Sets the user position from the device.
-    * Takes success and failure callbacks.
+    * Returns a promise containing the position.
     *
-    * @param  {Function, Function}
-    * @return {}
+    * @param  {}
+    * @return {Promise}
     */
-    function getUserPosition(successCallback, failureCallback) {
+    function getUserPosition() {
         $log.debug('Getting current location.');
-        $cordovaGeolocation.getCurrentPosition(options)
-        .then(successCallback, failureCallback);
+        return $cordovaGeolocation.getCurrentPosition(options);
     };
 
     /**
-    * Sets the user position from the device.
-    * Takes success and failure callbacks.
+    * Watches the user position from the device.
+    * Returns a promise containing the position.
     *
-    * @param  {Function, Function}
-    * @return {}
+    * @param  {}
+    * @return {Promise}
     */
-    function watchUserPosition(successCallback, failureCallback) {
+    function watchUserPosition() {
         $log.debug('Watch user location.');
-        $cordovaGeolocation.watchPosition(options)
-        .then(null, failureCallback, successCallback);
+        return $cordovaGeolocation.watchPosition(options);
     };
 
     /**
+    * Gets nearby city for a given latitude and longitude.
     * Returns a promise for the location of a nearby city.
-    * Based on two given float values - latitude and longitude.
     *
     * @param  {Float, Float}
     * @return {Promise}
     */
     function getNearByCity(latitude, longitude) {
-        var defer = $q.defer();
-        var url = Config.ENV.GOOGLE_MAPS_API + '/geocode/json?latlng=' + latitude +',' + longitude +'&sensor=true';
-        $http({
+        $log.debug('Get nearby city.');
+        var url = Config.ENV.GOOGLE_MAPS_API + '/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
+        return $http({
             method: 'GET',
             url: url
-        })
-        .success(function(data, status, headers, config) {
-            defer.resolve({data : data});
-        })
-        .error(function(data, status, headers, config) {
-            defer.reject({error: 'City not found'});
         });
-
-        return defer.promise;
     }
 
     return {
         getUserPosition: getUserPosition,
+        watchUserPosition: watchUserPosition,
         getNearByCity: getNearByCity
     };
 });

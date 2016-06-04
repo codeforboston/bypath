@@ -2,37 +2,75 @@
 
 angular.module('main')
 
-.controller('MapCtrl', function ($rootScope, $scope, $state, $log, $filter, Database, Map, Geolocation) {
+.controller('MapCtrl', function($scope, $state, $log, $filter, Database, Geolocation) {
 
-    // Note that 'mapCtrl' is also established in the routing in main.js.
     var mapCtrl = this;
+    mapCtrl.data = {};
+    mapCtrl.data.filteredComplaints = [];
+    mapCtrl.filters = {};
+    mapCtrl.filtersSelected = [];
+    mapCtrl.showFilters = false;
 
-    // Initialize the map object. When that is done
-    // we can set up our event hooks and generate the
-    // map markers
-    Map.initialize(function(){
-        Map.onMarkerSelected(onMarkerSelected);
-        Map.onMapMoveEnd(onMapMoveEnd);
-        run();
-    });
+    $scope.markers = [];
+    $scope.tiles = {};
 
-    function run(){
-        // Variables.
-        mapCtrl.data = {};
-        mapCtrl.data.filteredComplaints = [];
-        mapCtrl.filters = {};
-        mapCtrl.filtersSelected = [];
-        mapCtrl.showFilters = false;
-        $log.log($scope.mapCenter);
-        Database.getIssues($scope.mapCenter.lat, $scope.mapCenter.lng, 0.35, function(data){
+    // Get location, then initialize map.
+    Geolocation.getUserPosition()
+    .then(
+        function(position) {
+            $log.debug("Got user position.");
+            $scope.mapCenter = getCenterObject(position.coords.latitude, position.coords.longitude, 12);
+        },
+        function(error) {
+            $log.debug("Failed to obtain user position.");
+            $scope.mapCenter = getCenterObject(42.39137720000001, -71.1473425, 12);
+        }
+    )
+    .then(initMap);
+
+    // Initialize map.
+    function initMap() {
+        leafletData.getMap("map")
+        .then(function(map) {
+            initMapData('Streets Basic')
+            initMapEvents(map);
+        });
+    };
+
+    // Initialize map data.
+    function initMapData(tileset) {
+        mapCtrl.tiles = TileSets.getTileSet(tileset);
+        Database.getIssues($scope.mapCenter.lat, $scope.mapCenter.lng, 0.35, function(data) {
             mapCtrl.data.complaints = data;
             generateMapMarkers();
         });
     };
 
+    // Set events on the map.
+    function initMapEvents(map) {
+        map.on('moveend', function() {
+            var viewport = getCurrentViewport();
+            Database.getIssues(viewport.latitude, viewport.longitude, viewport.distance, function(data) {
+                mapCtrl.data.complaints = data;
+                generateMapMarkers();
+            });
+        });
+        map.on('mousedown', function() {
+            // Do something.
+        });
+    };
+
+    function getCenterObject(latitude, longitude, zoom) {
+        return  {
+            lat: latitude,
+            lng: longitude,
+            zoom: zoom
+        };
+    };
+
     // On the right track but needs a little bit more clean up
     // how the map marker data is stored
-    function generateMapMarkers(){
+    function generateMapMarkers() {
         // Generate filters.
         angular.forEach(mapCtrl.data.complaints, function (value, key) {
                 // Generate general list of filters.
@@ -66,30 +104,29 @@ angular.module('main')
                         draggable: false
                     };
                 }
-            });
+            }
+        );
 
-        Map.addMarkers(markers);
-    }
+        $scope.markers = markers;
+    };
 
-    // This gets called when ever the map is either moved
-    // or zoomed.
-    // When the map is moved pased the cached map markers
-    // we will need to do a new query and generate a new
-    // set of map markers.
-    function onMapMoveEnd(){
-        var viewport = Map.getCurrentViewport();
+    function Viewport() {
+        Viewport.prototype.latitude;
+        Viewport.prototype.longitude;
+        Viewport.prototype.distance;
+    };
 
-        Database.getIssues(viewport.latitude, viewport.longitude, viewport.distance, function(data){
-            mapCtrl.data.complaints = data;
+    function getCurrentViewport() {
+        var v = new Viewport();
+        var coords = map.getCenter();
+        var ne = map.getBounds().getNorthEast();
+        var sw = map.getBounds().getSouthWest();
+        var dist = Math.max(Math.abs(ne.lat - sw.lat), Math.abs(ne.lng - sw.lng));
 
-            generateMapMarkers();
-        });
-    }
+        v.latitude = coords.lat;
+        v.longitude = coords.lng;
+        v.distance = dist;
 
-    // When a map marker is clicked it the map object
-    // should return the marker data to this event callback
-    // We will want to display the markers info
-    function onMarkerSelected(){
-        //console.log('map clicked');
-    }
+        return v;
+    };
 });
