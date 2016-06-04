@@ -6,7 +6,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+
 var modules = require('./../../util/modules.js');
+var env = require('../../constants/environment.js');
+
+var ENV = env.getEnvironment();
 
 var router = express.Router();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -34,7 +38,7 @@ router.get('/get', function (req, res) {
             console.log('data recieved from database');
             console.log('Number of items: ' + data.length);
 
-            res.setHeader('Access-Control-Allow-Origin', 'http://bypath.herokuapp.com');// convert this to a resource
+            res.setHeader('Access-Control-Allow-Origin', ENV.ACCESS_ORIGIN_URL);// convert this to a resource
             // Request methods you wish to allow
             res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
