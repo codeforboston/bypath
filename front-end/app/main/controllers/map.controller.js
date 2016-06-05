@@ -8,8 +8,15 @@ angular.module('main')
     mapCtrl.incidents = {};
     mapCtrl.incidentsGeotagged = [];
     mapCtrl.filters = {};
+    mapCtrl.popup = '<div class="item item-text-wrap item-icon-right">\
+        <h3>{{ incidentSelected.title }}</h3>\
+        <p>{{ incidentSelected.address }}</p>\
+        <span class="type type-balanced type-small">Opened: </span>\
+        <span class="type type-muted type-small">{{ incidentSelected.opened | date:"MMM dd" }}</span>\
+        </div>';
 
     // Default scope values.
+    $scope.incidentSelected = {};
     $scope.markers = [];
     $scope.tiles = {
         name: "Streets Basic",
@@ -46,16 +53,17 @@ angular.module('main')
 
     // Set events on the map.
     function initMapEvents(map) {
-        map.on('moveend', function() {
+        $scope.$on('leafletDirectiveMap.map.moveend', function() {
             var viewport = getCurrentViewport(map);
             Database.getIssues(viewport.latitude, viewport.longitude, viewport.distance, function(incidents) {
                 mapCtrl.incidents = incidents;
                 generateMapMarkers();
             });
         });
-        map.on('mousedown', function() {
-            // Do something.
-        });
+        $scope.$on('leafletDirectiveMarker.map.click', function(e, args) {
+            console.log(args.model.model);
+            $scope.incidentSelected = args.model.model;
+        }); 
     };
 
     function getCenterObject(latitude, longitude, zoom) {
@@ -84,6 +92,7 @@ angular.module('main')
     };
 
     function generateMapMarkers() {
+        var markers = [];
         angular.forEach(mapCtrl.incidents, function(value, key) {
             mapCtrl.filters[value.type] = value.type;
             var extendedObj = angular.extend(value, {
@@ -92,32 +101,21 @@ angular.module('main')
                     longitude: value.longitude
                 }
             });
-            this.push(extendedObj);
-        },
-        mapCtrl.incidentsGeotagged
-        );
-
-        // Create markers dictionary for Leaflet directive.
-        var markers = [];
-        angular.forEach(
-            mapCtrl.incidentsGeotagged, function(value) {
-                var lat = value.markablePosition.latitude;
-                var lng = value.markablePosition.longitude;
-                if (lat && lng) {
-                    markers[value.id] = {
-                        group:     'all',
-                        model:     value,
-                        lat:       value.markablePosition.latitude,
-                        lng:       value.markablePosition.longitude,
-                        focus:     false,
-                        draggable: false
-                    };
-                }
+            if (value.latitude && value.longitude) {
+                markers[value.id] = {
+                    group:              'all',
+                    model:              value,
+                    lat:                value.latitude,
+                    lng:                value.longitude,
+                    message:            mapCtrl.popup,
+                    getMessageScope:    function() { return $scope; },
+                    focus:              false,
+                    draggable:          false
+                };
             }
-        );
+        });
 
         $scope.markers = markers;
-        console.log(markers);
     };
 
     function Viewport() {
