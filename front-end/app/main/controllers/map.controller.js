@@ -2,13 +2,14 @@
 
 angular.module('main')
 
-.controller('MapCtrl', function($scope, $state, $log, $filter, Config, Database, Geolocation, TileSets, leafletData) {
+.controller('MapCtrl', function($scope, $state, $log, $filter, Config, Database, Map, TileSets) {
 
     var mapCtrl = this;
     mapCtrl.incidents = {};
     mapCtrl.incidentsGeotagged = [];
     mapCtrl.filters = {};
-    mapCtrl.popup = '<div class="item item-text-wrap item-icon-right">\
+    mapCtrl.popup =
+        '<div class="item item-text-wrap item-icon-right">\
         <h3>{{ incidentSelected.title }}</h3>\
         <p>{{ incidentSelected.address }}</p>\
         <span class="type type-balanced type-small">Opened: </span>\
@@ -34,17 +35,8 @@ angular.module('main')
         zoom: 12
     };
 
-    // Initialize map.
-    function initMap() {
-        leafletData.getMap("map")
-        .then(function(map) {
-            initMapData();
-            initMapEvents(map);
-        });
-    };
-
     // Initialize map data.
-    function initMapData(tileset) {
+    function initMapData() {
         Database.getIssues($scope.center.lat, $scope.center.lng, 0.35, function(incidents) {
             mapCtrl.incidents = incidents;
             generateMapMarkers();
@@ -54,37 +46,20 @@ angular.module('main')
     // Set events on the map.
     function initMapEvents(map) {
         $scope.$on('leafletDirectiveMap.map.moveend', function() {
-            var viewport = getCurrentViewport(map);
+            var viewport = Map.getCurrentViewport(map);
             Database.getIssues(viewport.latitude, viewport.longitude, viewport.distance, function(incidents) {
                 mapCtrl.incidents = incidents;
                 generateMapMarkers();
             });
         });
         $scope.$on('leafletDirectiveMarker.map.click', function(e, args) {
-            console.log(args.model.model);
             $scope.incidentSelected = args.model.model;
         }); 
     };
 
-    function getCenterObject(latitude, longitude, zoom) {
-        return  {
-            lat: latitude,
-            lng: longitude,
-            zoom: zoom
-        };
-    };
-
-    function startWatchingUserPosition() {
-        return Geolocation.watchUserPosition({
-            frequency : 1000,
-            timeout : 3000,
-            enableHighAccuracy: true
-        });
-    };
-
     function positionSuccess(position) {
         $log.debug("Updated user position.");
-        $scope.center = getCenterObject(position.coords.latitude, position.coords.longitude, 12);
+        $scope.center = Map.getCenterObject(position.coords.latitude, position.coords.longitude, 12);
     };
 
     function positionError(error) {
@@ -118,29 +93,5 @@ angular.module('main')
         $scope.markers = markers;
     };
 
-    function Viewport() {
-        Viewport.prototype.latitude;
-        Viewport.prototype.longitude;
-        Viewport.prototype.distance;
-    };
-
-    function getCurrentViewport(map) {
-        var v = new Viewport();
-        var coords = map.getCenter();
-        var ne = map.getBounds().getNorthEast();
-        var sw = map.getBounds().getSouthWest();
-        var dist = Math.max(Math.abs(ne.lat - sw.lat), Math.abs(ne.lng - sw.lng));
-
-        v.latitude = coords.lat;
-        v.longitude = coords.lng;
-        v.distance = dist;
-
-        return v;
-    };
-
-    // Start watching user position.
-    startWatchingUserPosition()
-    .then(null, positionError, positionSuccess)
-    // Initialize the map.
-    initMap();
+    Map.initMap(positionSuccess, positionError, initMapData, initMapEvents);
 });
