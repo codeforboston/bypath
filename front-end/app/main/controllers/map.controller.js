@@ -2,118 +2,96 @@
 
 angular.module('main')
 
-.controller('MapCtrl', function ($scope, $state, $log, $filter, Database, Map, Geolocation) {
+.controller('MapCtrl', function($scope, $state, $log, $filter, Config, Database, Map, TileSets) {
 
-    // Note that 'mapCtrl' is also established in the routing in main.js.
     var mapCtrl = this;
-    Geolocation.getUserPosition(getPositionSuccess, getPositionFailure)
+    mapCtrl.incidents = {};
+    mapCtrl.incidentsGeotagged = [];
+    mapCtrl.filters = {};
+    mapCtrl.popup =
+        '<div class="item item-text-wrap item-icon-right">\
+        <h3>{{ incidentSelected.title }}</h3>\
+        <p>{{ incidentSelected.address }}</p>\
+        <span class="type type-balanced type-small">Opened: </span>\
+        <span class="type type-muted type-small">{{ incidentSelected.opened | date:"MMM dd" }}</span>\
+        </div>';
 
-    // Initialize the map object. When that is done
-    // we can set up our event hooks and generate the
-    // map markers
-    Map.initialize(function(){
-        Map.onMarkerSelected(onMarkerSelected);
-        Map.onMapMoveEnd(onMapMoveEnd);
-        run();
-    });
+    // Default scope values.
+    $scope.incidentSelected = {};
+    $scope.markers = [];
+    $scope.tiles = {
+        name: "Streets Basic",
+        url: Config.ENV.MAPBOX_API,
+        type: "xyz",
+        options: {
+            mapid: "mapbox.streets-basic",
+            format: "png",
+            apikey: "pk.eyJ1IjoiYWVsYXdzb24iLCJhIjoiY2luMnBtdGMxMGJta3Y5a2tqd29sZWlzayJ9.wxiPp_RFGYXGB2SzXZvfaA"
+        }
+    };
+    $scope.center = {
+        lat: 42.39137720000001,
+        lng: -71.1473425,
+        zoom: 12
+    };
 
-    function run(){
-        // Variables.
-        mapCtrl.data = {};
-        mapCtrl.data.filteredComplaints = [];
-        mapCtrl.filters = {};
-        mapCtrl.filtersSelected = [];
-        mapCtrl.showFilters = false;
-        $log.log($scope.mapCenter);
-        Database.getIssues($scope.mapCenter.lat, $scope.mapCenter.lng, 0.35, function(data){
-            mapCtrl.data.complaints = data;
+    // Initialize map data.
+    function initMapData() {
+        Database.getIssues($scope.center.lat, $scope.center.lng, 0.35, function(incidents) {
+            mapCtrl.incidents = incidents;
             generateMapMarkers();
         });
     };
 
-    // On the right track but needs a little bit more clean up
-    // how the map marker data is stored
-    function generateMapMarkers(){
-        // Generate filters.
-        angular.forEach(mapCtrl.data.complaints, function (value, key) {
-                // Generate general list of filters.
-                mapCtrl.filters[value.type] = value.type;
-                // Generate markable position.
-                var markablePosition = {latitude: value.latitude, longitude: value.longitude};
-                var extendedObj = angular.extend(value, {'markablePosition': markablePosition});
-                this.push(extendedObj);
-            },
-            mapCtrl.data.filteredComplaints
-        );
+    // Set events on the map.
+    function initMapEvents(map) {
+        $scope.$on('leafletDirectiveMap.map.moveend', function() {
+            var viewport = Map.getCurrentViewport(map);
+            Database.getIssues(viewport.latitude, viewport.longitude, viewport.distance, function(incidents) {
+                mapCtrl.incidents = incidents;
+                generateMapMarkers();
+            });
+        });
+        $scope.$on('leafletDirectiveMarker.map.click', function(e, args) {
+            $scope.incidentSelected = args.model.model;
+        }); 
+    };
 
-        // Filter incidents.
-        var filtered = $filter('incidentType')(mapCtrl.data.complaints, Object.keys(mapCtrl.filters));
-        filtered = $filter('filter')(filtered, mapCtrl.filters.search);
-        mapCtrl.data.filteredComplaints = filtered;
+    function positionSuccess(position) {
+        $log.debug("Updated user position.");
+        $scope.center = Map.getCenterObject(position.coords.latitude, position.coords.longitude, 12);
+    };
 
-        // Create markers dictionary for Leaflet directive.
+    function positionError(error) {
+        $log.debug("Failed to update user position.");
+    };
+
+    function generateMapMarkers() {
         var markers = [];
-        angular.forEach(
-            mapCtrl.data.filteredComplaints, function(value) {
-                var lat = value.markablePosition.latitude;
-                var lng = value.markablePosition.longitude;
-                if (lat && lng) {
-                    markers[value.id] = {
-                        group:     'all',
-                        model:     value,
-                        lat:       value.markablePosition.latitude,
-                        lng:       value.markablePosition.longitude,
-                        focus:     false,
-                        draggable: false
-                    };
+        angular.forEach(mapCtrl.incidents, function(value, key) {
+            mapCtrl.filters[value.type] = value.type;
+            var extendedObj = angular.extend(value, {
+                'markablePosition': {
+                    latitude: value.latitude,
+                    longitude: value.longitude
                 }
             });
-
-        Map.addMarkers(markers);
-    }
-
-    // This gets called when ever the map is either moved
-    // or zoomed.
-    // When the map is moved pased the cached map markers
-    // we will need to do a new query and generate a new
-    // set of map markers.
-    function onMapMoveEnd(){
-        var viewport = Map.getCurrentViewport();
-
-        Database.getIssues(viewport.latitude, viewport.longitude, viewport.distance, function(data){
-            mapCtrl.data.complaints = data;
-
-            generateMapMarkers();
+            if (value.latitude && value.longitude) {
+                markers[value.id] = {
+                    group:              'all',
+                    model:              value,
+                    lat:                value.latitude,
+                    lng:                value.longitude,
+                    message:            mapCtrl.popup,
+                    getMessageScope:    function() { return $scope; },
+                    focus:              false,
+                    draggable:          false
+                };
+            }
         });
-    }
 
-    // When a map marker is clicked it the map object
-    // should return the marker data to this event callback
-    // We will want to display the markers info
-    function onMarkerSelected(){
-        //console.log('map clicked');
-    }
+        $scope.markers = markers;
+    };
 
-    function getPositionSuccess(position) {
-        $log.log("Success. Using obtained position.");
-        $scope.userPosition = position;
-        $log.log(position);
-    }
-
-    function getPositionFailure() {
-        $log.log("Failed. Using default position.");
-        var defaultPosition = {
-            coords: {
-                accuracy: 70,
-                altitude: null,
-                altitudeAccuracy: null,
-                heading: null,
-                latitude: 42.39137720000001,
-                longitude: -71.1473425,
-                speed: null
-            },
-            timestamp: 1463167968457
-        };
-        $scope.userPosition = defaultPosition;
-    }
+    Map.initMap(positionSuccess, positionError, initMapData, initMapEvents);
 });

@@ -5,7 +5,7 @@ angular.module('ByPath', [
 ])
 
 .config(function($logProvider) {
-    $logProvider.debugEnabled(false);
+    $logProvider.debugEnabled(true);
 })
 
 .config(function($ionicConfigProvider) {

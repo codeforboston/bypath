@@ -3,12 +3,12 @@
 angular.module('main')
 
 .filter('incidentType', function() {
-    return function (complaints, filters) {
+    return function (incidents, filters) {
         var filteredItems = {
             filters: filters,
             items: []
         };
-        angular.forEach(complaints, function (value, key) {
+        angular.forEach(incidents, function (value, key) {
             filters.forEach(function(filter) {
                 if (value.type == filter) {
                   filteredItems.items.push(value);

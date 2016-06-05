@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('firebase.config', [])
-  .constant('FBURL', 'https://snowranger.firebaseio.com');
+
+.constant('FBURL', 'https://snowranger.firebaseio.com');
 
 angular.module('main', [
   'ionic',
@@ -11,6 +12,7 @@ angular.module('main', [
   'firebase.config',
   'leaflet-directive'
 ])
+
 .config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/main/map');
     $stateProvider
@@ -30,20 +32,3 @@ angular.module('main', [
         }
     })
 });
-
-// Get address from GeoLocation factory.
-function getAddress(location) {
-    var latitude = location.coords.latitude;
-    var longitude = location.coords.longitude;
-    return Geolocation.getNearByCity(latitude, longitude)
-    .then(getLocationAndAddress(location));
-}
-
-// Get location and address object from given address.
-function getLocationAndAddress(address, location) {
-    var formatted_address = address.data.results[0]['formatted_address'];
-    return {
-        location: location,
-        address: formatted_address
-    };
-}
