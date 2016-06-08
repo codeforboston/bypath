@@ -27,6 +27,6 @@
     "mocha": "^2.5.3"
   },
   "scripts": {
-    "test": "mocha test/incident-test.js"
+    "test": "mocha test"
   }
 }
