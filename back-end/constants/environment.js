@@ -12,14 +12,17 @@ var CONSTANTS_PATH = path.dirname(require.main.filename) + '/constants/';
 module.exports = {
     getEnvironment: function() {
         // Handle environment settings.
+        var output;
         if (envs('NODE_ENV') == 'DEV') {
-            return JSON.parse(fs.readFileSync(CONSTANTS_PATH + 'env-dev.json', 'utf8'));
+            output = JSON.parse(fs.readFileSync(CONSTANTS_PATH + 'env-dev.json', 'utf8'));
         }
         else if (envs('NODE_ENV') == 'PROD') {
-            return JSON.parse(fs.readFileSync(CONSTANTS_PATH + 'env-prod.json', 'utf8'));
+            output = JSON.parse(fs.readFileSync(CONSTANTS_PATH + 'env-prod.json', 'utf8'));
         }
         else {
-            return JSON.parse(fs.readFileSync(CONSTANTS_PATH + DEFAULT_ENV, 'utf8'));
+            output = JSON.parse(fs.readFileSync(CONSTANTS_PATH + DEFAULT_ENV, 'utf8'));
         }
+        console.log(output);
+        return output;
     },
 }

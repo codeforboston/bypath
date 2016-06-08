@@ -1,7 +1,7 @@
 {
-  "name": "SnowrangerNode",
+  "name": "BypathServer",
   "version": "0.0.0",
-  "description": "SnowrangerNode",
+  "description": "Server for the bypath apis",
   "main": "server.js",
   "author": {
     "name": "Alex",

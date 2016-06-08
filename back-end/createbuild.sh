@@ -1,1 +1,1 @@
-rsync -av --progress SnowrangerNode/ ../../BypathServerBuild --exclude /node_modules --exclude SnowrangerNode.njsproj --exclude README.md --exclude test_server.js
+rsync -av --progress / ../../BypathServerBuild --exclude /node_modules --exclude SnowrangerNode.njsproj --exclude README.md --exclude test_server.js
