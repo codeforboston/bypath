@@ -27,6 +27,7 @@
     "mocha": "^2.5.3"
   },
   "scripts": {
+    "start-dev": "NODE_ENV=DEV npm start",
     "test": "mocha test"
   }
 }
