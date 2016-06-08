@@ -15,6 +15,6 @@ script:
 test:
     - cd ../back-end
     - npm install
-    - npm start &
+    - npm run start-dev &
     - sleep 5
     - npm test
