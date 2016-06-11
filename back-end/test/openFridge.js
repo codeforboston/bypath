@@ -1,6 +1,6 @@
 // This is just a test module to make sure that stockTheFridge is keeping things ice cold.
 
-var fridge = require('./data/stockTheFridge.js');
+var fridge = require('../data/stockTheFridge.js');
 var fs = require('fs-extra-promise');
 
 exports.topShelf = function() {

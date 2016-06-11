@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - 'stable'
-  - '0.12'
+  - '4.2.x'
 before_install:
     - npm install -g gulp
     - npm install -g bower
@@ -12,3 +12,9 @@ install:
     - gulp --cordova "prepare"
 script:
     - gulp build
+test:
+    - cd ../back-end
+    - npm install
+    - npm run start-dev &
+    - sleep 5
+    - npm test

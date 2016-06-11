@@ -3,7 +3,12 @@
   "engines": {
     "node": ">=4.0.0"
   },
+  "scripts": {
+    "postinstall": "bower install",
+    "build-dev": "gulp default --env=dev"
+  },
   "devDependencies": {
+    "bower": "^1.7.9",
     "browser-sync": "^2.8.3",
     "chalk": "^1.1.0",
     "cordova": "^6.0.0",
