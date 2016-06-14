@@ -2,7 +2,7 @@
 
 ### An app to help make cities more accessible to those with low-mobility.
 
-[![Build Status](https://travis-ci.org/aelawson/bypath.svg?branch=master)](https://travis-ci.org/aelawson/bypath)
+[![Build Status](https://travis-ci.org/codeforboston/bypath.svg?branch=master)](https://travis-ci.org/codeforboston/bypath)
 
 ![Imgur](http://i.imgur.com/WSI4l7y.png)
 
