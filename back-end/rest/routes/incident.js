@@ -49,6 +49,8 @@ router.get('/get', function (req, res) {
             // to the API (e.g. in case you use sessions)
             res.setHeader('Access-Control-Allow-Credentials', true);
             res.end(JSON.stringify(data));
+
+            console.log(data);
         }
     });
 

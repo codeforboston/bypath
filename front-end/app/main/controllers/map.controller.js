@@ -3,7 +3,7 @@
 angular.module('main')
 
 .controller('MapCtrl', function($scope, $state, $log, $filter, Config, Database, Map, TileSets) {
-
+    console.log("map started");
     var mapCtrl = this;
     mapCtrl.incidents = {};
     mapCtrl.incidentsGeotagged = [];
