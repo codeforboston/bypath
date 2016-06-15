@@ -13,3 +13,5 @@ script:
     - npm run start-dev &
     - sleep 5
     - npm test
+    - cd ../front-end
+    - npm test

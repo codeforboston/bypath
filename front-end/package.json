@@ -5,6 +5,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
+    "test": "gulp protractor --env=dev",
     "build-dev": "gulp default --env=dev"
   },
   "devDependencies": {
