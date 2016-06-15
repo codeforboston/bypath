@@ -44,6 +44,12 @@ function runProtractor (done) {
     .on('end', function () {
       bs.exit();
       done();
+
+      // uh why isn't the process stopping yet?
+      setTimeout(function () {
+        console.log('Looks like everything passed. Manually stopping the process');
+        process.exit(0);
+      }, 5000);
     });
 }
 
