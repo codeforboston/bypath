@@ -47,6 +47,12 @@ module.exports = {
         queryDbCallback(queryString, callback);
     },
     
+    getParkingWithinDist: function(latitude, longitude, dist, callback){
+        var queryString = "SELECT id, address, ST_X(geo_coords) as latitude, ST_Y(geo_coords) as longitude FROM parking WHERE ST_DWithin(geo_coords, ST_GeomFromText('POINT(" + latitude + " " + longitude + ")',4326)," + dist + ")"
+        
+        queryDbCallback(queryString, callback);
+    },
+    
     getLastUpdated: function (source, callback){
         var queryString = "SELECT date FROM updates WHERE source='" + source + "'";
         

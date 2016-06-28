@@ -91,4 +91,6 @@ web/www/*
 
 .directory
 
+.browse.*
+
 mobile/platforms/ios/

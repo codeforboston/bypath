@@ -9,6 +9,9 @@
     }).when('/addNewSource', {
         templateUrl: 'views/addNewDataSource.html',
         controller: 'addNewDataSourceCtrl'
+    }).when('/addParking',{
+        templateUrl: 'views/addParking.html',
+        controller: 'addParkingCtrl'
     }).otherwise({
     redirectTo: '/'
     });

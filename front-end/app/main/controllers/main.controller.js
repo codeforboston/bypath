@@ -2,8 +2,7 @@
 
 angular.module('main')
 
-.controller('MainCtrl', function($rootScope, $log, $timeout, Geolocation) {
-
+.controller('MainCtrl', function($rootScope, $state, $log, $timeout, Geolocation) {
     var mainCtrl = this;
 
     $rootScope.space = {};

@@ -2,7 +2,7 @@
 
 angular.module('main')
 
-.controller('ParkingCtrl', function($scope, $state, $log, $filter, Config, Database, Map, TileSets) {
+.controller('ParkingCtrl', function($rootScope, $scope, $state, $log, $filter, Config, Database, Map, TileSets) {
     console.log("parking starting");
     var parkingCtrl = this;
     parkingCtrl.incidents = {};
@@ -46,7 +46,8 @@ angular.module('main')
 
     // Set events on the map.
     function initMapEvents(map) {
-        $scope.$on('leafletDirectiveMap.map.moveend', function() {
+        // Returns an function that on call will stop the callback
+        var unregisterMapMove = $scope.$on('leafletDirectiveMap.map.moveend', function() {
             var viewport = Map.getCurrentViewport(map);
             Database.getParking(viewport.latitude, viewport.longitude, viewport.distance, function(parking) {
                 console.log(parking);
@@ -54,7 +55,8 @@ angular.module('main')
                 generateMapMarkers();
             });
         });
-        $scope.$on('leafletDirectiveMarker.map.click', function(e, args) {
+        
+        var unregisterMapClick = $scope.$on('leafletDirectiveMarker.map.click', function(e, args) {
             $scope.incidentSelected = args.model.model;
         }); 
     };

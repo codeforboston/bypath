@@ -2,15 +2,15 @@
 
 angular.module('main')
 
-.controller('MapCtrl', function($scope, $state, $log, $filter, Config, Database, Map, TileSets) {
-    console.log("map started");
+.controller('MapCtrl', function($rootScope, $scope, $state, $log, $filter, Config, Database, Map, TileSets) {
+
     var mapCtrl = this;
     mapCtrl.incidents = {};
     mapCtrl.incidentsGeotagged = [];
     mapCtrl.filters = {};
     mapCtrl.popup =
         '<div class="item item-text-wrap item-icon-right">\
-        <h3>{{ incidentSelected.title }}</h3>\
+        <h3>{{ incidentSelected.title }}Map</h3>\
         <p>{{ incidentSelected.address }}</p>\
         <span class="type type-balanced type-small">Opened: </span>\
         <span class="type type-muted type-small">{{ incidentSelected.opened | date:"MMM dd" }}</span>\
