@@ -16,6 +16,7 @@ angular.module('main')
         <span class="type type-muted type-small">{{ incidentSelected.opened | date:"MMM dd" }}</span>\
         </div>';
 
+    mapCtrl.queryBackend = true;
     // Default scope values.
     $scope.incidentSelected = {};
     $scope.markers = [];
@@ -37,20 +38,14 @@ angular.module('main')
 
     // Initialize map data.
     function initMapData() {
-        Database.getIssues($scope.center.lat, $scope.center.lng, 0.35, function(incidents) {
-            mapCtrl.incidents = incidents;
-            generateMapMarkers();
-        });
+        getMapMarkers($scope.center.lat, $scope.center.lng, 0.35);
     };
 
     // Set events on the map.
     function initMapEvents(map) {
         $scope.$on('leafletDirectiveMap.map.moveend', function() {
             var viewport = Map.getCurrentViewport(map);
-            Database.getIssues(viewport.latitude, viewport.longitude, viewport.distance, function(incidents) {
-                mapCtrl.incidents = incidents;
-                generateMapMarkers();
-            });
+            getMapMarkers(viewport.latitude, viewport.longitude, viewport.distance);
         });
         $scope.$on('leafletDirectiveMarker.map.click', function(e, args) {
             $scope.incidentSelected = args.model.model;
@@ -92,6 +87,21 @@ angular.module('main')
 
         $scope.markers = markers;
     };
+
+    function getMapMarkers(lat, lng, dist){
+        if (mapCtrl.queryBackend){
+            Database.getIssues(lat, lng, dist, function(incidents) {
+                mapCtrl.incidents = incidents;
+                generateMapMarkers();
+            });
+            mapCtrl.queryBackend = false;
+            setTimeout(queryReady, 3000);
+        }
+    };
+
+    function queryReady() {
+        mapCtrl.queryBackend = true;
+    }
 
     Map.initMap(positionSuccess, positionError, initMapData, initMapEvents);
 });

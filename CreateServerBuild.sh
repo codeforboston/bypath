@@ -1,0 +1,1 @@
+rsync -av --progress back-end/ ../BypathServerBuild --exclude /node_modules --exclude BypathServer.njsproj --exclude README.md --exclude test_server.js --exclude /.vscode

@@ -3,8 +3,9 @@
 angular.module('main')
 
 .controller('ParkingCtrl', function($rootScope, $scope, $state, $log, $filter, Config, Database, Map, TileSets) {
-    console.log("parking starting");
+
     var parkingCtrl = this;
+    
     parkingCtrl.incidents = {};
     parkingCtrl.incidentsGeotagged = [];
     parkingCtrl.filters = {};
