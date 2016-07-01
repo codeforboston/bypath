@@ -28,8 +28,12 @@ module.exports = {
     getIssuesWithinDist (latitude, longitude, dist, callback){
         post_db.getIssuesWithinDist(latitude, longitude, dist, callback);
     },
+
+    addParking: function (parking) {
+        post_db.addParking(parking);
+    },
     
-    getParkingWithinDist (latitude, longitude, dist, callback){
+    getParkingWithinDist: function (latitude, longitude, dist, callback){
         post_db.getParkingWithinDist(latitude, longitude, dist, callback);
     },
     

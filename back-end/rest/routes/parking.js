@@ -50,4 +50,16 @@ router.get('/get', function (req, res) {
     //res.end('recieved');
 });
 
+router.post('/add', urlencodedParser, function (req, res) {
+    db = modules.getModule('db');
+    
+    var j = req.body;
+    var parsed = JSON.parse(j['object']);
+
+    for(var i in parsed){
+        db.addParking(parsed[i]);
+        console.log(parsed[i]);
+    }
+});
+
 module.exports = router;
