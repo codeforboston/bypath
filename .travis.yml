@@ -1,20 +1,21 @@
 language: node_js
 node_js:
-  - 'stable'
-  - '4.2.x'
+  - '4.2'
 before_install:
-    - npm install -g gulp
-    - npm install -g bower
     - cd front-end
 install:
     - npm install
-    - bower install
-    - gulp --cordova "prepare"
+    - npm run build-dev &
+    # - gulp --cordova "prepare"
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
 script:
-    - gulp build
-test:
     - cd ../back-end
     - npm install
     - npm run start-dev &
     - sleep 5
+    - npm test
+    - cd ../front-end
     - npm test
