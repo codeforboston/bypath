@@ -46,6 +46,18 @@ module.exports = {
         
         queryDbCallback(queryString, callback);
     },
+
+    addParking: function (parking) {
+        var queryString = "INSERT INTO " + getParkingSchema() + " " + createParkingQueryValue(parking);
+
+        queryDb(queryString);
+    },
+    
+    getParkingWithinDist: function(latitude, longitude, dist, callback){
+        var queryString = "SELECT id, address, ST_X(geo_coords) as latitude, ST_Y(geo_coords) as longitude FROM parking WHERE ST_DWithin(geo_coords, ST_GeomFromText('POINT(" + latitude + " " + longitude + ")',4326)," + dist + ")"
+        
+        queryDbCallback(queryString, callback);
+    },
     
     getLastUpdated: function (source, callback){
         var queryString = "SELECT date FROM updates WHERE source='" + source + "'";
@@ -117,7 +129,7 @@ function queryDb(queryString) {
 }
 
 function getIssueSchema(){
-    return "issues(opened, source, title, type, address, source_id, geo_coords)"
+    return "issues(opened, source, title, type, address, source_id, geo_coords)";
 }
 
 function createIssueQueryValue(issue){
@@ -133,4 +145,15 @@ function createIssueQueryValue(issue){
     return output;
 }
 
+function getParkingSchema() {
+    return "parking(address, geo_coords)";
+}
+
+function  createParkingQueryValue(parking) {
+    var output = "VALUES("+
+    " '" + parking.address + "',"+
+    " ST_GeomFromText('POINT(" + parking.latitude + " " + parking.longitude + ")',4326))";    
+    
+    return output;
+}
 

@@ -106,6 +106,11 @@ angular.module('main')
         get(url, callback);
     };
 
+    function getParking(latitude, longitude, dist, callback) {
+        var url = Config.ENV.BYPATH_API + '/parking/get?x=' + latitude + '&y=' + longitude + '&d=' + dist;
+        get(url, callback);
+    }
+
     // All updates and adds will not be sent to the firebase
     // but rather our server to process the request
     // Values are an array of json objects that are in the format of
@@ -153,6 +158,7 @@ angular.module('main')
         getObjectAll: getObjectAll,
         getItem: getItem,
         getIssues: getIssues,
+        getParking: getParking,
         addNewItem: addNewItem,
         update: update,
         assembleObjects: assembleObjects

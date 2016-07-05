@@ -1,0 +1,16 @@
+{
+    "san_francisco_311": {
+        "url": "https://data.sfgov.org/resource/vw6y-z8j6.json?$query=",
+        "key": "soda_key",
+        "query": "SELECT * WHERE opened > '$date' AND status = 'Open' AND STARTS_WITH(category, 'Sidewalk or Curb') LIMIT 100",
+        "map": {
+            "id": "case_id",
+            "title":"request_details",
+            "type": "category",
+            "location": "address",
+            "open": "opened",
+            "latitude": "point.latitude",
+            "longitude": "point.longitude"
+        }
+    }
+}

@@ -72,6 +72,10 @@
             {
                 'name': 'Add New Data Source',
                 'url': 'addNewSource'
+            },
+            {
+                'name': 'Add Parking Data',
+                'url': 'addParking'
             }
         ];
         

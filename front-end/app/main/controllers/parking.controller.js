@@ -2,21 +2,21 @@
 
 angular.module('main')
 
-.controller('MapCtrl', function($rootScope, $scope, $state, $log, $filter, Config, Database, Map, TileSets) {
+.controller('ParkingCtrl', function($rootScope, $scope, $state, $log, $filter, Config, Database, Map, TileSets) {
 
-    var mapCtrl = this;
-    mapCtrl.incidents = {};
-    mapCtrl.incidentsGeotagged = [];
-    mapCtrl.filters = {};
-    mapCtrl.popup =
+    var parkingCtrl = this;
+    
+    parkingCtrl.incidents = {};
+    parkingCtrl.incidentsGeotagged = [];
+    parkingCtrl.filters = {};
+    parkingCtrl.popup =
         '<div class="item item-text-wrap item-icon-right">\
-        <h3>{{ incidentSelected.title }}Map</h3>\
+        <h3>{{ incidentSelected.title }}</h3>\
         <p>{{ incidentSelected.address }}</p>\
         <span class="type type-balanced type-small">Opened: </span>\
         <span class="type type-muted type-small">{{ incidentSelected.opened | date:"MMM dd" }}</span>\
         </div>';
 
-    mapCtrl.queryBackend = true;
     // Default scope values.
     $scope.incidentSelected = {};
     $scope.markers = [];
@@ -38,16 +38,26 @@ angular.module('main')
 
     // Initialize map data.
     function initMapData() {
-        getMapMarkers($scope.center.lat, $scope.center.lng, 0.35);
+        Database.getParking($scope.center.lat, $scope.center.lng, 0.35, function(parking) {
+            console.log(parking);
+            parkingCtrl.incidents = parking;
+            generateMapMarkers();
+        });
     };
 
     // Set events on the map.
     function initMapEvents(map) {
-        $scope.$on('leafletDirectiveMap.map.moveend', function() {
+        // Returns an function that on call will stop the callback
+        var unregisterMapMove = $scope.$on('leafletDirectiveMap.map.moveend', function() {
             var viewport = Map.getCurrentViewport(map);
-            getMapMarkers(viewport.latitude, viewport.longitude, viewport.distance);
+            Database.getParking(viewport.latitude, viewport.longitude, viewport.distance, function(parking) {
+                console.log(parking);
+                parkingCtrl.incidents = parking;
+                generateMapMarkers();
+            });
         });
-        $scope.$on('leafletDirectiveMarker.map.click', function(e, args) {
+        
+        var unregisterMapClick = $scope.$on('leafletDirectiveMarker.map.click', function(e, args) {
             $scope.incidentSelected = args.model.model;
         }); 
     };
@@ -63,8 +73,8 @@ angular.module('main')
 
     function generateMapMarkers() {
         var markers = [];
-        angular.forEach(mapCtrl.incidents, function(value, key) {
-            mapCtrl.filters[value.type] = value.type;
+        angular.forEach(parkingCtrl.incidents, function(value, key) {
+            parkingCtrl.filters[value.type] = value.type;
             var extendedObj = angular.extend(value, {
                 'markablePosition': {
                     latitude: value.latitude,
@@ -77,7 +87,7 @@ angular.module('main')
                     model:              value,
                     lat:                value.latitude,
                     lng:                value.longitude,
-                    message:            mapCtrl.popup,
+                    message:            parkingCtrl.popup,
                     getMessageScope:    function() { return $scope; },
                     focus:              false,
                     draggable:          false
@@ -87,21 +97,6 @@ angular.module('main')
 
         $scope.markers = markers;
     };
-
-    function getMapMarkers(lat, lng, dist){
-        if (mapCtrl.queryBackend){
-            Database.getIssues(lat, lng, dist, function(incidents) {
-                mapCtrl.incidents = incidents;
-                generateMapMarkers();
-            });
-            mapCtrl.queryBackend = false;
-            setTimeout(queryReady, 3000);
-        }
-    };
-
-    function queryReady() {
-        mapCtrl.queryBackend = true;
-    }
 
     Map.initMap(positionSuccess, positionError, initMapData, initMapEvents);
 });

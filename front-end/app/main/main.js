@@ -31,4 +31,13 @@ angular.module('main', [
             }
         }
     })
+    .state('main.parking', {
+        url: '/parking',
+        views:{
+            'tab-parking': {
+                templateUrl: 'main/templates/map.html',
+                controller: 'ParkingCtrl as parkingCtrl'
+            }
+        }
+    })
 });

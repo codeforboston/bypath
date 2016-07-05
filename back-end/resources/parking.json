@@ -1,0 +1,16 @@
+{
+    "cambridge_parking": {
+        "url": "https://data.cambridgema.gov/resource/t8h9-i4u2.json?$query=",
+        "key": "soda_key",
+        "query": "SELECT *",
+        "map": {
+            "id": "case_enquiry_id",
+            "title":"case_title",
+            "type": "type",
+            "location": "location",
+            "open": "open_dt",
+            "latitude": "latitude",
+            "longitude": "longitude"
+        }
+    }
+}
