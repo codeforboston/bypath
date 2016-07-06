@@ -6,33 +6,42 @@
 
     <table id="table">
         <thead>
-            <th>Address</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
         </thead>
         <tbody>
         </tbody>
     </table>
 
+    <form role="connect">
+        <div class="form-group ">
+            <div class="col-xs-10">
+                <label for="url">url:</label>
+                <input type="text" class="form-control" id="url" />
+            </div>
+            <div class="col-xs-6">
+                <button id="connect" type="button" class="btn btn-default">Query</button>
+            </div>
+
+    </form>
+    <br />
     <form role="form">
         <div class="form-group ">
             <div class="col-xs-3">
-            <label for="address">Address:</label>
-            <input type="text" class="form-control" id="address" />
+                <label for="address">Address:</label>
+                <input type="text" class="form-control" id="address" />
             </div>
 
             <div class="col-xs-3">
-            <label for="latitude">Latitude:</label>
-            <input type="text" class="form-control" id="lat" />
+                <label for="latitude">Latitude:</label>
+                <input type="text" class="form-control" id="lat" />
             </div>
 
             <div class="col-xs-3">
-            <label for="longitude">Longitude:</label>
-            <input type="text" class="form-control" id="lng" />
+                <label for="longitude">Longitude:</label>
+                <input type="text" class="form-control" id="lng" />
             </div>
 
             <div class="col-xs-3">
-            <button id="add" type="button" class="btn btn-default">Add</button>
+                <button id="add" type="button" class="btn btn-default">Add</button>
             </div>
         </div>
     </form>
