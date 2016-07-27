@@ -4,7 +4,7 @@ angular.module('main')
 
 .factory('Map', function(Geolocation, leafletData) {
 
-	var watchId;
+    var watchId;
 
     function startWatchingUserPosition() {
         return Geolocation.watchUserPosition({
@@ -14,22 +14,25 @@ angular.module('main')
         });
     };
 
-	function initMap(positionSuccess, positionError, mapData, mapEvents) {
-	    this.watchId = startWatchingUserPosition();
-	    this.watchId
-	    .then(null, positionError, positionSuccess)
-	    .then(initMapSettings(mapData, mapEvents));
-	};
+    function initMap(positionSuccess, positionError, mapData, mapEvents) {
+        this.watchId = startWatchingUserPosition();
+        this.watchId
+        .then(null, positionError, positionSuccess)
+        .then(initMapSettings(mapData, mapEvents));
+    };
 
     function initMapSettings(mapData, mapEvents) {
         leafletData.getMap("map")
         .then(function(map) {
             mapData();
             mapEvents(map);
+//        setInterval()
+        L.circle([42.33, -71.12], 3000).addTo(map);
         });
+
     };
 
-	function Viewport() {
+    function Viewport() {
         Viewport.prototype.latitude;
         Viewport.prototype.longitude;
         Viewport.prototype.distance;
@@ -56,10 +59,15 @@ angular.module('main')
         };
     };
 
-	return {
-		watchId : watchId,
-		initMap : initMap,
-		getCenterObject: getCenterObject,
-		getCurrentViewport: getCurrentViewport
-	};
+   function drawLocation() {
+        L.circle([42,-71], 7000).addTo(map);
+   }
+
+    return {
+        watchId : watchId,
+        initMap : initMap,
+        getCenterObject: getCenterObject,
+        getCurrentViewport: getCurrentViewport,
+        drawLocation: drawLocation
+    };
 });
