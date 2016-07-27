@@ -38,7 +38,15 @@ angular.module('main')
 
     // Initialize map data.
     function initMapData() {
+<<<<<<< 24ca23996040f37c5d489825cd77a88ae795e394
         getMapMarkers($scope.center.lat, $scope.center.lng, 0.35);
+=======
+        Database.getIssues($scope.center.lat, $scope.center.lng, 0.35, function(incidents) {
+            mapCtrl.incidents = incidents;
+            generateMapMarkers();
+        });
+       // Map.drawLocation();
+>>>>>>> userMapCircle&changesToMap.controller.js(?)
     };
 
     // Set events on the map.
@@ -50,6 +58,7 @@ angular.module('main')
         $scope.$on('leafletDirectiveMarker.map.click', function(e, args) {
             $scope.incidentSelected = args.model.model;
         }); 
+
     };
 
     function positionSuccess(position) {
