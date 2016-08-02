@@ -36,6 +36,14 @@ module.exports = {
     getParkingWithinDist: function (latitude, longitude, dist, callback){
         post_db.getParkingWithinDist(latitude, longitude, dist, callback);
     },
+
+    addNav: function (nav) {
+        post_db.addParking(nav);
+    },
+
+    getNavWithinDist (latitude, longitude, dist, callback){
+        post_db.getNavWithinDist(latitude, longitude, dist, callback);
+    },
     
     getLastUpdated: function (source, callback){
         post_db.getLastUpdated(source, callback);
