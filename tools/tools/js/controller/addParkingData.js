@@ -1,15 +1,29 @@
 ﻿toolsApp.controller("addParkingCtrl", function ($scope, $location,$http) {
-    var header = ["address", "latitude", "longitude"];
 
     var address = $('#address');
     var lat = $('#lat');
     var lng = $('#lng');
+    var url = $('#url');
 
     var table;
 
+    var columnsDef = [{
+        "sTitle": "Address",
+            "mData": "address",
+            "aTargets": [0]
+    }, {
+        "sTitle": "Latitude",
+            "mData": "latitude",
+            "aTargets": [1]
+    }, {
+        "sTitle": "Longitude",
+            "mData": "longitude",
+            "aTargets": [2]
+    }  ];
+
     $(document).ready(function(){
         table = $('#table').DataTable({
-            columns: GenerateColumns()
+            "aoColumnDefs":columnsDef
         });
     });
 
@@ -18,7 +32,7 @@
         result = {
             'address': address.val(),
             'latitude': lat.val(),
-            'longitude': lng.val(),
+            'longitude': lng.val()
         }
         table.rows.add([result]).draw();
     });
@@ -51,6 +65,38 @@
 
     });
 
+    $('#connect').click(function () {
+        var stmnt = url.val();//'https://data.cambridgema.gov/resource/t8h9-i4u2.json?$query=SELECT * LIMIT 10';
+        var key = 'k7chiGNz0GPFKd4dS03IEfKuE';
+
+        $http({
+                url: stmnt,
+                method: "GET",
+                headers: {
+                'X-App-Token': key
+                }
+        }).then(function(response) {
+            var data = response['data'];
+
+            var output = [];
+
+            for(i in data){
+                var lat = data[i]['latitude'];
+                var lng = data[i]['longitude'];
+                var address = data[i]['street_number'] + " " + data[i]['location_address'];
+                
+                result = {
+                    'address': address,
+                    'latitude': lat,
+                    'longitude': lng
+                }
+                output.push(result);
+            }
+
+            table.rows.add(output).draw();
+        });
+    });
+
     function GetTableContense(){
         var output = [];
         var length = table.rows().data().length;
@@ -60,17 +106,6 @@
             output.push(table.rows(i).data()[0]);
         }
         
-        return output;
-    }
-
-    function GenerateColumns(){
-        var output = [];
-
-        for (var i in header){
-            var item = header[i];
-            output.push({data: item});
-        }
-
         return output;
     }
 });

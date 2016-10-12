@@ -9,6 +9,7 @@ var index = require('./routes/index.js');
 var incident = require('./routes/incident.js');
 var parking = require('./routes/parking.js');
 var data = require('./routes/data.js');
+var nav = require('./routes/nav.js');
 var env = require('../constants/environment.js');
 
 var ENV = env.getEnvironment();
@@ -26,6 +27,7 @@ module.exports = {
         app.use('/incident', incident);
         app.use('/parking', parking);
         app.use('/data', data);
+        app.use('/nav', nav);
     },
 
     start: function (){

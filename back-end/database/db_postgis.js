@@ -42,7 +42,7 @@ module.exports = {
     },
     
     getIssuesWithinDist: function(latitude, longitude, dist, callback){
-        var queryString = "SELECT id, opened, source, title, type, address, ST_X(geo_coords) as latitude, ST_Y(geo_coords) as longitude FROM issues WHERE ST_DWithin(geo_coords, ST_GeomFromText('POINT(" + latitude + " " + longitude + ")',4326)," + dist + ")"
+        var queryString = "SELECT id, opened, source, title, type, address, ST_X(geo_coords) as latitude, ST_Y(geo_coords) as longitude FROM issues WHERE ST_DWithin(geo_coords, ST_GeomFromText('POINT(" + latitude + " " + longitude + ")',4326)," + dist + ")";
         
         queryDbCallback(queryString, callback);
     },
@@ -54,9 +54,21 @@ module.exports = {
     },
     
     getParkingWithinDist: function(latitude, longitude, dist, callback){
-        var queryString = "SELECT id, address, ST_X(geo_coords) as latitude, ST_Y(geo_coords) as longitude FROM parking WHERE ST_DWithin(geo_coords, ST_GeomFromText('POINT(" + latitude + " " + longitude + ")',4326)," + dist + ")"
+        var queryString = "SELECT id, address, ST_X(geo_coords) as latitude, ST_Y(geo_coords) as longitude FROM parking WHERE ST_DWithin(geo_coords, ST_GeomFromText('POINT(" + latitude + " " + longitude + ")',4326)," + dist + ")";
         
         queryDbCallback(queryString, callback);
+    },
+
+    getNavWithinDist: function (latitude, longitude, dist, callback) {
+        var queryString = "SELECT id, map_quest_id, ST_X(geo_coords) as latitude, ST_Y(geo_coords) as longitude FROM nav WHERE ST_DWithin(geo_coords, ST_GeomFromText('POINT(" + latitude + " " + longitude + ")',4326)," + dist + ")";
+
+        queryDbCallback(queryString, callback);
+    },
+
+    addNav: function (nav) {
+        var queryString = "INSERT INTO " + getParkingSchema() + " " + createParkingQueryValue(nav);
+
+        queryDb(queryString);
     },
     
     getLastUpdated: function (source, callback){
@@ -157,3 +169,14 @@ function  createParkingQueryValue(parking) {
     return output;
 }
 
+function getParkingSchema() {
+    return "nav(map_quest_id, geo_coords)";
+}
+
+function  createParkingQueryValue(nav) {
+    var output = "VALUES("+
+    " '" + nav.map_quest_id + "',"+
+    " ST_GeomFromText('POINT(" + nav.latitude + " " + nav.longitude + ")',4326))";    
+    
+    return output;
+}
