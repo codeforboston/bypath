@@ -1,15 +1,9 @@
 'use strict';
 
-angular.module('firebase.config', [])
-
-.constant('FBURL', 'https://snowranger.firebaseio.com');
-
 angular.module('main', [
   'ionic',
   'ngCordova',
   'ui.router',
-  'firebase',
-  'firebase.config',
   'leaflet-directive'
 ])
 

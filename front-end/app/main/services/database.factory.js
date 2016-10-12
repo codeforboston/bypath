@@ -2,7 +2,7 @@
 
 angular.module('main')
 
-.factory('Database', function ($log, $http, $httpParamSerializer, $q, $firebaseArray, Config, Utils, Geo, Ref) {
+.factory('Database', function ($log, $http, $httpParamSerializer, $q, Config, Utils) {
 
     // Tables will be in the format of a list of string
     // each string will be the name of a table you want
