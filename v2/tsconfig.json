@@ -6,7 +6,7 @@
     "experimentalDecorators": true
   },
   "filesGlob": [
-    "**/*.ts",
+    "**/*.ts",  
     "!node_modules/**/*"
   ],
   "exclude": [

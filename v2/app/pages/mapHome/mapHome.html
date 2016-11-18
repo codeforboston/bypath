@@ -1,10 +1,13 @@
 <ion-header>
   <ion-navbar>
     <ion-title>311 Incidents</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding class="home">
   <h2>311 Incidents Map</h2>
-  <div id='mapId'></div>
+  <div #mapId id='mapId'></div> 
 </ion-content>
