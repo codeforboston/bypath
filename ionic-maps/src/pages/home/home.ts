@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Geolocation } from 'ionic-native';
 
 declare var google;
 
@@ -16,21 +17,28 @@ export class HomePage {
 
   }
 
-  ionViewLoaded(){
+  ionViewDidLoad(){
+    console.log("got to zero")
     this.loadMap();
   }
 
   loadMap(){
+    console.log("Got to 1")
 
-    let latLng = new google.maps.LatLng(-34.9290, 138.6010);
+    Geolocation.getCurrentPosition().then((position) => {
+      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-    let mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+      let mapOptions = {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
 
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
+    }, (err) => {
+      console.log(err);
+    });
+    console.log("got to 2 ")
   }
 }
