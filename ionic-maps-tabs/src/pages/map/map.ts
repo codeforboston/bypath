@@ -4,6 +4,22 @@ import { NavController } from 'ionic-angular'
 import { Geolocation } from 'ionic-native'
 import 'rxjs/add/operator/map'
 
+/*
+const mapPoints = this.http.get('localhost:3000/incident/get?x=42&y=-71&d=1').map(res => res.json()).subscribe(data => {
+   console.log(data)
+})
+
+
+const mapPoints = this.http.get('http://bypath-api.herokuapp.com/incident/get?x=42&y=-71&d=1').map(res => res.json()).subscribe(data => {
+   console.log(data)
+})
+
+$http.get('facebook.com/allthecutecats', function(response){
+  $scope.cats = response.data;
+})
+*/
+
+/*
 const mapPoints = [
  {
   id: 2,
@@ -33,6 +49,7 @@ const mapPoints = [
   longitude: -71.0587
  }
 ]
+*/
 
 declare var google
 
@@ -44,64 +61,75 @@ declare var google
 export class MapPage {
 
   @ViewChild('map') mapElement: ElementRef
-    map: any
 
-    constructor(public navCtrl: NavController, public http: Http) {
-    }
+  map: any
+  mapPoints: any
 
-    ionViewDidLoad(){
-      console.log("got to zero")
+  constructor(public navCtrl: NavController, public http: Http) {
 
-    this.loadMap()
-    }
+    //this.http.get('https://www.reddit.com/r/gifs/new/.json?limit=10').map(res => res.json()).subscribe(
+    this.http.get('http://localhost:8080/incident/get?x=42&y=-71&d=1').map(res => res.json()).subscribe(
+    //this.http.get('http://bypath.herokuapp.com/incident/get?x=42&y=-71&d=1').map(res => res.json()).subscribe(
+      data => {
+        this.mapPoints = data.data.children
+        console.log(this.mapPoints)
+      },
+      err => {
+        console.log('error!!! :)')
+      }
+    )
+    console.log(this.mapPoints)
+  }
 
-    loadMap(){
+  ionViewDidLoad()  {
+    console.log("got to zero")
+    //this.loadMap()
+  }
+
+  loadMap(){
+
+    Geolocation.getCurrentPosition().then((position) => {
+
+      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+
+      let mapOptions = {
+        zoomControl: true,
+        zoomControlOptions: {
+          style: google.maps.ZoomControlStyle.SMALL,
+          position: google.maps.ControlPosition.RIGHT
+        },
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+
+      let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions)
+      console.log("Got to 1")
+
       /*
-      let mapPoints = this.http.get('localhost:3000/incident/get?x=42&y=-71&d=1').map(res => res.json()).subscribe(data => {
-         console.log(data)
+      let marker = new google.maps.Marker({
+        position: latLng,
+        map: this.map,
+        title: 'Hello World!'
       })
       */
 
-      Geolocation.getCurrentPosition().then((position) => {
+    this.mapPoints.forEach(function(point) {
 
-        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+        let latLong = new google.maps.LatLng(point.latitude, point.longitude)
 
-        let mapOptions = {
-          zoomControl: true,
-          zoomControlOptions: {
-            style: google.maps.ZoomControlStyle.SMALL,
-            position: google.maps.ControlPosition.RIGHT
-          },
-          center: latLng,
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-
-        let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions)
-        console.log("Got to 1")
-      /*
         let marker = new google.maps.Marker({
-          position: latLng,
-          map: this.map,
-          title: 'Hello World!'
+          position: latLong,
+          map: map,
+          // icon: icon,
+          title: point.title
         })
-      */
-        mapPoints.forEach(function(point) {
-
-          let latLong = new google.maps.LatLng(point.latitude, point.longitude)
-
-          let marker = new google.maps.Marker({
-            position: latLong,
-            map: map,
-            // icon: icon,
-            title: point.title
-          })
-        })
-      }, (err) => {
-        console.log(err)
       })
+    }, (err) => {
+      console.log(err)
+    })
 
-      console.log("got to 2 ")
+    console.log("got to 2 ")
 
-    }
+  }
 }
