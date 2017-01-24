@@ -71,19 +71,18 @@ export class MapPage {
     this.http.get('http://localhost:8080/incident/get?x=42&y=-71&d=1').map(res => res.json()).subscribe(
     //this.http.get('http://bypath.herokuapp.com/incident/get?x=42&y=-71&d=1').map(res => res.json()).subscribe(
       data => {
-        this.mapPoints = data.data.children
+        this.mapPoints = data
         console.log(this.mapPoints)
       },
       err => {
         console.log('error!!! :)')
       }
     )
-    console.log(this.mapPoints)
   }
 
   ionViewDidLoad()  {
     console.log("got to zero")
-    //this.loadMap()
+    this.loadMap()
   }
 
   loadMap(){
@@ -106,6 +105,7 @@ export class MapPage {
       let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions)
       console.log("Got to 1")
 
+
       /*
       let marker = new google.maps.Marker({
         position: latLng,
@@ -113,6 +113,7 @@ export class MapPage {
         title: 'Hello World!'
       })
       */
+
 
     this.mapPoints.forEach(function(point) {
 
